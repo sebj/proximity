@@ -1,8 +1,7 @@
 #import "AppController.h"
-
+#import "NSWorkspace+runFileAtPath.h"
 
 @implementation AppController
-
 
 #pragma mark -
 #pragma mark Delegate Methods
@@ -72,7 +71,7 @@
 			priorStatus = InRange;
 			
 			[self menuIconInRange];
-			[self runInRangeScript];
+            [self runInRangeScript:YES];
 		}
 	}
 	else
@@ -82,7 +81,7 @@
 			priorStatus = OutOfRange;
 			
 			[self menuIconOutOfRange];
-			[self runOutOfRangeScript];
+            [self runOutOfRangeScript:YES];
 		}
 	}
 	
@@ -91,10 +90,15 @@
 
 - (BOOL)isInRange
 {
-	if( device && [device remoteNameRequest:nil] == kIOReturnSuccess )
-		return true;
-	
-	return false;
+   int repeat_count = 3;
+    do {
+        if( device && [device remoteNameRequest:nil] == kIOReturnSuccess ) {
+                return true;
+        }
+        usleep(500000L);
+    } while(--repeat_count);
+
+    return false;
 }
 
 - (void)menuIconInRange
@@ -115,41 +119,44 @@
 
 - (BOOL)newVersionAvailable
 {
-	NSURL *url = [NSURL URLWithString:@"http://reduxcomputing.com/download/Proximity.plist"];
-	NSDictionary *dict = [NSDictionary dictionaryWithContentsOfURL:url];
-	NSArray *version = [[dict valueForKey:@"version"] componentsSeparatedByString:@"."];
-	
-	int newVersionMajor = [[version objectAtIndex:0] intValue];
+	NSDictionary *dict = [[NSBundle mainBundle] infoDictionary];
+	NSArray *version = [[dict valueForKey:@"CFBundleVersion"] componentsSeparatedByString:@"."];
+
+    int thisVersionMajor = 1;
+    int thisVersionMinor = 6;
+
+	NSURL *url = [NSURL URLWithString:@"https://raw.github.com/Daij-Djan/proximity/master/Info.plist"];
+	dict = [NSDictionary dictionaryWithContentsOfURL:url];
+	version = [[dict valueForKey:@"CFBundleVersion"] componentsSeparatedByString:@"."];
+    int newVersionMajor = [[version objectAtIndex:0] intValue];
 	int newVersionMinor = [[version objectAtIndex:1] intValue];
 	
 	if( thisVersionMajor < newVersionMajor || thisVersionMinor < newVersionMinor )
 		return YES;
-	
+
 	return NO;
 }
 
-- (void)runInRangeScript
+- (void)runScript:(NSString*)path arguments:(NSArray*)args silent:(BOOL)silent
 {
-	NSAppleScript *script;
-	NSDictionary *errDict;
-	NSAppleEventDescriptor *ae;
-	
-	script = [[NSAppleScript alloc]
-			  initWithContentsOfURL:[NSURL fileURLWithPath:[inRangeScriptPath stringValue]]
-			  error:&errDict];
-	ae = [script executeAndReturnError:&errDict];		
+    if(!path.length)
+        return;
+    
+    NSError *error = nil;
+    BOOL b = [[NSWorkspace sharedWorkspace] runFileAtPath:path arguments:args error:&error];
+    if(!silent && !b) {
+        if(!error)
+            error = [NSError errorWithDomain:@"NSWorkspace" code:0 userInfo:@{ NSLocalizedDescriptionKey : @"unknown error" }];
+        [NSApp presentError:error];
+    }
 }
 
-- (void)runOutOfRangeScript
-{
-	NSAppleScript *script;
-	NSDictionary *errDict;
-	NSAppleEventDescriptor *ae;
-	
-	script = [[NSAppleScript alloc]
-			  initWithContentsOfURL:[NSURL fileURLWithPath:[outOfRangeScriptPath stringValue]] 
-			  error:&errDict];
-	ae = [script executeAndReturnError:&errDict];	
+- (void)runInRangeScript:(BOOL)silent {
+    [self runScript:[inRangeScriptPath stringValue] arguments:@[@"inRange"] silent:silent];
+}
+
+- (void)runOutOfRangeScript:(BOOL)silent {
+    [self runScript:[outOfRangeScriptPath stringValue] arguments:@[@"outOfRange"] silent:silent];
 }
 
 - (void)startMonitoring
@@ -214,14 +221,7 @@
 	BOOL updating = [defaults boolForKey:@"updating"];
 	if( updating ) {
 		[checkUpdatesOnStartup setState:NSOnState];
-		if( [self newVersionAvailable] )
-		{
-			if( NSRunAlertPanel( @"Proximity", @"A new version of Proximity is available for download.",
-								@"Close", @"Download", nil, nil ) == NSAlertAlternateReturn )
-			{
-				[[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"http://reduxcomputing.com/proximity/"]];
-			}
-		}
+        [self checkForUpdates:nil silent:YES];
 	}
 	
 	// Monitoring enabled
@@ -240,9 +240,9 @@
 		if( monitoring )
 		{
 			if( [self isInRange] ) {
-				[self runInRangeScript];
+				[self runInRangeScript:YES];
 			} else {
-				[self runOutOfRangeScript];
+				[self runOutOfRangeScript:YES];
 			}
 		}
 	}
@@ -326,25 +326,35 @@
 	}
 }
 
-- (IBAction)checkForUpdates:(id)sender
+- (void)checkForUpdates:(id)sender silent:(BOOL)silent
 {
-	if( [self newVersionAvailable] )
-	{
-		if( NSRunAlertPanel( @"Proximity", @"A new version of Proximity is available for download.",
-							@"Close", @"Download", nil, nil ) == NSAlertAlternateReturn )
-		{
-			[[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"http://reduxcomputing.com/proximity/"]];
-		}
-	}
-	else
-	{
-		NSRunAlertPanel( @"Proximity", @"You have the latest version.", @"Close", nil, nil, nil );
-	}
+    dispatch_async(dispatch_get_global_queue(0, 0), ^{
+        BOOL br = [self newVersionAvailable];
+        dispatch_sync(dispatch_get_main_queue(), ^{
+            if( br ) {
+                if( NSRunAlertPanel( @"Proximity", @"A new version of Proximity is available for download.",
+                                    @"Close", @"Download", nil, nil ) == NSAlertAlternateReturn )
+                {
+                    [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"https://github.com/Daij-Djan/proximity"]];
+                }
+            }
+            else {
+                if(!silent) {
+                    NSRunAlertPanel( @"Proximity", @"You have the latest version.", @"Close", nil, nil, nil );
+                }
+            }
+        });
+    });
 }
 
-- (IBAction)donate:(id)sender
+- (IBAction)checkForUpdates:(id)sender
 {
-	[[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"http://reduxcomputing.com/donate.php"]];
+    [self checkForUpdates:sender silent:NO];
+}
+
+- (IBAction)about:(id)sender
+{
+	[[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"https://github.com/Daij-Djan/proximity/README"]];
 }
 
 - (IBAction)enableMonitoring:(id)sender
@@ -355,10 +365,11 @@
 - (IBAction)inRangeScriptChange:(id)sender
 {
 	NSOpenPanel *op = [NSOpenPanel openPanel];
-	[op runModalForDirectory:@"~" file:nil types:[NSArray arrayWithObject:@"scpt"]];
+	[op runModalForDirectory:@"~" file:nil types:nil]; //[NSArray arrayWithObject:@"scpt"]
 	
 	NSArray *filenames = [op filenames];
-	[inRangeScriptPath setStringValue:[filenames objectAtIndex:0]];	
+    if([filenames count])
+        [inRangeScriptPath setStringValue:[filenames objectAtIndex:0]];
 }
 
 - (IBAction)inRangeScriptClear:(id)sender
@@ -368,16 +379,17 @@
 
 - (IBAction)inRangeScriptTest:(id)sender
 {
-	[self runInRangeScript];
+    [self runInRangeScript:NO];
 }
 
 - (IBAction)outOfRangeScriptChange:(id)sender
 {
 	NSOpenPanel *op = [NSOpenPanel openPanel];
-	[op runModalForDirectory:@"~" file:nil types:[NSArray arrayWithObject:@"scpt"]];
+	[op runModalForDirectory:@"~" file:nil types:nil]; //[NSArray arrayWithObject:@"scpt"]
 	
 	NSArray *filenames = [op filenames];
-	[outOfRangeScriptPath setStringValue:[filenames objectAtIndex:0]];    
+    if([filenames count])
+        [outOfRangeScriptPath setStringValue:[filenames objectAtIndex:0]];
 }
 
 - (IBAction)outOfRangeScriptClear:(id)sender
@@ -387,11 +399,13 @@
 
 - (IBAction)outOfRangeScriptTest:(id)sender
 {
-    [self runOutOfRangeScript];
+    [self runOutOfRangeScript:NO];
 }
 
 - (void)showWindow:(id)sender
 {
+    [NSApp activateIgnoringOtherApps:YES];
+    
 	[prefsWindow makeKeyAndOrderFront:self];
 	[prefsWindow center];
 	

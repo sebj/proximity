@@ -3,9 +3,6 @@
 //#import <IOBluetoothUI/IOBluetoothUI.h>
 #import <IOBluetoothUI/objc/IOBluetoothDeviceSelectorController.h>
 
-int thisVersionMajor = 1;
-int thisVersionMinor = 5;
-
 typedef enum _BPStatus {
 	InRange,
 	OutOfRange
@@ -34,24 +31,11 @@ typedef enum _BPStatus {
     IBOutlet id timerInterval;
 }
 
-// AppController methods
-- (void)createMenuBar;
-- (void)userDefaultsLoad;
-- (void)userDefaultsSave;
-- (BOOL)isInRange;
-- (void)menuIconInRange;
-- (void)menuIconOutOfRange;
-- (void)runInRangeScript;
-- (void)runOutOfRangeScript;
-- (void)startMonitoring;
-- (void)stopMonitoring;
-
-
 // UI methods
 - (IBAction)changeDevice:(id)sender;
 - (IBAction)checkConnectivity:(id)sender;
 - (IBAction)checkForUpdates:(id)sender;
-- (IBAction)donate:(id)sender;
+- (IBAction)about:(id)sender;
 - (IBAction)enableMonitoring:(id)sender;
 - (IBAction)inRangeScriptChange:(id)sender;
 - (IBAction)inRangeScriptClear:(id)sender;
