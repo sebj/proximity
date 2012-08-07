@@ -124,9 +124,8 @@
 {
 	NSDictionary *dict = [[NSBundle mainBundle] infoDictionary];
 	NSArray *version = [[dict valueForKey:@"CFBundleVersion"] componentsSeparatedByString:@"."];
-
-    int thisVersionMajor = 1;
-    int thisVersionMinor = 6;
+    int thisVersionMajor = [[version objectAtIndex:0] intValue];
+	int thisVersionMinor = [[version objectAtIndex:1] intValue];
 
 	NSURL *url = [NSURL URLWithString:@"https://raw.github.com/Daij-Djan/proximity/master/Info.plist"];
 	dict = [NSDictionary dictionaryWithContentsOfURL:url];
