@@ -8,19 +8,37 @@
 
 /* Begin PBXBuildFile section */
 		1DDD58160DA1D0A300B32029 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DDD58140DA1D0A300B32029 /* MainMenu.xib */; };
-		2E10CA190FBD00900059A159 /* AppController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E10CA180FBD00900059A159 /* AppController.m */; };
+		2E10CA190FBD00900059A159 /* ProximityAppController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E10CA180FBD00900059A159 /* ProximityAppController.m */; };
 		2E10CA850FBD09DA0059A159 /* inRange.png in Resources */ = {isa = PBXBuildFile; fileRef = 2E10CA810FBD09DA0059A159 /* inRange.png */; };
 		2E10CA860FBD09DA0059A159 /* inRangeAlt.png in Resources */ = {isa = PBXBuildFile; fileRef = 2E10CA820FBD09DA0059A159 /* inRangeAlt.png */; };
 		2E10CA870FBD09DA0059A159 /* outRange.png in Resources */ = {isa = PBXBuildFile; fileRef = 2E10CA830FBD09DA0059A159 /* outRange.png */; };
 		2E10CA880FBD09DA0059A159 /* outRangeAlt.png in Resources */ = {isa = PBXBuildFile; fileRef = 2E10CA840FBD09DA0059A159 /* outRangeAlt.png */; };
-		2E67EBFB0FC03A780025D101 /* IOBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E67EBFA0FC03A780025D101 /* IOBluetooth.framework */; };
-		2E67EC010FC03A8F0025D101 /* IOBluetoothUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E67EC000FC03A8F0025D101 /* IOBluetoothUI.framework */; };
 		2EA9F55B0FC02F68007354EF /* AppIcon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 2EA9F55A0FC02F68007354EF /* AppIcon.icns */; };
 		8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
 		8D11072D0486CEB800E47090 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
+		B427AFD715C27F1800CF0229 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = B427AFD615C27F1800CF0229 /* main.m */; };
+		B427AFE615C27F7300CF0229 /* ProximityLoginHelper.app in CopyFiles */ = {isa = PBXBuildFile; fileRef = B427AFCC15C27F1800CF0229 /* ProximityLoginHelper.app */; };
+		B427AFE715C2825A00CF0229 /* IOBluetoothUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E67EC000FC03A8F0025D101 /* IOBluetoothUI.framework */; };
+		B427AFEA15C2876300CF0229 /* ServiceManagement.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B427AFE915C2876300CF0229 /* ServiceManagement.framework */; };
+		B427AFEC15C289A900CF0229 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B427AFEB15C289A900CF0229 /* Cocoa.framework */; };
 		B495BE7715C04C0000236FC4 /* NSWorkspace+runFileAtPath.m in Sources */ = {isa = PBXBuildFile; fileRef = B495BE7615C04C0000236FC4 /* NSWorkspace+runFileAtPath.m */; };
+		B4B8CA9D15C2A1F40068A39C /* Defaults.plist in Resources */ = {isa = PBXBuildFile; fileRef = B4B8CA9C15C2A1F40068A39C /* Defaults.plist */; };
+		B4FF6C2915C98AC400BD0910 /* ProximityBluetoothMonitor.m in Sources */ = {isa = PBXBuildFile; fileRef = B4FF6C2815C98AC400BD0910 /* ProximityBluetoothMonitor.m */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		B427AFE515C27F2A00CF0229 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = Contents/Library/LoginItems;
+			dstSubfolderSpec = 1;
+			files = (
+				B427AFE615C27F7300CF0229 /* ProximityLoginHelper.app in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		089C165DFE840E0CC02AAC07 /* English */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -30,8 +48,8 @@
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		29B97324FDCFA39411CA2CEA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		29B97325FDCFA39411CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
-		2E10CA170FBD00900059A159 /* AppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppController.h; sourceTree = "<group>"; };
-		2E10CA180FBD00900059A159 /* AppController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppController.m; sourceTree = "<group>"; };
+		2E10CA170FBD00900059A159 /* ProximityAppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProximityAppController.h; sourceTree = "<group>"; };
+		2E10CA180FBD00900059A159 /* ProximityAppController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProximityAppController.m; sourceTree = "<group>"; };
 		2E10CA810FBD09DA0059A159 /* inRange.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = inRange.png; sourceTree = "<group>"; };
 		2E10CA820FBD09DA0059A159 /* inRangeAlt.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = inRangeAlt.png; sourceTree = "<group>"; };
 		2E10CA830FBD09DA0059A159 /* outRange.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = outRange.png; sourceTree = "<group>"; };
@@ -42,8 +60,18 @@
 		32CA4F630368D1EE00C91783 /* Proximity_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Proximity_Prefix.pch; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8D1107320486CEB800E47090 /* Proximity.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Proximity.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		B427AFCC15C27F1800CF0229 /* ProximityLoginHelper.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ProximityLoginHelper.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		B427AFD215C27F1800CF0229 /* ProximityLoginHelper-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "ProximityLoginHelper-Info.plist"; sourceTree = "<group>"; };
+		B427AFD615C27F1800CF0229 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		B427AFD815C27F1800CF0229 /* ProximityLoginHelper-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ProximityLoginHelper-Prefix.pch"; sourceTree = "<group>"; };
+		B427AFE915C2876300CF0229 /* ServiceManagement.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ServiceManagement.framework; path = System/Library/Frameworks/ServiceManagement.framework; sourceTree = SDKROOT; };
+		B427AFEB15C289A900CF0229 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		B495BE7515C04C0000236FC4 /* NSWorkspace+runFileAtPath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSWorkspace+runFileAtPath.h"; sourceTree = "<group>"; };
 		B495BE7615C04C0000236FC4 /* NSWorkspace+runFileAtPath.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSWorkspace+runFileAtPath.m"; sourceTree = "<group>"; };
+		B4B8CA9B15C28C7A0068A39C /* Proximity.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = Proximity.entitlements; sourceTree = "<group>"; };
+		B4B8CA9C15C2A1F40068A39C /* Defaults.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Defaults.plist; sourceTree = "<group>"; };
+		B4FF6C2715C98AC400BD0910 /* ProximityBluetoothMonitor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProximityBluetoothMonitor.h; sourceTree = "<group>"; };
+		B4FF6C2815C98AC400BD0910 /* ProximityBluetoothMonitor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProximityBluetoothMonitor.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -52,8 +80,16 @@
 			buildActionMask = 2147483647;
 			files = (
 				8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */,
-				2E67EBFB0FC03A780025D101 /* IOBluetooth.framework in Frameworks */,
-				2E67EC010FC03A8F0025D101 /* IOBluetoothUI.framework in Frameworks */,
+				B427AFEA15C2876300CF0229 /* ServiceManagement.framework in Frameworks */,
+				B427AFE715C2825A00CF0229 /* IOBluetoothUI.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B427AFC915C27F1800CF0229 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B427AFEC15C289A900CF0229 /* Cocoa.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -63,8 +99,10 @@
 		080E96DDFE201D6D7F000001 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				2E10CA170FBD00900059A159 /* AppController.h */,
-				2E10CA180FBD00900059A159 /* AppController.m */,
+				2E10CA170FBD00900059A159 /* ProximityAppController.h */,
+				2E10CA180FBD00900059A159 /* ProximityAppController.m */,
+				B4FF6C2715C98AC400BD0910 /* ProximityBluetoothMonitor.h */,
+				B4FF6C2815C98AC400BD0910 /* ProximityBluetoothMonitor.m */,
 				B495BE7515C04C0000236FC4 /* NSWorkspace+runFileAtPath.h */,
 				B495BE7615C04C0000236FC4 /* NSWorkspace+runFileAtPath.m */,
 			);
@@ -74,6 +112,8 @@
 		1058C7A0FEA54F0111CA2CBB /* Linked Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				B427AFE915C2876300CF0229 /* ServiceManagement.framework */,
+				2E67EC000FC03A8F0025D101 /* IOBluetoothUI.framework */,
 				1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */,
 			);
 			name = "Linked Frameworks";
@@ -82,6 +122,7 @@
 		1058C7A2FEA54F0111CA2CBB /* Other Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				2E67EBFA0FC03A780025D101 /* IOBluetooth.framework */,
 				29B97324FDCFA39411CA2CEA /* AppKit.framework */,
 				13E42FB307B3F0F600E4EEF1 /* CoreData.framework */,
 				29B97325FDCFA39411CA2CEA /* Foundation.framework */,
@@ -93,6 +134,7 @@
 			isa = PBXGroup;
 			children = (
 				8D1107320486CEB800E47090 /* Proximity.app */,
+				B427AFCC15C27F1800CF0229 /* ProximityLoginHelper.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -100,10 +142,8 @@
 		29B97314FDCFA39411CA2CEA /* Proximity */ = {
 			isa = PBXGroup;
 			children = (
-				080E96DDFE201D6D7F000001 /* Classes */,
-				29B97315FDCFA39411CA2CEA /* Other Sources */,
-				29B97317FDCFA39411CA2CEA /* Resources */,
-				29B97323FDCFA39411CA2CEA /* Frameworks */,
+				B427AFE815C2830400CF0229 /* Proximity */,
+				B427AFD015C27F1800CF0229 /* ProximityLoginHelper */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
 			);
 			name = Proximity;
@@ -121,6 +161,7 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				B4B8CA9B15C28C7A0068A39C /* Proximity.entitlements */,
 				2EA9F55A0FC02F68007354EF /* AppIcon.icns */,
 				2E10CA810FBD09DA0059A159 /* inRange.png */,
 				2E10CA820FBD09DA0059A159 /* inRangeAlt.png */,
@@ -129,6 +170,7 @@
 				8D1107310486CEB800E47090 /* Info.plist */,
 				089C165CFE840E0CC02AAC07 /* InfoPlist.strings */,
 				1DDD58140DA1D0A300B32029 /* MainMenu.xib */,
+				B4B8CA9C15C2A1F40068A39C /* Defaults.plist */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -136,12 +178,32 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				2E67EC000FC03A8F0025D101 /* IOBluetoothUI.framework */,
-				2E67EBFA0FC03A780025D101 /* IOBluetooth.framework */,
 				1058C7A0FEA54F0111CA2CBB /* Linked Frameworks */,
 				1058C7A2FEA54F0111CA2CBB /* Other Frameworks */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		B427AFD015C27F1800CF0229 /* ProximityLoginHelper */ = {
+			isa = PBXGroup;
+			children = (
+				B427AFD615C27F1800CF0229 /* main.m */,
+				B427AFD215C27F1800CF0229 /* ProximityLoginHelper-Info.plist */,
+				B427AFD815C27F1800CF0229 /* ProximityLoginHelper-Prefix.pch */,
+				B427AFEB15C289A900CF0229 /* Cocoa.framework */,
+			);
+			path = ProximityLoginHelper;
+			sourceTree = "<group>";
+		};
+		B427AFE815C2830400CF0229 /* Proximity */ = {
+			isa = PBXGroup;
+			children = (
+				080E96DDFE201D6D7F000001 /* Classes */,
+				29B97315FDCFA39411CA2CEA /* Other Sources */,
+				29B97317FDCFA39411CA2CEA /* Resources */,
+				29B97323FDCFA39411CA2CEA /* Frameworks */,
+			);
+			name = Proximity;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -154,6 +216,7 @@
 				8D1107290486CEB800E47090 /* Resources */,
 				8D11072C0486CEB800E47090 /* Sources */,
 				8D11072E0486CEB800E47090 /* Frameworks */,
+				B427AFE515C27F2A00CF0229 /* CopyFiles */,
 			);
 			buildRules = (
 			);
@@ -163,6 +226,23 @@
 			productInstallPath = "$(HOME)/Applications";
 			productName = Proximity;
 			productReference = 8D1107320486CEB800E47090 /* Proximity.app */;
+			productType = "com.apple.product-type.application";
+		};
+		B427AFCB15C27F1800CF0229 /* ProximityLoginHelper */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B427AFE215C27F1800CF0229 /* Build configuration list for PBXNativeTarget "ProximityLoginHelper" */;
+			buildPhases = (
+				B427AFC815C27F1800CF0229 /* Sources */,
+				B427AFC915C27F1800CF0229 /* Frameworks */,
+				B427AFCA15C27F1800CF0229 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = ProximityLoginHelper;
+			productName = ProximityLoginHelper;
+			productReference = B427AFCC15C27F1800CF0229 /* ProximityLoginHelper.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -185,6 +265,7 @@
 			projectRoot = "";
 			targets = (
 				8D1107260486CEB800E47090 /* Proximity */,
+				B427AFCB15C27F1800CF0229 /* ProximityLoginHelper */,
 			);
 		};
 /* End PBXProject section */
@@ -201,6 +282,14 @@
 				2E10CA870FBD09DA0059A159 /* outRange.png in Resources */,
 				2E10CA880FBD09DA0059A159 /* outRangeAlt.png in Resources */,
 				2EA9F55B0FC02F68007354EF /* AppIcon.icns in Resources */,
+				B4B8CA9D15C2A1F40068A39C /* Defaults.plist in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B427AFCA15C27F1800CF0229 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -212,8 +301,17 @@
 			buildActionMask = 2147483647;
 			files = (
 				8D11072D0486CEB800E47090 /* main.m in Sources */,
-				2E10CA190FBD00900059A159 /* AppController.m in Sources */,
+				2E10CA190FBD00900059A159 /* ProximityAppController.m in Sources */,
 				B495BE7715C04C0000236FC4 /* NSWorkspace+runFileAtPath.m in Sources */,
+				B4FF6C2915C98AC400BD0910 /* ProximityBluetoothMonitor.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B427AFC815C27F1800CF0229 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B427AFD715C27F1800CF0229 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -239,23 +337,53 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		B427AFE315C27F1800CF0229 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				INFOPLIST_FILE = "ProximityLoginHelper/ProximityLoginHelper-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		B427AFE415C27F1800CF0229 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				INFOPLIST_FILE = "ProximityLoginHelper/ProximityLoginHelper-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
 		C01FCF4B08A954540054247B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				COMBINE_HIDPI_IMAGES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CODE_SIGN_ENTITLEMENTS = Proximity.entitlements;
+				CODE_SIGN_IDENTITY = "Mac Developer";
 				COPY_PHASE_STRIP = NO;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)\"",
-				);
 				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Proximity_Prefix.pch;
 				INFOPLIST_FILE = Info.plist;
-				INSTALL_PATH = "$(HOME)/Applications";
-				MACOSX_DEPLOYMENT_TARGET = 10.5;
 				PRODUCT_NAME = Proximity;
 			};
 			name = Debug;
@@ -263,18 +391,13 @@
 		C01FCF4C08A954540054247B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				COMBINE_HIDPI_IMAGES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CODE_SIGN_ENTITLEMENTS = Proximity.entitlements;
+				CODE_SIGN_IDENTITY = "Mac Developer";
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)\"",
-				);
-				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Proximity_Prefix.pch;
 				INFOPLIST_FILE = Info.plist;
-				INSTALL_PATH = "$(HOME)/Applications";
-				MACOSX_DEPLOYMENT_TARGET = 10.5;
 				PRODUCT_NAME = Proximity;
 			};
 			name = Release;
@@ -282,29 +405,54 @@
 		C01FCF4F08A954540054247B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_IMPLICIT_SIGN_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COMBINE_HIDPI_IMAGES = YES;
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = DEBUG;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+				VALID_ARCHS = x86_64;
 			};
 			name = Debug;
 		};
 		C01FCF5008A954540054247B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_IMPLICIT_SIGN_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COMBINE_HIDPI_IMAGES = YES;
 				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				SDKROOT = macosx;
+				VALID_ARCHS = x86_64;
 			};
 			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		B427AFE215C27F1800CF0229 /* Build configuration list for PBXNativeTarget "ProximityLoginHelper" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B427AFE315C27F1800CF0229 /* Debug */,
+				B427AFE415C27F1800CF0229 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		C01FCF4A08A954540054247B /* Build configuration list for PBXNativeTarget "Proximity" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

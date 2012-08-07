@@ -11,7 +11,16 @@ The intent of this project is for the source code to be critiqued by other devel
 This version is based on proximity 1.5 from reduxcomputing
 
 ###Changes
+-
 
+#####1.71
+added the option to require a good signal strength (defined as the Golden Cut in the BT4 Specification)
+
+#####1.7
+* Added sandboxing & mac appstore compatible way to open the app at login
+* Made the app run sandboxed 
+* A command line argument is now passed to the inRange or OutOfRange Action. (Either 'InRange' or 'OutOfRange')
+ 
 #####1.6
 * I added the ability to run not only applescripts but also run shell scripts, unix executables or app bundles.
 * Fixed some minor crashes

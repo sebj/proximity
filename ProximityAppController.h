@@ -2,41 +2,46 @@
 //#import <IOBluetooth/IOBluetooth.h>
 //#import <IOBluetoothUI/IOBluetoothUI.h>
 #import <IOBluetoothUI/objc/IOBluetoothDeviceSelectorController.h>
+#import <ServiceManagement/ServiceManagement.h>
+#import "ProximityBluetoothMonitor.h"
 
 typedef enum _BPStatus {
 	InRange,
 	OutOfRange
 } BPStatus;
 
-@interface AppController : NSObject
+@interface ProximityAppController : NSObject<NSApplicationDelegate, NSWindowDelegate, ProximityBluetoothMonitorDelegate>
 {
-	IOBluetoothDevice *device;
-	NSTimer *timer;
-	BPStatus priorStatus;
+    ProximityBluetoothMonitor *monitor;
 	NSStatusItem *statusItem;
+
+    NSURL *inRangeScriptURL;
+    NSURL *outOfRangeScriptURL;
 	
 	NSImage *outOfRangeImage;
 	NSImage *outOfRangeAltImage;
 	NSImage *inRangeImage;
 	NSImage *inRangeAltImage;
 	
-    IBOutlet id checkUpdatesOnStartup;
-    IBOutlet id deviceName;
-    IBOutlet id inRangeScriptPath;
-    IBOutlet id monitoringEnabled;
-    IBOutlet id outOfRangeScriptPath;
-    IBOutlet id prefsWindow;
-    IBOutlet id progressIndicator;
-    IBOutlet id runScriptsOnStartup;
-    IBOutlet id timerInterval;
+    IBOutlet NSButton *checkUpdatesOnStartup;
+    IBOutlet NSButton *startOnSystemStartup;
+    IBOutlet NSTextField *deviceName;
+    IBOutlet NSTextField *inRangeScriptPath;
+    IBOutlet NSButton *monitoringEnabled;
+    IBOutlet NSTextField *outOfRangeScriptPath;
+    IBOutlet NSWindow *prefsWindow;
+    IBOutlet NSProgressIndicator *progressIndicator;
+    IBOutlet NSButton *runScriptsOnStartup;
+    IBOutlet NSTextField *timerInterval;
+    IBOutlet NSButton *requireStrongSignal;
 }
 
 // UI methods
 - (IBAction)changeDevice:(id)sender;
 - (IBAction)checkConnectivity:(id)sender;
 - (IBAction)checkForUpdates:(id)sender;
+- (IBAction)toggleStartOnSystemStartup:(id)sender;
 - (IBAction)about:(id)sender;
-- (IBAction)enableMonitoring:(id)sender;
 - (IBAction)inRangeScriptChange:(id)sender;
 - (IBAction)inRangeScriptClear:(id)sender;
 - (IBAction)inRangeScriptTest:(id)sender;
