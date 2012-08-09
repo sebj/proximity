@@ -17,7 +17,7 @@
     if(self) {
         _priorStatus = _status = ProximityBluetoothStatusUndefined;
         _timeInterval = kDefaultPageTimeout;
-        _requireStrongSignal = NO;
+        _requiredSignalStrength = NO;
     }
     return self;
 }
@@ -94,14 +94,14 @@
 //        BluetoothHCIRSSIValue rawRssi = [_device rawRSSI];
         BluetoothHCIRSSIValue rssi = [_device RSSI];
 #ifdef DEBUG
-        if(rssi!=0)
-            NSLog(@"RSSI of %@: %d", _device.name, rssi);
+//        if(rssi!=0)
+            NSLog(@"RSSI of %@: %d/%d", _device.name, rssi, _requiredSignalStrength);
 #endif
-        if(_requireStrongSignal) {
-            return rssi==0;
-        }
+        BOOL inRange = rssi>=_requiredSignalStrength;
+        
         [_device closeConnection];
-        return YES;
+        
+        return inRange;
     }
     
     return NO;

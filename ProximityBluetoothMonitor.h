@@ -35,7 +35,7 @@ NS_ENUM(NSInteger, ProximityBluetoothStatus) {
 
 @property(weak) id<ProximityBluetoothMonitorDelegate> delegate;
 @property(nonatomic, assign) NSTimeInterval timeInterval;
-@property(assign) BOOL requireStrongSignal;
+@property(assign) BOOL requiredSignalStrength;
 @property(retain) IOBluetoothDevice *device; // could be an array and statuses too
 
 @property(readonly) enum ProximityBluetoothStatus priorStatus;

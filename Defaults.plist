@@ -12,7 +12,7 @@
 	<false/>
 	<key>startOnSystemStartup</key>
 	<false/>
-	<key>requireStrongSignal</key>
-	<true/>
+	<key>requiredSignalStrength</key>
+	<integer>-20</integer>
 </dict>
 </plist>

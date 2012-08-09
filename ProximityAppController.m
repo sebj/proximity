@@ -35,7 +35,7 @@
 	[self userDefaultsSave];
 
     if(monitoringEnabled.state == NSOnState && monitor.device) {
-        monitor.requireStrongSignal = requireStrongSignal.state == NSOnState;
+        monitor.requiredSignalStrength = requiredSignalStrength.integerValue;
         monitor.timeInterval = timerInterval.doubleValue;
         [monitor refresh];
         [monitor start];
@@ -175,8 +175,8 @@
     }
 
 	//require StrongSignal
-	[requireStrongSignal setState:[defaults boolForKey:@"requireStrongSignal"]];
-    monitor.requireStrongSignal = requireStrongSignal.state == NSOnState;
+	[requiredSignalStrength setIntegerValue:[defaults integerForKey:@"requiredSignalStrength"]];
+    monitor.requiredSignalStrength = requiredSignalStrength.integerValue;
 
     // Device
 	deviceAsData = [defaults objectForKey:@"device"];
@@ -271,7 +271,7 @@
 	// autostart
     [defaults setBool:[startOnSystemStartup state] == NSOnState ? TRUE : FALSE forKey:@"executeOnStartup"];
     
-    [defaults setBool:requireStrongSignal.state==NSOnState forKey:@"requireStrongSignal"];
+    [defaults setInteger:requiredSignalStrength.integerValue forKey:@"requiredSignalStrength"];
     
     //persist
 	[defaults synchronize];
@@ -313,7 +313,7 @@
 	
     ProximityBluetoothMonitor *testMon = [[ProximityBluetoothMonitor alloc] init];
     testMon.device = monitor.device;
-    testMon.requireStrongSignal = monitor.requireStrongSignal;
+    testMon.requiredSignalStrength = monitor.requiredSignalStrength;
     [testMon refresh];
     
 	if( testMon.status == ProximityBluetoothStatusInRange )
@@ -358,18 +358,9 @@
     [self setStartAtLogin:autostart];
 }
 
-- (IBAction)changeRequireStrongSignal:(id)sender {
-    //See window will close method
-}
-
 - (IBAction)about:(id)sender
 {
 	[[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"https://github.com/Daij-Djan/proximity/README"]];
-}
-
-- (IBAction)enableMonitoring:(id)sender
-{
-	// See windowWillClose: method
 }
 
 - (NSURL*)chooseScript {
