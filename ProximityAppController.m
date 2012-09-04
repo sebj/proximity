@@ -380,8 +380,10 @@
 - (IBAction)inRangeScriptChange:(id)sender
 {
     NSURL *file = [self chooseScript];
-    if(file)
+    if(file) {
+        inRangeScriptURL = file;
         [inRangeScriptPath setStringValue:file.path];
+    }
 }
 
 - (IBAction)inRangeScriptClear:(id)sender
