@@ -360,7 +360,7 @@
 
 - (IBAction)about:(id)sender
 {
-	[[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"https://github.com/Daij-Djan/proximity/README"]];
+	[[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"https://github.com/Daij-Djan/proximity/blob/master/README.md"]];
 }
 
 - (NSURL*)chooseScript {
