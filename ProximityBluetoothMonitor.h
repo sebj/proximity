@@ -28,6 +28,8 @@ NS_ENUM(NSInteger, ProximityBluetoothStatus) {
 
 - (void)proximityBluetoothMonitor:(ProximityBluetoothMonitor*)monitor foundDevice:(IOBluetoothDevice*)device;
 - (void)proximityBluetoothMonitor:(ProximityBluetoothMonitor*)monitor lostDevice:(IOBluetoothDevice*)device;
+- (void)setMenuIconInRange;
+- (void)setMenuIconOutOfRange;
 
 @end
 
@@ -35,11 +37,14 @@ NS_ENUM(NSInteger, ProximityBluetoothStatus) {
 
 @property(weak) id<ProximityBluetoothMonitorDelegate> delegate;
 @property(nonatomic, assign) NSTimeInterval timeInterval;
+@property(nonatomic, assign) NSInteger inRangeDetectionCount;
+@property(nonatomic, assign) NSInteger outOfRangeDetectionCount;
 @property(assign) BOOL requiredSignalStrength;
 @property(retain) IOBluetoothDevice *device; // could be an array and statuses too
 
 @property(readonly) enum ProximityBluetoothStatus priorStatus;
 @property(readonly) enum ProximityBluetoothStatus status;
+@property(readonly) enum ProximityBluetoothStatus iconStatus;
 
 - (void)start;
 - (void)stop;
