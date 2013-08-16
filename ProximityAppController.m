@@ -297,6 +297,41 @@
 	[defaults synchronize];
 }
 
+- (void)updateDeviceStatus
+{
+    if( !monitor.device ) {
+        [deviceStatus setStringValue:@"Please Select a Device"];
+        return;
+    }
+    
+    [progressIndicator startAnimation:nil];
+    
+    // Refresh status
+    ProximityBluetoothMonitor *testMon = [[ProximityBluetoothMonitor alloc] init];
+    testMon.device = monitor.device;
+    testMon.requiredSignalStrength = monitor.requiredSignalStrength = requiredSignalStrength.integerValue;
+    [testMon refresh];
+    
+    // Update signal bar
+    [currentSignalStrength setIntegerValue:[testMon getRange:YES]];
+    
+    // Update status
+	if( testMon.status == ProximityBluetoothStatusInRange )
+	{
+        [deviceStatus setStringValue:@"In Range"];
+	}
+	else if( testMon.status == ProximityBluetoothStatusOutOfRange )
+	{
+        [deviceStatus setStringValue:@"Out of Range"];
+	}
+    else if( testMon.status == ProximityBluetoothStatusUndefined )
+	{
+        [deviceStatus setStringValue:@"Not Detectable"];
+	}
+    
+    [progressIndicator stopAnimation:nil];
+}
+
 
 #pragma mark -
 #pragma mark Interface Methods
@@ -320,31 +355,13 @@
 								[device addressString]]];
     
     monitor.device = device;
+    
+    [self updateDeviceStatus];
 }
 
 - (IBAction)checkConnectivity:(id)sender
 {
-    if(!monitor.device) {
-		NSRunAlertPanel( @"Unknown", @"Please select a bluetooth device", nil, nil, nil, nil );
-        return;
-    }
-    
-	[progressIndicator startAnimation:nil];
-	
-    ProximityBluetoothMonitor *testMon = [[ProximityBluetoothMonitor alloc] init];
-    testMon.device = monitor.device;
-    testMon.requiredSignalStrength = monitor.requiredSignalStrength;
-    [testMon refresh];
-    
-	if( testMon.status == ProximityBluetoothStatusInRange )
-	{
-		NSRunAlertPanel( @"Found", @"Device is powered on and in range", nil, nil, nil, nil );
-	}
-	else
-	{
-		NSRunAlertPanel( @"Not Found", @"Device is powered off or out of range", nil, nil, nil, nil );
-	}
-    [progressIndicator stopAnimation:nil];
+    [self updateDeviceStatus];
 }
 
 - (void)checkForUpdates:(id)sender silent:(BOOL)silent
@@ -441,6 +458,10 @@
     
 	[prefsWindow makeKeyAndOrderFront:self];
 	[prefsWindow center];
+    
+    // Clear out status
+    [deviceStatus setStringValue:@""];
+    [currentSignalStrength setIntegerValue:0];
 	
 	[monitor stop];
 }
