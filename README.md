@@ -13,6 +13,14 @@ Including fixes from [fivemicro](https://github.com/fivemicro/proximity)
 
 ###Changes
 -
+#####1.81
+* Added a Signal Bar to display the current signal of the device
+* Widened the Required Signal slider so it can be viewed in relation to the Signal Bar
+* Replaced Popup Statuses with a new Status Area next the Check Connection button
+* Added steppers to the number inputs
+    * The Detection Inputs are now put into a range of numbers 1-15
+    * The Timer Interval input is now put into a range of numbers 2-99999
+
 #####1.8
 * added the option to delay running the script for in/out of range only after a set number of detections have occured
 
