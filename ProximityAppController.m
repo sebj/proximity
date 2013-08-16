@@ -129,7 +129,7 @@
     int thisVersionMajor = [[version objectAtIndex:0] intValue];
 	int thisVersionMinor = [[version objectAtIndex:1] intValue];
 
-	NSURL *url = [NSURL URLWithString:@"https://raw.github.com/Daij-Djan/proximity/master/Info.plist"];
+	NSURL *url = [NSURL URLWithString:@"https://raw.github.com/janka102/proximity/master/Info.plist"];
 	dict = [NSDictionary dictionaryWithContentsOfURL:url];
 	version = [[dict valueForKey:@"CFBundleVersion"] componentsSeparatedByString:@"."];
     int newVersionMajor = [[version objectAtIndex:0] intValue];
@@ -373,7 +373,7 @@
                 if( NSRunAlertPanel( @"Proximity", @"A new version of Proximity is available for download.",
                                     @"Close", @"Download", nil, nil ) == NSAlertAlternateReturn )
                 {
-                    [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"https://github.com/Daij-Djan/proximity"]];
+                    [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"https://github.com/janka102/proximity"]];
                 }
             }
             else {
@@ -397,7 +397,7 @@
 
 - (IBAction)about:(id)sender
 {
-	[[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"https://github.com/Daij-Djan/proximity/blob/master/README.md"]];
+	[[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"https://github.com/janka102/proximity/blob/master/README.md"]];
 }
 
 - (NSURL*)chooseScript {
