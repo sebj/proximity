@@ -36,6 +36,8 @@ typedef enum _BPStatus {
     IBOutlet NSSlider *requiredSignalStrength;
     IBOutlet NSTextField *inRangeDetectionsCountInput;
     IBOutlet NSTextField *outOfRangeDetectionsCountInput;
+    IBOutlet NSLevelIndicator *currentSignalStrength;
+    IBOutlet NSTextField *deviceStatus;
 }
 
 // UI methods
