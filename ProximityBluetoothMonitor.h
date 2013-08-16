@@ -17,9 +17,9 @@
 //} ProximityBluetoothStatus;
 
 NS_ENUM(NSInteger, ProximityBluetoothStatus) {
-	ProximityBluetoothStatusUndefined,
+    ProximityBluetoothStatusOutOfRange,
     ProximityBluetoothStatusInRange,
-    ProximityBluetoothStatusOutOfRange
+    ProximityBluetoothStatusUndefined
 } ProximityBluetoothStatus;
 
 @class ProximityBluetoothMonitor;
@@ -49,5 +49,6 @@ NS_ENUM(NSInteger, ProximityBluetoothStatus) {
 - (void)start;
 - (void)stop;
 - (void)refresh;
+- (int)getRange:(BOOL)getSignal;
 
 @end
