@@ -10,12 +10,15 @@
 
 @implementation ProximityBluetoothMonitor {
 	NSTimer *_timer;
+    NSInteger _changedStatusCounter;
 }
+
+@synthesize inRangeDetectionCount, outOfRangeDetectionCount;
 
 - (id)init {
     self = [super init];
     if(self) {
-        _priorStatus = _status = ProximityBluetoothStatusUndefined;
+        _iconStatus = _priorStatus = _status = ProximityBluetoothStatusUndefined;
         _timeInterval = kDefaultPageTimeout;
         _requiredSignalStrength = NO;
     }
@@ -24,6 +27,7 @@
 
 - (void)start {
     [_timer invalidate];
+    _changedStatusCounter = 0;
     _timer = [NSTimer scheduledTimerWithTimeInterval:_timeInterval
                                              target:self
                                            selector:@selector(handleTimer:)
@@ -35,7 +39,7 @@
     [_timer invalidate];
     _timer = nil;
     
-    _priorStatus = _status;
+    _iconStatus = _priorStatus = _status;
     _status = ProximityBluetoothStatusUndefined;
 }
 
@@ -60,26 +64,59 @@
     BOOL inRange = [self isInRange];
 #ifdef DEBUG
     NSLog(@"BT device %@ inRange:%d",_device.name, inRange);
+    NSLog(@"Changed counter %ld", _changedStatusCounter);
 #endif
     
     _status = inRange ? ProximityBluetoothStatusInRange : ProximityBluetoothStatusOutOfRange;
+    
+    if(_status != _iconStatus)
+    {
+        if(_status == ProximityBluetoothStatusInRange)
+        {
+            [_delegate setMenuIconInRange];
+        }
+        else
+        {
+            [_delegate setMenuIconOutOfRange];
+        }
+        _iconStatus = _status;
+    }
+    
 	if( inRange ) {
 		if( _priorStatus != ProximityBluetoothStatusInRange ) {
-			_priorStatus = ProximityBluetoothStatusInRange;
-            [_delegate proximityBluetoothMonitor:self foundDevice:_device];
+            _changedStatusCounter++;
+            if(_changedStatusCounter >= inRangeDetectionCount)
+            {
+                _changedStatusCounter = 0;
+                _priorStatus = ProximityBluetoothStatusInRange;
+                [_delegate proximityBluetoothMonitor:self foundDevice:_device];
 #ifdef DEBUG
-            NSLog(@"-- found");
+                NSLog(@"-- found");
 #endif
+            }
 		}
+        else
+        {
+            _changedStatusCounter = 0;
+        }
 	}
 	else {
 		if( _priorStatus != ProximityBluetoothStatusOutOfRange ) {
-			_priorStatus = ProximityBluetoothStatusOutOfRange;
-            [_delegate proximityBluetoothMonitor:self lostDevice:_device];
+            _changedStatusCounter++;
+            if(_changedStatusCounter >= outOfRangeDetectionCount)
+            {
+                _changedStatusCounter = 0;
+                _priorStatus = ProximityBluetoothStatusOutOfRange;
+                [_delegate proximityBluetoothMonitor:self lostDevice:_device];
 #ifdef DEBUG
-            NSLog(@"-- lost");
+                NSLog(@"-- lost");
 #endif
+            }
 		}
+        else
+        {
+            _changedStatusCounter = 0;
+        }
 	}
 }
 

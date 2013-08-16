@@ -34,6 +34,8 @@ typedef enum _BPStatus {
     IBOutlet NSButton *runScriptsOnStartup;
     IBOutlet NSTextField *timerInterval;
     IBOutlet NSSlider *requiredSignalStrength;
+    IBOutlet NSTextField *inRangeDetectionsCountInput;
+    IBOutlet NSTextField *outOfRangeDetectionsCountInput;
 }
 
 // UI methods
