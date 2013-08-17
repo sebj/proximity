@@ -326,7 +326,7 @@
 	}
     else if( testMon.status == ProximityBluetoothStatusUndefined )
 	{
-        [deviceStatus setStringValue:@"Not Detectable"];
+        [deviceStatus setStringValue:@"Not Found"];
 	}
     
     [progressIndicator stopAnimation:nil];
