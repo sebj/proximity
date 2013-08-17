@@ -63,7 +63,7 @@
 {
     int inRange = [self getRange];
 #ifdef DEBUG
-    // 0: Out of Range, 1: In Range, 2: Not Detectable
+    // 0: Out of Range, 1: In Range, 2: Not Found
     NSLog(@"BT device %@ inRange:%d",_device.name, inRange);
     NSLog(@"Changed counter %ld", _changedStatusCounter);
 #endif
@@ -118,27 +118,41 @@
 
 - (int)getRange:(BOOL)getSignal
 {
-    if( !_device )
+    if( !_device ) {
+        if( getSignal )
+            return 0;
+        
         return ProximityBluetoothStatusUndefined;
+    }
     
     IOReturn br = [_device openConnection:nil withPageTimeout:kDefaultPageTimeout authenticationRequired:NO];
     
     if( br == kIOReturnSuccess ) {
 //        BluetoothHCIRSSIValue rawRssi = [_device rawRSSI];
         BluetoothHCIRSSIValue rssi = [_device RSSI];
-#ifdef DEBUG
-//        if(rssi!=0)
-            NSLog(@"RSSI of %@: %d/%d", _device.name, rssi, _requiredSignalStrength);
-#endif
-        BOOL inRange = rssi>=_requiredSignalStrength;
         
         [_device closeConnection];
         
-        if( getSignal )
+        if( getSignal ) {
+            
+#ifdef DEBUG
+            NSLog(@"RSSI of %@ out of 50: %d", _device.name, 50+rssi);
+#endif
+            // -1 * (minimun RSSI) + rssi
             return 50+rssi;
+        }
+
+#ifdef DEBUG
+        //        if(rssi!=0)
+        NSLog(@"RSSI of %@: %d/%d", _device.name, rssi, _requiredSignalStrength);
+#endif
+        BOOL inRange = rssi>=_requiredSignalStrength;
         
         return inRange ? ProximityBluetoothStatusInRange : ProximityBluetoothStatusOutOfRange;
     }
+    
+    if( getSignal )
+        return 0;
     
     return ProximityBluetoothStatusUndefined;
 }
