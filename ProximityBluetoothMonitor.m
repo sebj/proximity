@@ -18,13 +18,26 @@
 - (id)init {
     self = [super init];
     if (self) {
-        _iconStatus = _priorStatus = _status = ProximityBluetoothStatusUndefined;
-        _timeInterval = kDefaultPageTimeout;
-        _requiredSignalStrength = NO;
-        inRangeDetectionCount = 1;
-        outOfRangeDetectionCount = 1;
+        [self setupVars];
     }
     return self;
+}
+
+- (id)initWithDevice:(IOBluetoothDevice*)aDevice {
+    self = [super init];
+    if (self) {
+        [self setupVars];
+        _device = aDevice;
+    }
+    return self;
+}
+
+- (void)setupVars {
+    _iconStatus = _priorStatus = _status = ProximityBluetoothStatusUndefined;
+    _timeInterval = kDefaultPageTimeout;
+    _requiredSignalStrength = NO;
+    inRangeDetectionCount = 1;
+    outOfRangeDetectionCount = 1;
 }
 
 - (void)start {

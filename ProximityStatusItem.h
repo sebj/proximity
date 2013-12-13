@@ -9,6 +9,7 @@
 
 @interface ProximityStatusItem : StatusItem
 
+@property BOOL paused;
 @property BOOL inRange;
 
 @end

@@ -6,6 +6,10 @@
 	<string>60</string>
 	<key>enabled</key>
 	<true/>
+	<key>idleCheckEnabled</key>
+	<false/>
+	<key>idleTime</key>
+	<integer>30</integer>
 	<key>executeOnStartup</key>
 	<false/>
 	<key>requiredSignalStrength</key>

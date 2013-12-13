@@ -47,6 +47,8 @@ NS_ENUM(NSInteger, ProximityBluetoothStatus) {
 @property(readonly) enum ProximityBluetoothStatus status;
 @property(readonly) enum ProximityBluetoothStatus iconStatus;
 
+- (id)initWithDevice:(IOBluetoothDevice*)aDevice;
+
 - (void)start;
 - (void)stop;
 - (void)refresh;

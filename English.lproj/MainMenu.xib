@@ -79,14 +79,14 @@
         </menu>
         <window title="Proximity Preferences" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" restorable="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" animationBehavior="default" id="371">
             <windowStyleMask key="styleMask" titled="YES" closable="YES"/>
-            <rect key="contentRect" x="335" y="320" width="523" height="452"/>
+            <rect key="contentRect" x="335" y="320" width="523" height="407"/>
             <rect key="screenRect" x="0.0" y="0.0" width="1680" height="1028"/>
             <view key="contentView" id="372">
-                <rect key="frame" x="0.0" y="0.0" width="523" height="452"/>
+                <rect key="frame" x="0.0" y="0.0" width="523" height="407"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <box autoresizesSubviews="NO" title="Bluetooth Device" borderType="line" id="518">
-                        <rect key="frame" x="17" y="152" width="489" height="149"/>
+                        <rect key="frame" x="17" y="125" width="489" height="149"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <view key="contentView">
                             <rect key="frame" x="1" y="1" width="487" height="130"/>
@@ -174,7 +174,7 @@
                                 <textField verticalHuggingPriority="750" id="671">
                                     <rect key="frame" x="173" y="16" width="138" height="17"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="No device" placeholderString="Status" id="672">
+                                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" allowsUndo="NO" sendsActionOnEndEditing="YES" title="No device" placeholderString="Status" id="672">
                                         <font key="font" metaFont="system"/>
                                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -191,7 +191,7 @@
                         <font key="titleFont" metaFont="system"/>
                     </box>
                     <box autoresizesSubviews="NO" title="General" borderType="line" id="519">
-                        <rect key="frame" x="17" y="333" width="489" height="109"/>
+                        <rect key="frame" x="17" y="288" width="489" height="109"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <view key="contentView">
                             <rect key="frame" x="1" y="1" width="487" height="90"/>
@@ -226,6 +226,7 @@
                                     </textFieldCell>
                                     <connections>
                                         <action selector="takeIntegerValueFrom:" target="665" id="678"/>
+                                        <binding destination="QlU-qC-Q8O" name="enabled" keyPath="values.enabled" id="iKq-Sk-46z"/>
                                         <binding destination="QlU-qC-Q8O" name="value" keyPath="values._timerInterval" id="wCF-fe-f9L"/>
                                     </connections>
                                 </textField>
@@ -255,12 +256,13 @@
                                     <stepperCell key="cell" continuous="YES" alignment="left" minValue="2" maxValue="99999" doubleValue="60" id="666"/>
                                     <connections>
                                         <action selector="takeIntegerValueFrom:" target="523" id="675"/>
+                                        <binding destination="QlU-qC-Q8O" name="enabled" keyPath="values.enabled" id="gKp-GI-dr1"/>
                                     </connections>
                                 </stepper>
                                 <button id="NmH-7a-yoS">
-                                    <rect key="frame" x="16" y="37" width="324" height="18"/>
+                                    <rect key="frame" x="16" y="37" width="327" height="18"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                    <buttonCell key="cell" type="check" title="Only run out of range action if also idle for min." bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="HaZ-3n-SsF">
+                                    <buttonCell key="cell" type="check" title="Run out of range action if also idle for minimum" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="HaZ-3n-SsF">
                                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                         <font key="font" metaFont="system"/>
                                         <connections>
@@ -286,6 +288,8 @@
                                     </textFieldCell>
                                     <connections>
                                         <action selector="takeIntegerValueFrom:" target="rSh-IH-W54" id="H9q-dP-11O"/>
+                                        <binding destination="QlU-qC-Q8O" name="enabled" keyPath="values.idleCheckEnabled" id="qDZ-Z8-Dya"/>
+                                        <binding destination="QlU-qC-Q8O" name="value" keyPath="values.idleTime" id="0m3-fg-mfD"/>
                                     </connections>
                                 </textField>
                                 <textField verticalHuggingPriority="750" id="RM7-Fu-1Vd">
@@ -300,9 +304,10 @@
                                 <stepper horizontalHuggingPriority="750" verticalHuggingPriority="750" id="rSh-IH-W54">
                                     <rect key="frame" x="396" y="33" width="19" height="27"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                    <stepperCell key="cell" continuous="YES" alignment="left" minValue="2" maxValue="99999" doubleValue="60" id="Cp4-3K-l8B"/>
+                                    <stepperCell key="cell" continuous="YES" alignment="left" minValue="10" maxValue="99999" doubleValue="30" id="Cp4-3K-l8B"/>
                                     <connections>
                                         <action selector="takeIntegerValueFrom:" target="nxs-Hy-72f" id="pWZ-65-Ey5"/>
+                                        <binding destination="QlU-qC-Q8O" name="enabled" keyPath="values.idleCheckEnabled" id="43W-Wc-OK1"/>
                                     </connections>
                                 </stepper>
                             </subviews>
@@ -312,7 +317,7 @@
                         <font key="titleFont" metaFont="system"/>
                     </box>
                     <box autoresizesSubviews="NO" title="Actions" borderType="line" id="551">
-                        <rect key="frame" x="17" y="43" width="489" height="95"/>
+                        <rect key="frame" x="17" y="16" width="489" height="95"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <view key="contentView">
                             <rect key="frame" x="1" y="1" width="487" height="76"/>
@@ -415,7 +420,7 @@
                         <font key="titleFont" metaFont="system"/>
                     </box>
                     <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" id="605">
-                        <rect key="frame" x="97.999999429096988" y="121" width="407" height="13"/>
+                        <rect key="frame" x="97.000000236052202" y="94" width="407" height="13"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" allowsUndo="NO" sendsActionOnEndEditing="YES" alignment="right" title="Applescripts, shell scripts, executables, app bundles. Argument passed:  'in' or 'out'" id="606">
                             <font key="font" metaFont="system" size="10"/>

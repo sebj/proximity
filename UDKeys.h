@@ -1,9 +1,15 @@
 #define UDMonitoringEnabledKey @"enabled"
 #define UDCheckIntervalKey @"_timerInterval"
+
+#define UDIdleCheckEnabledkey @"idleCheckEnabled"
+#define UDIdleMinTimeKey @"idleTime"
+
 #define UDActionOnStartupKey @"executeOnStartup"
-#define UDRequiredSignalKey @"requiredSignalStrength"
+
 
 #define UDDeviceKey @"device"
+#define UDRequiredSignalKey @"requiredSignalStrength"
+
 
 #define UDInRangeActionKey @"inRangeScriptURL"
 #define UDOutOfRangeActionKey @"outOfRangeScriptURL"

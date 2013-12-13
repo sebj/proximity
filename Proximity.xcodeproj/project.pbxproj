@@ -9,8 +9,6 @@
 /* Begin PBXBuildFile section */
 		1DDD58160DA1D0A300B32029 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DDD58140DA1D0A300B32029 /* MainMenu.xib */; };
 		2E10CA190FBD00900059A159 /* ProximityAppController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E10CA180FBD00900059A159 /* ProximityAppController.m */; };
-		2E10CA850FBD09DA0059A159 /* inRange.png in Resources */ = {isa = PBXBuildFile; fileRef = 2E10CA810FBD09DA0059A159 /* inRange.png */; };
-		2E10CA870FBD09DA0059A159 /* outRange.png in Resources */ = {isa = PBXBuildFile; fileRef = 2E10CA830FBD09DA0059A159 /* outRange.png */; };
 		2EA9F55B0FC02F68007354EF /* AppIcon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 2EA9F55A0FC02F68007354EF /* AppIcon.icns */; };
 		8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
 		8D11072D0486CEB800E47090 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
@@ -47,8 +45,6 @@
 		29B97325FDCFA39411CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
 		2E10CA170FBD00900059A159 /* ProximityAppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProximityAppController.h; sourceTree = "<group>"; };
 		2E10CA180FBD00900059A159 /* ProximityAppController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProximityAppController.m; sourceTree = "<group>"; };
-		2E10CA810FBD09DA0059A159 /* inRange.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = inRange.png; sourceTree = "<group>"; };
-		2E10CA830FBD09DA0059A159 /* outRange.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = outRange.png; sourceTree = "<group>"; };
 		2E67EBFA0FC03A780025D101 /* IOBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOBluetooth.framework; path = /System/Library/Frameworks/IOBluetooth.framework; sourceTree = "<absolute>"; };
 		2E67EC000FC03A8F0025D101 /* IOBluetoothUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOBluetoothUI.framework; path = /System/Library/Frameworks/IOBluetoothUI.framework; sourceTree = "<absolute>"; };
 		2EA9F55A0FC02F68007354EF /* AppIcon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = AppIcon.icns; sourceTree = "<group>"; };
@@ -153,8 +149,6 @@
 			children = (
 				B4B8CA9B15C28C7A0068A39C /* Proximity.entitlements */,
 				2EA9F55A0FC02F68007354EF /* AppIcon.icns */,
-				2E10CA810FBD09DA0059A159 /* inRange.png */,
-				2E10CA830FBD09DA0059A159 /* outRange.png */,
 				8D1107310486CEB800E47090 /* Info.plist */,
 				089C165CFE840E0CC02AAC07 /* InfoPlist.strings */,
 				1DDD58140DA1D0A300B32029 /* MainMenu.xib */,
@@ -252,8 +246,6 @@
 			files = (
 				8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */,
 				1DDD58160DA1D0A300B32029 /* MainMenu.xib in Resources */,
-				2E10CA850FBD09DA0059A159 /* inRange.png in Resources */,
-				2E10CA870FBD09DA0059A159 /* outRange.png in Resources */,
 				2EA9F55B0FC02F68007354EF /* AppIcon.icns in Resources */,
 				B4B8CA9D15C2A1F40068A39C /* ud.plist in Resources */,
 			);

@@ -12,58 +12,35 @@
 #pragma mark -
 #pragma mark Delegate Methods
 
-//http://www.danandcheryl.com/2010/06/how-to-check-the-system-idle-time-using-cocoa
-int64_t SystemIdleTime(void) {
-    int64_t idlesecs = -1;
-    io_iterator_t iter = 0;
-    if (IOServiceGetMatchingServices(kIOMasterPortDefault, IOServiceMatching("IOHIDSystem"), &iter) == KERN_SUCCESS) {
-        io_registry_entry_t entry = IOIteratorNext(iter);
-        if (entry) {
-            CFMutableDictionaryRef dict = NULL;
-            if (IORegistryEntryCreateCFProperties(entry, &dict, kCFAllocatorDefault, 0) == KERN_SUCCESS) {
-                CFNumberRef obj = CFDictionaryGetValue(dict, CFSTR("HIDIdleTime"));
-                if (obj) {
-                    int64_t nanoseconds = 0;
-                    if (CFNumberGetValue(obj, kCFNumberSInt64Type, &nanoseconds)) {
-                        idlesecs = (nanoseconds >> 30); // Divide by 10^9 to convert from nanoseconds to seconds.
-                    }
-                }
-                CFRelease(dict);
-            }
-            IOObjectRelease(entry);
-        }
-        IOObjectRelease(iter);
-    }
+- (void)awakeFromNib {
+    [[NSUserDefaults standardUserDefaults] registerDefaults:[NSDictionary dictionaryWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"ud" ofType:@"plist"]]];
     
-    return idlesecs;
+    monitor = [[ProximityBluetoothMonitor alloc] init];
+    monitor.delegate = self;
+    
+    [self userDefaultsLoad];
+
+	[self createMenuBar];
 }
 
 - (void)applicationWillTerminate:(NSNotification *)aNotification {
 	[monitor stop];
 }
 
-- (void)awakeFromNib {
-    inRangeImage = [NSImage imageNamed:@"inRange"];
-    outOfRangeImage = [NSImage imageNamed:@"outRange"];
-
-    monitor = [[ProximityBluetoothMonitor alloc] init];
-    monitor.delegate = self;
-
-	[self createMenuBar];
-    [[NSUserDefaults standardUserDefaults] registerDefaults:[NSDictionary dictionaryWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"ud" ofType:@"plist"]]];
-	[self userDefaultsLoad];
-}
-
 - (void)windowWillClose:(NSNotification *)aNotification {
 	[self userDefaultsSave];
 
     if ([UD boolForKey:UDMonitoringEnabledKey] && monitor.device) {
-        monitor.requiredSignalStrength = ((NSNumber*)[UD objectForKey:UDRequiredSignalKey]).integerValue;
+        monitor.requiredSignalStrength = [[UD objectForKey:UDRequiredSignalKey] integerValue];
         monitor.timeInterval = [UD stringForKey:UDCheckIntervalKey].doubleValue;
         [monitor refresh];
         [monitor start];
+        
+        statusItem.paused = NO;
     } else {
         [monitor stop];
+        
+        statusItem.paused = YES;
     }
 }
 
@@ -90,16 +67,46 @@ int64_t SystemIdleTime(void) {
 
 - (void)inRange {
     statusItem.inRange = YES;
-    statusItem.needsDisplay = YES;
     
     [self runInRangeScript:YES];
 }
 
+//http://www.danandcheryl.com/2010/06/how-to-check-the-system-idle-time-using-cocoa
+int64_t SystemIdleTime(void) {
+    int64_t idlesecs = -1;
+    io_iterator_t iter = 0;
+    if (IOServiceGetMatchingServices(kIOMasterPortDefault, IOServiceMatching("IOHIDSystem"), &iter) == KERN_SUCCESS) {
+        io_registry_entry_t entry = IOIteratorNext(iter);
+        if (entry) {
+            CFMutableDictionaryRef dict = NULL;
+            if (IORegistryEntryCreateCFProperties(entry, &dict, kCFAllocatorDefault, 0) == KERN_SUCCESS) {
+                CFNumberRef obj = CFDictionaryGetValue(dict, CFSTR("HIDIdleTime"));
+                if (obj) {
+                    int64_t nanoseconds = 0;
+                    if (CFNumberGetValue(obj, kCFNumberSInt64Type, &nanoseconds)) {
+                        idlesecs = (nanoseconds >> 30); // Divide by 10^9 to convert from nanoseconds to seconds.
+                    }
+                }
+                CFRelease(dict);
+            }
+            IOObjectRelease(entry);
+        }
+        IOObjectRelease(iter);
+    }
+    
+    return idlesecs;
+}
+
 - (void)outOfRange {
     statusItem.inRange = NO;
-    statusItem.needsDisplay = YES;
     
-    [self runOutOfRangeScript:YES];
+    if ([UD boolForKey:UDIdleCheckEnabledkey]) {
+        NSLog(@"Idle time: %lli",SystemIdleTime());
+        
+        if (SystemIdleTime() >= [[UD objectForKey:UDIdleMinTimeKey] integerValue]) {
+            [self runOutOfRangeScript:YES];
+        }
+    }
 }
 
 - (void)runScript:(NSURL*)pathUrl arguments:(NSArray*)args silent:(BOOL)silent {
@@ -110,18 +117,24 @@ int64_t SystemIdleTime(void) {
     BOOL b = [[NSWorkspace sharedWorkspace] runFileAtPath:pathUrl.path arguments:args error:&error];
     if (!silent && !b) {
         if (!error)
-            error = [NSError errorWithDomain:@"NSWorkspace" code:0 userInfo:@{ NSLocalizedDescriptionKey : @"unknown error" }];
+            error = [NSError errorWithDomain:@"NSWorkspace" code:0 userInfo:@{NSLocalizedDescriptionKey : @"unknown error"}];
         [NSApp presentError:error];
     }
 }
 
 - (void)runInRangeScript:(BOOL)silent {
-    [self runScript:inRangeScriptURL arguments:@[@"in"] silent:silent];
+    if (inRangeScriptURL) {
+        [self runScript:inRangeScriptURL arguments:@[@"in"] silent:silent];
+    }
 }
 
 - (void)runOutOfRangeScript:(BOOL)silent {
-    [self runScript:outOfRangeScriptURL arguments:@[@"out"] silent:silent];
+    if (outOfRangeScriptURL) {
+        [self runScript:outOfRangeScriptURL arguments:@[@"out"] silent:silent];
+    }
 }
+
+#pragma mark -
 
 - (void)userDefaultsLoad {
 	//Timer interval
@@ -173,9 +186,8 @@ int64_t SystemIdleTime(void) {
     [_progressIndicator startAnimation:nil];
     
     // Refresh status
-    ProximityBluetoothMonitor *testMon = [[ProximityBluetoothMonitor alloc] init];
-    testMon.device = monitor.device;
-    testMon.requiredSignalStrength = monitor.requiredSignalStrength = ((NSNumber*)[UD objectForKey:UDRequiredSignalKey]).integerValue;
+    ProximityBluetoothMonitor *testMon = [[ProximityBluetoothMonitor alloc] initWithDevice:monitor.device];
+    testMon.requiredSignalStrength = monitor.requiredSignalStrength = [[UD objectForKey:UDRequiredSignalKey] integerValue];
     [testMon refresh];
     
     // Update signal bar
@@ -201,30 +213,30 @@ int64_t SystemIdleTime(void) {
 #pragma mark Interface Methods
 
 - (IBAction)changeDevice:(id)sender {
-	IOBluetoothDeviceSelectorController *deviceSelector;
-	deviceSelector = [IOBluetoothDeviceSelectorController deviceSelector];
-	[deviceSelector runModal];
-	
-	NSArray *results;
-	results = deviceSelector.getResults;
-	
-	if (!results)
-		return;
-	
-	id device = results[0];
-	
-	[_deviceName setStringValue:[NSString stringWithFormat:@"%@ (%@)", [device name], [device addressString]]];
+	IOBluetoothDeviceSelectorController *deviceSelector = [IOBluetoothDeviceSelectorController deviceSelector];
     
-    monitor.device = device;
-    
-    [self updateDeviceStatus:nil];
-    
-    // Device
-	if (monitor.device) {
-		NSData *deviceAsData = [NSKeyedArchiver archivedDataWithRootObject:monitor.device];
-		[[NSUserDefaults standardUserDefaults] setObject:deviceAsData forKey:UDDeviceKey];
-	}
+	[deviceSelector beginSheetModalForWindow:_prefsWindow modalDelegate:self didEndSelector:@selector(sheetDidEnd:returnCode:contextInfo:) contextInfo:NULL];
 }
+
+- (void)sheetDidEnd:(IOBluetoothDeviceSelectorController *)controller returnCode:(int)returnCode contextInfo:(void *)contextInfo {
+    if (returnCode == kIOBluetoothUISuccess) {
+        id device = controller.getResults[0];
+        
+        [_deviceName setStringValue:[NSString stringWithFormat:@"%@ (%@)", [device name], [device addressString]]];
+        
+        monitor.device = device;
+        
+        [self updateDeviceStatus:nil];
+        
+        // Device
+        if (monitor.device) {
+            NSData *deviceAsData = [NSKeyedArchiver archivedDataWithRootObject:monitor.device];
+            [[NSUserDefaults standardUserDefaults] setObject:deviceAsData forKey:UDDeviceKey];
+        }
+    }
+}
+
+#pragma mark -
 
 - (NSURL*)chooseScript {
     NSOpenPanel *op = [NSOpenPanel openPanel];
@@ -241,6 +253,7 @@ int64_t SystemIdleTime(void) {
 
 - (IBAction)inRangeScriptChange:(id)sender {
     NSURL *file = [self chooseScript];
+    
     if (file) {
         inRangeScriptURL = file;
         [_inRangeScriptPath setStringValue:file.path];
@@ -253,6 +266,7 @@ int64_t SystemIdleTime(void) {
 
 - (IBAction)outOfRangeScriptChange:(id)sender {
     NSURL *file = [self chooseScript];
+    
     if (file) {
         outOfRangeScriptURL = file;
         [_outOfRangeScriptPath setStringValue:file.path];
@@ -263,6 +277,8 @@ int64_t SystemIdleTime(void) {
     [self runOutOfRangeScript:NO];
 }
 
+#pragma mark -
+
 - (void)showWindow:(id)sender {
     [NSApp activateIgnoringOtherApps:YES];
     
@@ -272,6 +288,8 @@ int64_t SystemIdleTime(void) {
     [_deviceStatus setStringValue:@""];
 	
 	[monitor stop];
+    
+    statusItem.paused = YES;
 }
 
 
