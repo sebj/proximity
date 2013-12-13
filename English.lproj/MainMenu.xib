@@ -14,12 +14,9 @@
                 <outlet property="deviceName" destination="536" id="578"/>
                 <outlet property="deviceStatus" destination="671" id="674"/>
                 <outlet property="inRangeScriptPath" destination="563" id="579"/>
-                <outlet property="monitoringEnabled" destination="524" id="580"/>
                 <outlet property="outOfRangeScriptPath" destination="94j-f9-q1X" id="9Gv-7Q-Xqz"/>
                 <outlet property="prefsWindow" destination="371" id="585"/>
                 <outlet property="progressIndicator" destination="533" id="582"/>
-                <outlet property="requiredSignalStrength" destination="638" id="642"/>
-                <outlet property="runScriptsOnStartup" destination="549" id="583"/>
                 <outlet property="timerInterval" destination="523" id="584"/>
             </connections>
         </customObject>
@@ -82,17 +79,17 @@
         </menu>
         <window title="Proximity Preferences" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" restorable="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" animationBehavior="default" id="371">
             <windowStyleMask key="styleMask" titled="YES" closable="YES"/>
-            <rect key="contentRect" x="335" y="320" width="517" height="380"/>
+            <rect key="contentRect" x="335" y="320" width="523" height="452"/>
             <rect key="screenRect" x="0.0" y="0.0" width="1680" height="1028"/>
             <view key="contentView" id="372">
-                <rect key="frame" x="0.0" y="0.0" width="517" height="380"/>
+                <rect key="frame" x="0.0" y="0.0" width="523" height="452"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <box autoresizesSubviews="NO" title="Bluetooth Device" borderType="line" id="518">
-                        <rect key="frame" x="17" y="125" width="483" height="149"/>
+                        <rect key="frame" x="17" y="152" width="489" height="149"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <view key="contentView">
-                            <rect key="frame" x="1" y="1" width="481" height="130"/>
+                            <rect key="frame" x="1" y="1" width="487" height="130"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
                                 <button verticalHuggingPriority="750" id="532">
@@ -116,6 +113,7 @@
                                                 <string key="NSValueTransformerName">NSIsNotNil</string>
                                             </dictionary>
                                         </binding>
+                                        <binding destination="QlU-qC-Q8O" name="value" keyPath="values._requiredSignalStrength" id="wXt-VZ-iQD"/>
                                     </connections>
                                 </slider>
                                 <textField verticalHuggingPriority="750" id="640">
@@ -193,22 +191,25 @@
                         <font key="titleFont" metaFont="system"/>
                     </box>
                     <box autoresizesSubviews="NO" title="General" borderType="line" id="519">
-                        <rect key="frame" x="17" y="288" width="483" height="82"/>
+                        <rect key="frame" x="17" y="333" width="489" height="109"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <view key="contentView">
-                            <rect key="frame" x="1" y="1" width="481" height="63"/>
+                            <rect key="frame" x="1" y="1" width="487" height="90"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
                                 <button id="524">
-                                    <rect key="frame" x="16" y="37" width="284" height="18"/>
+                                    <rect key="frame" x="16" y="64" width="284" height="18"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                     <buttonCell key="cell" type="check" title="Enable device monitoring, checking every" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="525">
                                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                         <font key="font" metaFont="system"/>
+                                        <connections>
+                                            <binding destination="QlU-qC-Q8O" name="value" keyPath="values.enabled" id="koE-jG-0mK"/>
+                                        </connections>
                                     </buttonCell>
                                 </button>
                                 <textField verticalHuggingPriority="750" id="523">
-                                    <rect key="frame" x="306" y="36" width="50" height="22"/>
+                                    <rect key="frame" x="306" y="63" width="50" height="22"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" title="60" drawsBackground="YES" id="526">
                                         <numberFormatter key="formatter" formatterBehavior="custom10_4" positiveFormat="#0" negativeFormat="#0" numberStyle="decimal" allowsFloats="NO" usesGroupingSeparator="NO" minimumIntegerDigits="1" maximumIntegerDigits="309" minimumFractionDigits="0" maximumFractionDigits="0" id="676">
@@ -225,10 +226,11 @@
                                     </textFieldCell>
                                     <connections>
                                         <action selector="takeIntegerValueFrom:" target="665" id="678"/>
+                                        <binding destination="QlU-qC-Q8O" name="value" keyPath="values._timerInterval" id="wCF-fe-f9L"/>
                                     </connections>
                                 </textField>
                                 <textField verticalHuggingPriority="750" id="522">
-                                    <rect key="frame" x="378" y="38" width="56" height="17"/>
+                                    <rect key="frame" x="378" y="66" width="56" height="17"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="seconds" id="527">
                                         <font key="font" metaFont="system"/>
@@ -242,14 +244,65 @@
                                     <buttonCell key="cell" type="check" title="Immediately run scripts on startup (if enabled and in-range)" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="550">
                                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                         <font key="font" metaFont="system"/>
+                                        <connections>
+                                            <binding destination="QlU-qC-Q8O" name="value" keyPath="values.executeOnStartup" id="In6-g3-gcI"/>
+                                        </connections>
                                     </buttonCell>
                                 </button>
                                 <stepper horizontalHuggingPriority="750" verticalHuggingPriority="750" id="665">
-                                    <rect key="frame" x="356" y="33" width="19" height="27"/>
+                                    <rect key="frame" x="356" y="60" width="19" height="27"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                     <stepperCell key="cell" continuous="YES" alignment="left" minValue="2" maxValue="99999" doubleValue="60" id="666"/>
                                     <connections>
                                         <action selector="takeIntegerValueFrom:" target="523" id="675"/>
+                                    </connections>
+                                </stepper>
+                                <button id="NmH-7a-yoS">
+                                    <rect key="frame" x="16" y="37" width="324" height="18"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                    <buttonCell key="cell" type="check" title="Only run out of range action if also idle for min." bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="HaZ-3n-SsF">
+                                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                        <font key="font" metaFont="system"/>
+                                        <connections>
+                                            <binding destination="QlU-qC-Q8O" name="value" keyPath="values.idleCheckEnabled" id="1SN-gY-oQV"/>
+                                        </connections>
+                                    </buttonCell>
+                                </button>
+                                <textField verticalHuggingPriority="750" id="nxs-Hy-72f">
+                                    <rect key="frame" x="346" y="36" width="50" height="22"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" title="30" drawsBackground="YES" id="6Te-4Y-Yvn">
+                                        <numberFormatter key="formatter" formatterBehavior="custom10_4" positiveFormat="#0" negativeFormat="#0" numberStyle="decimal" allowsFloats="NO" usesGroupingSeparator="NO" minimumIntegerDigits="1" maximumIntegerDigits="309" minimumFractionDigits="0" maximumFractionDigits="0" id="yK1-jK-SxG">
+                                            <real key="roundingIncrement" value="0.0"/>
+                                            <real key="minimum" value="2"/>
+                                            <metadata>
+                                                <bool key="localizesFormat" value="YES"/>
+                                                <real key="inspectorSampleValue" value="1234.4559999999999"/>
+                                            </metadata>
+                                        </numberFormatter>
+                                        <font key="font" metaFont="system"/>
+                                        <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                    </textFieldCell>
+                                    <connections>
+                                        <action selector="takeIntegerValueFrom:" target="rSh-IH-W54" id="H9q-dP-11O"/>
+                                    </connections>
+                                </textField>
+                                <textField verticalHuggingPriority="750" id="RM7-Fu-1Vd">
+                                    <rect key="frame" x="418" y="39" width="56" height="17"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="seconds" id="3pw-Nl-bMO">
+                                        <font key="font" metaFont="system"/>
+                                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                    </textFieldCell>
+                                </textField>
+                                <stepper horizontalHuggingPriority="750" verticalHuggingPriority="750" id="rSh-IH-W54">
+                                    <rect key="frame" x="396" y="33" width="19" height="27"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                    <stepperCell key="cell" continuous="YES" alignment="left" minValue="2" maxValue="99999" doubleValue="60" id="Cp4-3K-l8B"/>
+                                    <connections>
+                                        <action selector="takeIntegerValueFrom:" target="nxs-Hy-72f" id="pWZ-65-Ey5"/>
                                     </connections>
                                 </stepper>
                             </subviews>
@@ -259,10 +312,10 @@
                         <font key="titleFont" metaFont="system"/>
                     </box>
                     <box autoresizesSubviews="NO" title="Actions" borderType="line" id="551">
-                        <rect key="frame" x="17" y="16" width="483" height="95"/>
+                        <rect key="frame" x="17" y="43" width="489" height="95"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <view key="contentView">
-                            <rect key="frame" x="1" y="1" width="481" height="76"/>
+                            <rect key="frame" x="1" y="1" width="487" height="76"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
                                 <textField verticalHuggingPriority="750" id="562">
@@ -362,7 +415,7 @@
                         <font key="titleFont" metaFont="system"/>
                     </box>
                     <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" id="605">
-                        <rect key="frame" x="91.999999325565284" y="94" width="407" height="13"/>
+                        <rect key="frame" x="97.999999429096988" y="121" width="407" height="13"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" allowsUndo="NO" sendsActionOnEndEditing="YES" alignment="right" title="Applescripts, shell scripts, executables, app bundles. Argument passed:  'in' or 'out'" id="606">
                             <font key="font" metaFont="system" size="10"/>

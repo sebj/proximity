@@ -15,6 +15,9 @@
 		8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
 		8D11072D0486CEB800E47090 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
+		966EA5ED185B8CA0003C39B7 /* StatusItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 966EA5EC185B8CA0003C39B7 /* StatusItem.m */; };
+		966EA5F0185B8D94003C39B7 /* ProximityStatusItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 966EA5EF185B8D94003C39B7 /* ProximityStatusItem.m */; };
+		966EA5F2185BA319003C39B7 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 966EA5F1185BA319003C39B7 /* IOKit.framework */; };
 		B427AFE715C2825A00CF0229 /* IOBluetoothUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E67EC000FC03A8F0025D101 /* IOBluetoothUI.framework */; };
 		B427AFEA15C2876300CF0229 /* ServiceManagement.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B427AFE915C2876300CF0229 /* ServiceManagement.framework */; };
 		B495BE7715C04C0000236FC4 /* NSWorkspace+runFileAtPath.m in Sources */ = {isa = PBXBuildFile; fileRef = B495BE7615C04C0000236FC4 /* NSWorkspace+runFileAtPath.m */; };
@@ -52,6 +55,12 @@
 		32CA4F630368D1EE00C91783 /* Proximity_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Proximity_Prefix.pch; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8D1107320486CEB800E47090 /* Proximity.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Proximity.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		966EA5EB185B8CA0003C39B7 /* StatusItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StatusItem.h; sourceTree = "<group>"; };
+		966EA5EC185B8CA0003C39B7 /* StatusItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StatusItem.m; sourceTree = "<group>"; };
+		966EA5EE185B8D94003C39B7 /* ProximityStatusItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProximityStatusItem.h; sourceTree = "<group>"; };
+		966EA5EF185B8D94003C39B7 /* ProximityStatusItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProximityStatusItem.m; sourceTree = "<group>"; };
+		966EA5F1185BA319003C39B7 /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
+		966EA5F4185BAB43003C39B7 /* UDKeys.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UDKeys.h; sourceTree = "<group>"; };
 		B427AFE915C2876300CF0229 /* ServiceManagement.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ServiceManagement.framework; path = System/Library/Frameworks/ServiceManagement.framework; sourceTree = SDKROOT; };
 		B495BE7515C04C0000236FC4 /* NSWorkspace+runFileAtPath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSWorkspace+runFileAtPath.h"; sourceTree = "<group>"; };
 		B495BE7615C04C0000236FC4 /* NSWorkspace+runFileAtPath.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSWorkspace+runFileAtPath.m"; sourceTree = "<group>"; };
@@ -66,6 +75,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				966EA5F2185BA319003C39B7 /* IOKit.framework in Frameworks */,
 				8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */,
 				B427AFEA15C2876300CF0229 /* ServiceManagement.framework in Frameworks */,
 				B427AFE715C2825A00CF0229 /* IOBluetoothUI.framework in Frameworks */,
@@ -84,6 +94,8 @@
 				B4FF6C2815C98AC400BD0910 /* ProximityBluetoothMonitor.m */,
 				B495BE7515C04C0000236FC4 /* NSWorkspace+runFileAtPath.h */,
 				B495BE7615C04C0000236FC4 /* NSWorkspace+runFileAtPath.m */,
+				966EA5EE185B8D94003C39B7 /* ProximityStatusItem.h */,
+				966EA5EF185B8D94003C39B7 /* ProximityStatusItem.m */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -91,6 +103,7 @@
 		1058C7A0FEA54F0111CA2CBB /* Linked Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				966EA5F1185BA319003C39B7 /* IOKit.framework */,
 				B427AFE915C2876300CF0229 /* ServiceManagement.framework */,
 				2E67EC000FC03A8F0025D101 /* IOBluetoothUI.framework */,
 				1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */,
@@ -146,6 +159,7 @@
 				089C165CFE840E0CC02AAC07 /* InfoPlist.strings */,
 				1DDD58140DA1D0A300B32029 /* MainMenu.xib */,
 				B4B8CA9C15C2A1F40068A39C /* ud.plist */,
+				966EA5F4185BAB43003C39B7 /* UDKeys.h */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -159,9 +173,19 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		966EA5EA185B8CA0003C39B7 /* StatusItem */ = {
+			isa = PBXGroup;
+			children = (
+				966EA5EB185B8CA0003C39B7 /* StatusItem.h */,
+				966EA5EC185B8CA0003C39B7 /* StatusItem.m */,
+			);
+			path = StatusItem;
+			sourceTree = "<group>";
+		};
 		B427AFE815C2830400CF0229 /* Proximity */ = {
 			isa = PBXGroup;
 			children = (
+				966EA5EA185B8CA0003C39B7 /* StatusItem */,
 				080E96DDFE201D6D7F000001 /* Classes */,
 				29B97315FDCFA39411CA2CEA /* Other Sources */,
 				29B97317FDCFA39411CA2CEA /* Resources */,
@@ -242,8 +266,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				966EA5F0185B8D94003C39B7 /* ProximityStatusItem.m in Sources */,
 				8D11072D0486CEB800E47090 /* main.m in Sources */,
 				2E10CA190FBD00900059A159 /* ProximityAppController.m in Sources */,
+				966EA5ED185B8CA0003C39B7 /* StatusItem.m in Sources */,
 				B495BE7715C04C0000236FC4 /* NSWorkspace+runFileAtPath.m in Sources */,
 				B4FF6C2915C98AC400BD0910 /* ProximityBluetoothMonitor.m in Sources */,
 			);

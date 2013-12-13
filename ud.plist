@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>timerInterval</key>
-	<string>40</string>
+	<string>60</string>
 	<key>enabled</key>
 	<true/>
 	<key>executeOnStartup</key>

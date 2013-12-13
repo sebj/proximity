@@ -1,5 +1,9 @@
+#import <IOKit/IOKitLib.h>
+
 #import "ProximityAppController.h"
 #import "NSWorkspace+runFileAtPath.h"
+#import "StatusItem.h"
+#import "UDKeys.h"
 
 #define UD [NSUserDefaults standardUserDefaults]
 
@@ -7,6 +11,32 @@
 
 #pragma mark -
 #pragma mark Delegate Methods
+
+//http://www.danandcheryl.com/2010/06/how-to-check-the-system-idle-time-using-cocoa
+int64_t SystemIdleTime(void) {
+    int64_t idlesecs = -1;
+    io_iterator_t iter = 0;
+    if (IOServiceGetMatchingServices(kIOMasterPortDefault, IOServiceMatching("IOHIDSystem"), &iter) == KERN_SUCCESS) {
+        io_registry_entry_t entry = IOIteratorNext(iter);
+        if (entry) {
+            CFMutableDictionaryRef dict = NULL;
+            if (IORegistryEntryCreateCFProperties(entry, &dict, kCFAllocatorDefault, 0) == KERN_SUCCESS) {
+                CFNumberRef obj = CFDictionaryGetValue(dict, CFSTR("HIDIdleTime"));
+                if (obj) {
+                    int64_t nanoseconds = 0;
+                    if (CFNumberGetValue(obj, kCFNumberSInt64Type, &nanoseconds)) {
+                        idlesecs = (nanoseconds >> 30); // Divide by 10^9 to convert from nanoseconds to seconds.
+                    }
+                }
+                CFRelease(dict);
+            }
+            IOObjectRelease(entry);
+        }
+        IOObjectRelease(iter);
+    }
+    
+    return idlesecs;
+}
 
 - (void)applicationWillTerminate:(NSNotification *)aNotification {
 	[monitor stop];
@@ -27,9 +57,9 @@
 - (void)windowWillClose:(NSNotification *)aNotification {
 	[self userDefaultsSave];
 
-    if (_monitoringEnabled.state == NSOnState && monitor.device) {
-        monitor.requiredSignalStrength = _requiredSignalStrength.integerValue;
-        monitor.timeInterval = _timerInterval.doubleValue;
+    if ([UD boolForKey:UDMonitoringEnabledKey] && monitor.device) {
+        monitor.requiredSignalStrength = ((NSNumber*)[UD objectForKey:UDRequiredSignalKey]).integerValue;
+        monitor.timeInterval = [UD stringForKey:UDCheckIntervalKey].doubleValue;
         [monitor refresh];
         [monitor start];
     } else {
@@ -51,23 +81,23 @@
 	[menu addItemWithTitle:@"Quit" action:@selector(terminate:) keyEquivalent:@""];
 	
 	// Space on status bar
-	statusItem = [[NSStatusBar systemStatusBar] statusItemWithLength:NSVariableStatusItemLength];
-	
-	// Attributes of space on status bar
-	[statusItem setHighlightMode:YES];
-	[statusItem setMenu:menu];
+    statusItem = [[ProximityStatusItem alloc] initWithStandardThickness];
+    statusItem.showMenuOnLeftMouseDown = YES;
+    statusItem.menu = menu;
 
 	[self outOfRange];
 }
 
 - (void)inRange {
-	[statusItem setImage:inRangeImage];
+    statusItem.inRange = YES;
+    statusItem.needsDisplay = YES;
     
     [self runInRangeScript:YES];
 }
 
 - (void)outOfRange {
-	[statusItem setImage:outOfRangeImage];
+    statusItem.inRange = NO;
+    statusItem.needsDisplay = YES;
     
     [self runOutOfRangeScript:YES];
 }
@@ -95,17 +125,12 @@
 
 - (void)userDefaultsLoad {
 	//Timer interval
-	if ([UD stringForKey:@"_timerInterval"].length > 0 ) {
-		[_timerInterval setStringValue:[UD stringForKey:@"_timerInterval"]];
-        monitor.timeInterval = _timerInterval.doubleValue;
+	if ([UD stringForKey:UDCheckIntervalKey].length > 0 ) {
+        monitor.timeInterval = [UD stringForKey:UDCheckIntervalKey].doubleValue;
     }
-    
-	//require StrongSignal
-	[_requiredSignalStrength setIntegerValue:[UD integerForKey:@"_requiredSignalStrength"]];
-    monitor.requiredSignalStrength = _requiredSignalStrength.integerValue;
 
     // Device
-	NSData *deviceAsData = [UD objectForKey:@"device"];
+	NSData *deviceAsData = [UD objectForKey:UDDeviceKey];
 	if (deviceAsData.length > 0) {
 		id device = [NSKeyedUnarchiver unarchiveObjectWithData:deviceAsData];
 		[_deviceName setStringValue:[NSString stringWithFormat:@"%@ (%@)", [device name], [device addressString]]];
@@ -114,52 +139,34 @@
         //update icon
         [monitor refresh];
 	}
-
-	// Out of range script path
-	if ([UD URLForKey:@"outOfRangeScriptURL"]) {
-        outOfRangeScriptURL = [UD URLForKey:@"outOfRangeScriptURL"];
-		[_outOfRangeScriptPath setStringValue:outOfRangeScriptURL.path];
-    }
-	
-	// In range script path
-	if ([UD URLForKey:@"inRangeScriptURL"]) {
-        inRangeScriptURL = [UD URLForKey:@"inRangeScriptURL"];
+    
+    // In range script path
+	if ([UD URLForKey:UDInRangeActionKey]) {
+        inRangeScriptURL = [UD URLForKey:UDInRangeActionKey];
 		[_inRangeScriptPath setStringValue:inRangeScriptURL.path];
     }
-	
-	// Monitoring enabled
-	BOOL monitoring = [UD boolForKey:@"enabled"];
-    [_monitoringEnabled setState:monitoring ? NSOnState : NSOffState];
-	
-    if (monitoring && monitor.device) {
-		[monitor start];
-	}
+
+	// Out of range script path
+	if ([UD URLForKey:UDOutOfRangeActionKey]) {
+        outOfRangeScriptURL = [UD URLForKey:UDOutOfRangeActionKey];
+		[_outOfRangeScriptPath setStringValue:outOfRangeScriptURL.path];
+    }
 }
 
 - (void)userDefaultsSave {
-	// Monitoring enabled
-	BOOL monitoring = (_monitoringEnabled.state == NSOnState ? TRUE : FALSE);
-	[UD setBool:monitoring forKey:@"enabled"];
-	
-	// Execute scripts on startup
-	BOOL startup = (_runScriptsOnStartup.state == NSOnState ? TRUE : FALSE );
-	[UD setBool:startup forKey:@"executeOnStartup"];
-	
-	// Timer interval
-	[UD setObject:_timerInterval.stringValue forKey:@"_timerInterval"];
-
 	// In range script
-	[UD setURL:inRangeScriptURL forKey:@"inRangeScriptURL"];
+	[UD setURL:inRangeScriptURL forKey:UDInRangeActionKey];
 
 	// Out of range script
-	[UD setURL:outOfRangeScriptURL forKey:@"outOfRangeScriptURL"];
+	[UD setURL:outOfRangeScriptURL forKey:UDOutOfRangeActionKey];
     
-    [UD setInteger:_requiredSignalStrength.integerValue forKey:@"_requiredSignalStrength"];
+    [UD synchronize];
 }
 
 - (IBAction)updateDeviceStatus:(id)sender {
     if (!monitor.device) {
         [_deviceStatus setStringValue:@"Please select a device"];
+        
         return;
     }
     
@@ -168,7 +175,7 @@
     // Refresh status
     ProximityBluetoothMonitor *testMon = [[ProximityBluetoothMonitor alloc] init];
     testMon.device = monitor.device;
-    testMon.requiredSignalStrength = monitor.requiredSignalStrength = _requiredSignalStrength.integerValue;
+    testMon.requiredSignalStrength = monitor.requiredSignalStrength = ((NSNumber*)[UD objectForKey:UDRequiredSignalKey]).integerValue;
     [testMon refresh];
     
     // Update signal bar
@@ -215,7 +222,7 @@
     // Device
 	if (monitor.device) {
 		NSData *deviceAsData = [NSKeyedArchiver archivedDataWithRootObject:monitor.device];
-		[[NSUserDefaults standardUserDefaults] setObject:deviceAsData forKey:@"device"];
+		[[NSUserDefaults standardUserDefaults] setObject:deviceAsData forKey:UDDeviceKey];
 	}
 }
 
@@ -263,9 +270,9 @@
     
     // Clear out status
     [_deviceStatus setStringValue:@""];
-    [_currentSignalStrength setIntegerValue:0];
 	
-	[monitor stop];}
+	[monitor stop];
+}
 
 
 @end

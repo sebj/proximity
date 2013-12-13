@@ -3,10 +3,11 @@
 //#import <IOBluetoothUI/IOBluetoothUI.h>
 #import <IOBluetoothUI/objc/IOBluetoothDeviceSelectorController.h>
 #import "ProximityBluetoothMonitor.h"
+#import "ProximityStatusItem.h"
 
 @interface ProximityAppController : NSObject <NSApplicationDelegate, NSWindowDelegate, ProximityBluetoothMonitorDelegate> {
     ProximityBluetoothMonitor *monitor;
-	NSStatusItem *statusItem;
+	ProximityStatusItem *statusItem;
 
     NSURL *inRangeScriptURL;
     NSURL *outOfRangeScriptURL;
@@ -17,13 +18,9 @@
 
 @property (strong) IBOutlet NSTextField *deviceName;
 @property (strong) IBOutlet NSTextField *inRangeScriptPath;
-@property (strong) IBOutlet NSButton *monitoringEnabled;
 @property (strong) IBOutlet NSTextField *outOfRangeScriptPath;
 @property (strong) IBOutlet NSWindow *prefsWindow;
 @property (strong) IBOutlet NSProgressIndicator *progressIndicator;
-@property (strong) IBOutlet NSButton *runScriptsOnStartup;
-@property (strong) IBOutlet NSTextField *timerInterval;
-@property (strong) IBOutlet NSSlider *requiredSignalStrength;
 @property (strong) IBOutlet NSLevelIndicator *currentSignalStrength;
 @property (strong) IBOutlet NSTextField *deviceStatus;
 

@@ -95,7 +95,7 @@
                     [_delegate proximityBluetoothMonitor:self foundDevice:_device];
                 }
 #ifdef DEBUG
-                NSLog(@"-- found");
+                NSLog(@"Found");
 #endif
             }
 		} else {
@@ -113,7 +113,7 @@
                     [_delegate proximityBluetoothMonitor:self lostDevice:_device];
                 }
 #ifdef DEBUG
-                NSLog(@"-- lost");
+                NSLog(@"Lost");
 #endif
             }
 		} else {
