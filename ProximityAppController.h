@@ -2,16 +2,9 @@
 //#import <IOBluetooth/IOBluetooth.h>
 //#import <IOBluetoothUI/IOBluetoothUI.h>
 #import <IOBluetoothUI/objc/IOBluetoothDeviceSelectorController.h>
-#import <ServiceManagement/ServiceManagement.h>
 #import "ProximityBluetoothMonitor.h"
 
-typedef enum _BPStatus {
-	InRange,
-	OutOfRange
-} BPStatus;
-
-@interface ProximityAppController : NSObject<NSApplicationDelegate, NSWindowDelegate, ProximityBluetoothMonitorDelegate>
-{
+@interface ProximityAppController : NSObject <NSApplicationDelegate, NSWindowDelegate, ProximityBluetoothMonitorDelegate> {
     ProximityBluetoothMonitor *monitor;
 	NSStatusItem *statusItem;
 
@@ -19,38 +12,27 @@ typedef enum _BPStatus {
     NSURL *outOfRangeScriptURL;
 	
 	NSImage *outOfRangeImage;
-	NSImage *outOfRangeAltImage;
 	NSImage *inRangeImage;
-	NSImage *inRangeAltImage;
-	
-    IBOutlet NSButton *checkUpdatesOnStartup;
-    IBOutlet NSButton *startOnSystemStartup;
-    IBOutlet NSTextField *deviceName;
-    IBOutlet NSTextField *inRangeScriptPath;
-    IBOutlet NSButton *monitoringEnabled;
-    IBOutlet NSTextField *outOfRangeScriptPath;
-    IBOutlet NSWindow *prefsWindow;
-    IBOutlet NSProgressIndicator *progressIndicator;
-    IBOutlet NSButton *runScriptsOnStartup;
-    IBOutlet NSTextField *timerInterval;
-    IBOutlet NSSlider *requiredSignalStrength;
-    IBOutlet NSTextField *inRangeDetectionsCountInput;
-    IBOutlet NSTextField *outOfRangeDetectionsCountInput;
-    IBOutlet NSLevelIndicator *currentSignalStrength;
-    IBOutlet NSTextField *deviceStatus;
 }
+
+@property (strong) IBOutlet NSTextField *deviceName;
+@property (strong) IBOutlet NSTextField *inRangeScriptPath;
+@property (strong) IBOutlet NSButton *monitoringEnabled;
+@property (strong) IBOutlet NSTextField *outOfRangeScriptPath;
+@property (strong) IBOutlet NSWindow *prefsWindow;
+@property (strong) IBOutlet NSProgressIndicator *progressIndicator;
+@property (strong) IBOutlet NSButton *runScriptsOnStartup;
+@property (strong) IBOutlet NSTextField *timerInterval;
+@property (strong) IBOutlet NSSlider *requiredSignalStrength;
+@property (strong) IBOutlet NSLevelIndicator *currentSignalStrength;
+@property (strong) IBOutlet NSTextField *deviceStatus;
 
 // UI methods
 - (IBAction)changeDevice:(id)sender;
-- (IBAction)checkConnectivity:(id)sender;
-- (IBAction)checkForUpdates:(id)sender;
-- (IBAction)toggleStartOnSystemStartup:(id)sender;
-- (IBAction)about:(id)sender;
+- (IBAction)updateDeviceStatus:(id)sender;
 - (IBAction)inRangeScriptChange:(id)sender;
-- (IBAction)inRangeScriptClear:(id)sender;
 - (IBAction)inRangeScriptTest:(id)sender;
 - (IBAction)outOfRangeScriptChange:(id)sender;
-- (IBAction)outOfRangeScriptClear:(id)sender;
 - (IBAction)outOfRangeScriptTest:(id)sender;
 - (IBAction)showWindow:(id)sender;
 

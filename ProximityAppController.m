@@ -1,44 +1,35 @@
 #import "ProximityAppController.h"
 #import "NSWorkspace+runFileAtPath.h"
 
-#include <pwd.h>
-#include <sys/types.h>
+#define UD [NSUserDefaults standardUserDefaults]
 
 @implementation ProximityAppController
 
 #pragma mark -
 #pragma mark Delegate Methods
 
-- (void)applicationWillTerminate:(NSNotification *)aNotification
-{
+- (void)applicationWillTerminate:(NSNotification *)aNotification {
 	[monitor stop];
 }
 
-- (void)awakeFromNib
-{
-	NSBundle *bundle = [NSBundle mainBundle];
-	inRangeImage = [[NSImage alloc] initWithContentsOfFile: [bundle pathForResource: @"inRange" ofType: @"png"]];
-	inRangeAltImage = [[NSImage alloc] initWithContentsOfFile: [bundle pathForResource: @"inRangeAlt" ofType: @"png"]];	
-	outOfRangeImage = [[NSImage alloc] initWithContentsOfFile: [bundle pathForResource: @"outRange" ofType: @"png"]];
-	outOfRangeAltImage = [[NSImage alloc] initWithContentsOfFile: [bundle pathForResource: @"outOfRange" ofType: @"png"]];	
+- (void)awakeFromNib {
+    inRangeImage = [NSImage imageNamed:@"inRange"];
+    outOfRangeImage = [NSImage imageNamed:@"outRange"];
 
     monitor = [[ProximityBluetoothMonitor alloc] init];
     monitor.delegate = self;
 
 	[self createMenuBar];
-    [[NSUserDefaults standardUserDefaults] registerDefaults:[NSDictionary dictionaryWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"Defaults" ofType:@"plist"]]];
+    [[NSUserDefaults standardUserDefaults] registerDefaults:[NSDictionary dictionaryWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"ud" ofType:@"plist"]]];
 	[self userDefaultsLoad];
 }
 
-- (void)windowWillClose:(NSNotification *)aNotification
-{
+- (void)windowWillClose:(NSNotification *)aNotification {
 	[self userDefaultsSave];
 
-    if(monitoringEnabled.state == NSOnState && monitor.device) {
-        monitor.requiredSignalStrength = requiredSignalStrength.integerValue;
-        monitor.timeInterval = timerInterval.doubleValue;
-        monitor.inRangeDetectionCount = inRangeDetectionsCountInput.integerValue;
-        monitor.outOfRangeDetectionCount = outOfRangeDetectionsCountInput.integerValue;
+    if (_monitoringEnabled.state == NSOnState && monitor.device) {
+        monitor.requiredSignalStrength = _requiredSignalStrength.integerValue;
+        monitor.timeInterval = _timerInterval.doubleValue;
         [monitor refresh];
         [monitor start];
     } else {
@@ -46,159 +37,78 @@
     }
 }
 
-- (void)proximityBluetoothMonitor:(ProximityBluetoothMonitor *)monitor foundDevice:(IOBluetoothDevice *)device {
-    [self setMenuIconInRange];
-    [self runInRangeScript:YES];
-}
-
-
-- (void)proximityBluetoothMonitor:(ProximityBluetoothMonitor *)monitor lostDevice:(IOBluetoothDevice *)device {
-    [self setMenuIconOutOfRange];
-    [self runOutOfRangeScript:YES];
-}
-
 #pragma mark -
 #pragma mark AppController Methods
 
-- (void)setStartAtLogin:(BOOL)enabled {
-#ifdef DEBUG
-    NSLog(@"Cant start at login when in DEBUG mode");
-#else
-	// Creating helper app complete URL
-    NSURL *bundleURL = [[NSBundle mainBundle] bundleURL];
-	NSURL *url = [bundleURL URLByAppendingPathComponent:
-                  @"Contents/Library/LoginItems/ProximityLoginHelper.app"];
-    
-	// Registering helper app
-	if (LSRegisterURL((__bridge CFURLRef)url, true) != noErr) {
-		NSLog(@"LSRegisterURL failed!");
-	}
-    
-	// Setting login
-	if (!SMLoginItemSetEnabled((CFStringRef)@"info.pich.proximityLoginHelper", enabled ? true : false)) {
-		NSLog(@"SMLoginItemSetEnabled failed!");
-	}
-#endif
-}
-
-- (void)createMenuBar
-{
-	NSMenu *myMenu;
-	NSMenuItem *menuItem;
-	 
-	// Menu for status bar item
-	myMenu = [[NSMenu alloc] init];
+- (void)createMenuBar {
+	NSMenu *menu = [[NSMenu alloc] init];
 	
-	// Prefences menu item
-	menuItem = [myMenu addItemWithTitle:@"Preferences" action:@selector(showWindow:) keyEquivalent:@""];
+	NSMenuItem *menuItem = [menu addItemWithTitle:@"Preferences..." action:@selector(showWindow:) keyEquivalent:@""];
 	[menuItem setTarget:self];
+    
+    [menu addItem:[NSMenuItem separatorItem]];
 	
-	// Quit menu item
-	[myMenu addItemWithTitle:@"Quit" action:@selector(terminate:) keyEquivalent:@""];
+	[menu addItemWithTitle:@"Quit" action:@selector(terminate:) keyEquivalent:@""];
 	
 	// Space on status bar
 	statusItem = [[NSStatusBar systemStatusBar] statusItemWithLength:NSVariableStatusItemLength];
 	
 	// Attributes of space on status bar
 	[statusItem setHighlightMode:YES];
-	[statusItem setMenu:myMenu];
+	[statusItem setMenu:menu];
 
-	[self setMenuIconOutOfRange];
+	[self outOfRange];
 }
 
-- (void)setMenuIconInRange
-{	
+- (void)inRange {
 	[statusItem setImage:inRangeImage];
-	[statusItem setAlternateImage:inRangeAltImage];
-		
-	//[statusItem	setTitle:@"O"];
+    
+    [self runInRangeScript:YES];
 }
 
-- (void)setMenuIconOutOfRange
-{
+- (void)outOfRange {
 	[statusItem setImage:outOfRangeImage];
-	[statusItem setAlternateImage:outOfRangeAltImage];
-
-//	[statusItem setTitle:@"X"];
+    
+    [self runOutOfRangeScript:YES];
 }
 
-- (BOOL)isNewVersionAvailable
-{
-	NSDictionary *dict = [[NSBundle mainBundle] infoDictionary];
-	NSArray *version = [[dict valueForKey:@"CFBundleVersion"] componentsSeparatedByString:@"."];
-    int thisVersionMajor = [[version objectAtIndex:0] intValue];
-	int thisVersionMinor = [[version objectAtIndex:1] intValue];
-
-	NSURL *url = [NSURL URLWithString:@"https://raw.github.com/janka102/proximity/master/Info.plist"];
-	dict = [NSDictionary dictionaryWithContentsOfURL:url];
-	version = [[dict valueForKey:@"CFBundleVersion"] componentsSeparatedByString:@"."];
-    int newVersionMajor = [[version objectAtIndex:0] intValue];
-	int newVersionMinor = [[version objectAtIndex:1] intValue];
-	
-	if( thisVersionMajor < newVersionMajor || thisVersionMinor < newVersionMinor )
-		return YES;
-
-	return NO;
-}
-
-- (void)runScript:(NSURL*)pathUrl arguments:(NSArray*)args silent:(BOOL)silent
-{
-    if(!pathUrl)
+- (void)runScript:(NSURL*)pathUrl arguments:(NSArray*)args silent:(BOOL)silent {
+    if (!pathUrl)
         return;
     
     NSError *error = nil;
     BOOL b = [[NSWorkspace sharedWorkspace] runFileAtPath:pathUrl.path arguments:args error:&error];
-    if(!silent && !b) {
-        if(!error)
+    if (!silent && !b) {
+        if (!error)
             error = [NSError errorWithDomain:@"NSWorkspace" code:0 userInfo:@{ NSLocalizedDescriptionKey : @"unknown error" }];
         [NSApp presentError:error];
     }
 }
 
 - (void)runInRangeScript:(BOOL)silent {
-    [self runScript:inRangeScriptURL arguments:@[@"inRange"] silent:silent];
+    [self runScript:inRangeScriptURL arguments:@[@"in"] silent:silent];
 }
 
 - (void)runOutOfRangeScript:(BOOL)silent {
-    [self runScript:outOfRangeScriptURL arguments:@[@"outOfRange"] silent:silent];
+    [self runScript:outOfRangeScriptURL arguments:@[@"out"] silent:silent];
 }
 
-- (void)userDefaultsLoad
-{
-	NSUserDefaults *defaults;
-	NSData *deviceAsData;
-	
-	defaults = [NSUserDefaults standardUserDefaults];
-		
+- (void)userDefaultsLoad {
 	//Timer interval
-	if( [[defaults stringForKey:@"timerInterval"] length] > 0 ) {
-		[timerInterval setStringValue:[defaults stringForKey:@"timerInterval"]];
-        monitor.timeInterval = timerInterval.doubleValue;
-    }
-
-    //minimum IN range detections to trigger script
-	if( [[defaults stringForKey:@"inRangeDetectionsCount"] length] > 0 ) {
-		[inRangeDetectionsCountInput setStringValue:[defaults stringForKey:@"inRangeDetectionsCount"]];
-        monitor.inRangeDetectionCount = inRangeDetectionsCountInput.integerValue;
-    }
-    
-    //minimum OUT OF range detections to trigger script
-	if( [[defaults stringForKey:@"outOfRangeDetectionsCount"] length] > 0 ) {
-		[outOfRangeDetectionsCountInput setStringValue:[defaults stringForKey:@"outOfRangeDetectionsCount"]];
-        monitor.outOfRangeDetectionCount = outOfRangeDetectionsCountInput.integerValue;
+	if ([UD stringForKey:@"_timerInterval"].length > 0 ) {
+		[_timerInterval setStringValue:[UD stringForKey:@"_timerInterval"]];
+        monitor.timeInterval = _timerInterval.doubleValue;
     }
     
 	//require StrongSignal
-	[requiredSignalStrength setIntegerValue:[defaults integerForKey:@"requiredSignalStrength"]];
-    monitor.requiredSignalStrength = requiredSignalStrength.integerValue;
+	[_requiredSignalStrength setIntegerValue:[UD integerForKey:@"_requiredSignalStrength"]];
+    monitor.requiredSignalStrength = _requiredSignalStrength.integerValue;
 
     // Device
-	deviceAsData = [defaults objectForKey:@"device"];
-	if( [deviceAsData length] > 0 )
-	{
+	NSData *deviceAsData = [UD objectForKey:@"device"];
+	if (deviceAsData.length > 0) {
 		id device = [NSKeyedUnarchiver unarchiveObjectWithData:deviceAsData];
-		[deviceName setStringValue:[NSString stringWithFormat:@"%@ (%@)",
-									[device name], [device addressString]]];
+		[_deviceName setStringValue:[NSString stringWithFormat:@"%@ (%@)", [device name], [device addressString]]];
 		
         monitor.device = device;
         //update icon
@@ -206,265 +116,156 @@
 	}
 
 	// Out of range script path
-	if( [defaults URLForKey:@"outOfRangeScriptURL"] ) {
-        outOfRangeScriptURL = [defaults URLForKey:@"outOfRangeScriptURL"];
-		[outOfRangeScriptPath setStringValue:outOfRangeScriptURL.path];
+	if ([UD URLForKey:@"outOfRangeScriptURL"]) {
+        outOfRangeScriptURL = [UD URLForKey:@"outOfRangeScriptURL"];
+		[_outOfRangeScriptPath setStringValue:outOfRangeScriptURL.path];
     }
 	
 	// In range script path
-	if( [defaults URLForKey:@"inRangeScriptURL"] ) {
-        inRangeScriptURL = [defaults URLForKey:@"inRangeScriptURL"];
-		[inRangeScriptPath setStringValue:inRangeScriptURL.path];
+	if ([UD URLForKey:@"inRangeScriptURL"]) {
+        inRangeScriptURL = [UD URLForKey:@"inRangeScriptURL"];
+		[_inRangeScriptPath setStringValue:inRangeScriptURL.path];
     }
 	
-	// Check for updates on startup
-	BOOL updating = [defaults boolForKey:@"updating"];
-    [checkUpdatesOnStartup setState:updating ? NSOnState : NSOffState];
-	if( updating ) {
-        [self checkForUpdates:nil silent:YES];
-	}
-	
 	// Monitoring enabled
-	BOOL monitoring = [defaults boolForKey:@"enabled"];
-    [monitoringEnabled setState:monitoring ? NSOnState : NSOffState];
-	if( monitoring && monitor.device ) {
+	BOOL monitoring = [UD boolForKey:@"enabled"];
+    [_monitoringEnabled setState:monitoring ? NSOnState : NSOffState];
+	
+    if (monitoring && monitor.device) {
 		[monitor start];
 	}
-	
-	// Run scripts on startup
-	BOOL startup = [defaults boolForKey:@"executeOnStartup"];
-    [runScriptsOnStartup setState:startup ? NSOnState : NSOffState];
-	if( startup && monitor.device )
-	{
-		if( monitoring )
-		{
-            [monitor refresh];
-		}
-	}
-	
-    //autostart
-	BOOL autostart = [defaults boolForKey:@"startOnSystemStartup"];
-    [startOnSystemStartup setState:autostart ? NSOnState : NSOffState];
-    [self setStartAtLogin:autostart];
 }
 
-- (void)userDefaultsSave
-{
-	NSUserDefaults *defaults;
-	NSData *deviceAsData;
-	
-	defaults = [NSUserDefaults standardUserDefaults];
-	
+- (void)userDefaultsSave {
 	// Monitoring enabled
-	BOOL monitoring = ( [monitoringEnabled state] == NSOnState ? TRUE : FALSE );
-	[defaults setBool:monitoring forKey:@"enabled"];
-	
-	// Update checking
-	BOOL updating = ( [checkUpdatesOnStartup state] == NSOnState ? TRUE : FALSE );
-	[defaults setBool:updating forKey:@"updating"];
+	BOOL monitoring = (_monitoringEnabled.state == NSOnState ? TRUE : FALSE);
+	[UD setBool:monitoring forKey:@"enabled"];
 	
 	// Execute scripts on startup
-	BOOL startup = ( [runScriptsOnStartup state] == NSOnState ? TRUE : FALSE );
-	[defaults setBool:startup forKey:@"executeOnStartup"];
+	BOOL startup = (_runScriptsOnStartup.state == NSOnState ? TRUE : FALSE );
+	[UD setBool:startup forKey:@"executeOnStartup"];
 	
 	// Timer interval
-	[defaults setObject:[timerInterval stringValue] forKey:@"timerInterval"];
-    
-    //minimum IN range detections to trigger script
-	[defaults setObject:[inRangeDetectionsCountInput stringValue] forKey:@"inRangeDetectionsCount"];
-	
-    //minimum OUT OF range detections to trigger script
-	[defaults setObject:[outOfRangeDetectionsCountInput stringValue] forKey:@"outOfRangeDetectionsCount"];
+	[UD setObject:_timerInterval.stringValue forKey:@"_timerInterval"];
 
 	// In range script
-	[defaults setURL:inRangeScriptURL forKey:@"inRangeScriptURL"];
+	[UD setURL:inRangeScriptURL forKey:@"inRangeScriptURL"];
 
 	// Out of range script
-	[defaults setURL:outOfRangeScriptURL forKey:@"outOfRangeScriptURL"];
-		
-	// Device
-	if( monitor.device ) {
-		deviceAsData = [NSKeyedArchiver archivedDataWithRootObject:monitor.device];
-		[defaults setObject:deviceAsData forKey:@"device"];
-	}
-
-	// autostart
-    [defaults setBool:[startOnSystemStartup state] == NSOnState ? TRUE : FALSE forKey:@"executeOnStartup"];
+	[UD setURL:outOfRangeScriptURL forKey:@"outOfRangeScriptURL"];
     
-    [defaults setInteger:requiredSignalStrength.integerValue forKey:@"requiredSignalStrength"];
-    
-    //persist
-	[defaults synchronize];
+    [UD setInteger:_requiredSignalStrength.integerValue forKey:@"_requiredSignalStrength"];
 }
 
-- (void)updateDeviceStatus
-{
-    if( !monitor.device ) {
-        [deviceStatus setStringValue:@"Please Select a Device"];
+- (IBAction)updateDeviceStatus:(id)sender {
+    if (!monitor.device) {
+        [_deviceStatus setStringValue:@"Please select a device"];
         return;
     }
     
-    [progressIndicator startAnimation:nil];
+    [_progressIndicator startAnimation:nil];
     
     // Refresh status
     ProximityBluetoothMonitor *testMon = [[ProximityBluetoothMonitor alloc] init];
     testMon.device = monitor.device;
-    testMon.requiredSignalStrength = monitor.requiredSignalStrength = requiredSignalStrength.integerValue;
+    testMon.requiredSignalStrength = monitor.requiredSignalStrength = _requiredSignalStrength.integerValue;
     [testMon refresh];
     
     // Update signal bar
-    [currentSignalStrength setIntegerValue:[testMon getRange:YES]];
+    [_currentSignalStrength setIntegerValue:[testMon getRange:YES]];
     
     // Update status
-	if( testMon.status == ProximityBluetoothStatusInRange )
-	{
-        [deviceStatus setStringValue:@"In Range"];
-	}
-	else if( testMon.status == ProximityBluetoothStatusOutOfRange )
-	{
-        [deviceStatus setStringValue:@"Out of Range"];
-	}
-    else if( testMon.status == ProximityBluetoothStatusUndefined )
-	{
-        [deviceStatus setStringValue:@"Not Found"];
+	if (testMon.status == ProximityBluetoothStatusInRange)  {
+        [_deviceStatus setStringValue:@"In range"];
+	} else if (testMon.status == ProximityBluetoothStatusOutOfRange) {
+        [_deviceStatus setStringValue:@"Out of range"];
+	} else if (testMon.status == ProximityBluetoothStatusUndefined) {
+        [_deviceStatus setStringValue:@"Not found"];
 	}
     
-    [progressIndicator stopAnimation:nil];
+    [testMon stop];
+    testMon = nil;
+    
+    [_progressIndicator stopAnimation:nil];
 }
 
 
 #pragma mark -
 #pragma mark Interface Methods
 
-- (IBAction)changeDevice:(id)sender
-{
+- (IBAction)changeDevice:(id)sender {
 	IOBluetoothDeviceSelectorController *deviceSelector;
 	deviceSelector = [IOBluetoothDeviceSelectorController deviceSelector];
 	[deviceSelector runModal];
 	
 	NSArray *results;
-	results = [deviceSelector getResults];
+	results = deviceSelector.getResults;
 	
-	if( !results )
+	if (!results)
 		return;
 	
-	id device = [results objectAtIndex:0];
+	id device = results[0];
 	
-	[deviceName setStringValue:[NSString stringWithFormat:@"%@ (%@)",
-								[device name],
-								[device addressString]]];
+	[_deviceName setStringValue:[NSString stringWithFormat:@"%@ (%@)", [device name], [device addressString]]];
     
     monitor.device = device;
     
-    [self updateDeviceStatus];
-}
-
-- (IBAction)checkConnectivity:(id)sender
-{
-    [self updateDeviceStatus];
-}
-
-- (void)checkForUpdates:(id)sender silent:(BOOL)silent
-{
-    dispatch_async(dispatch_get_global_queue(0, 0), ^{
-        BOOL br = [self isNewVersionAvailable];
-        dispatch_sync(dispatch_get_main_queue(), ^{
-            if( br ) {
-                if( NSRunAlertPanel( @"Proximity", @"A new version of Proximity is available for download.",
-                                    @"Close", @"Download", nil, nil ) == NSAlertAlternateReturn )
-                {
-                    [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"https://github.com/janka102/proximity"]];
-                }
-            }
-            else {
-                if(!silent) {
-                    NSRunAlertPanel( @"Proximity", @"You have the latest version.", @"Close", nil, nil, nil );
-                }
-            }
-        });
-    });
-}
-
-- (IBAction)checkForUpdates:(id)sender
-{
-    [self checkForUpdates:sender silent:NO];
-}
-
-- (IBAction)toggleStartOnSystemStartup:(id)sender {
-    BOOL autostart = ([startOnSystemStartup state]==NSOnState);
-    [self setStartAtLogin:autostart];
-}
-
-- (IBAction)about:(id)sender
-{
-	[[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"https://github.com/janka102/proximity/blob/master/README.md"]];
+    [self updateDeviceStatus:nil];
+    
+    // Device
+	if (monitor.device) {
+		NSData *deviceAsData = [NSKeyedArchiver archivedDataWithRootObject:monitor.device];
+		[[NSUserDefaults standardUserDefaults] setObject:deviceAsData forKey:@"device"];
+	}
 }
 
 - (NSURL*)chooseScript {
-    NSString *homePath = [NSString stringWithUTF8String:getpwuid(getuid())->pw_dir];
-	NSOpenPanel *op = [NSOpenPanel openPanel];
-    [op setDirectoryURL:[NSURL fileURLWithPath:homePath]];
+    NSOpenPanel *op = [NSOpenPanel openPanel];
     [op setAllowsMultipleSelection:NO];
-	if([op runModal]==NSOKButton) {
-        NSArray *files = [op URLs];
-        if([files count])
-            return [files objectAtIndex:0];
+    
+	if ([op runModal] == NSOKButton) {
+        NSArray *files = op.URLs;
+        if (files.count)
+            return files[0];
     }
     
     return nil;
 }
 
-- (IBAction)inRangeScriptChange:(id)sender
-{
+- (IBAction)inRangeScriptChange:(id)sender {
     NSURL *file = [self chooseScript];
-    if(file) {
+    if (file) {
         inRangeScriptURL = file;
-        [inRangeScriptPath setStringValue:file.path];
+        [_inRangeScriptPath setStringValue:file.path];
     }
 }
 
-- (IBAction)inRangeScriptClear:(id)sender
-{
-	[inRangeScriptPath setStringValue:@""];
-}
-
-- (IBAction)inRangeScriptTest:(id)sender
-{
+- (IBAction)inRangeScriptTest:(id)sender {
     [self runInRangeScript:NO];
 }
 
-- (IBAction)outOfRangeScriptChange:(id)sender
-{
+- (IBAction)outOfRangeScriptChange:(id)sender {
     NSURL *file = [self chooseScript];
-    if(file) {
+    if (file) {
         outOfRangeScriptURL = file;
-        [outOfRangeScriptPath setStringValue:file.path];
+        [_outOfRangeScriptPath setStringValue:file.path];
     }
 }
 
-- (IBAction)outOfRangeScriptClear:(id)sender
-{
-	[outOfRangeScriptPath setStringValue:@""];
-}
-
-- (IBAction)outOfRangeScriptTest:(id)sender
-{
+- (IBAction)outOfRangeScriptTest:(id)sender {
     [self runOutOfRangeScript:NO];
 }
 
-- (void)showWindow:(id)sender
-{
+- (void)showWindow:(id)sender {
     [NSApp activateIgnoringOtherApps:YES];
     
-	[prefsWindow makeKeyAndOrderFront:self];
-	[prefsWindow center];
+	[_prefsWindow makeKeyAndOrderFront:self];
     
     // Clear out status
-    [deviceStatus setStringValue:@""];
-    [currentSignalStrength setIntegerValue:0];
+    [_deviceStatus setStringValue:@""];
+    [_currentSignalStrength setIntegerValue:0];
 	
-	[monitor stop];
-}
+	[monitor stop];}
 
 
 @end

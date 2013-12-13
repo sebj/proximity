@@ -26,10 +26,11 @@ NS_ENUM(NSInteger, ProximityBluetoothStatus) {
 
 @protocol ProximityBluetoothMonitorDelegate <NSObject>
 
+@optional;
 - (void)proximityBluetoothMonitor:(ProximityBluetoothMonitor*)monitor foundDevice:(IOBluetoothDevice*)device;
 - (void)proximityBluetoothMonitor:(ProximityBluetoothMonitor*)monitor lostDevice:(IOBluetoothDevice*)device;
-- (void)setMenuIconInRange;
-- (void)setMenuIconOutOfRange;
+- (void)inRange;
+- (void)outOfRange;
 
 @end
 

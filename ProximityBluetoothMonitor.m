@@ -17,10 +17,12 @@
 
 - (id)init {
     self = [super init];
-    if(self) {
+    if (self) {
         _iconStatus = _priorStatus = _status = ProximityBluetoothStatusUndefined;
         _timeInterval = kDefaultPageTimeout;
         _requiredSignalStrength = NO;
+        inRangeDetectionCount = 1;
+        outOfRangeDetectionCount = 1;
     }
     return self;
 }
@@ -48,19 +50,18 @@
 }
 
 - (void)setTimeInterval:(NSTimeInterval)timeInterval {
-    if(_timeInterval < kDefaultPageTimeout)
+    if (_timeInterval < kDefaultPageTimeout)
         _timeInterval = kDefaultPageTimeout;
     
     _timeInterval = timeInterval;
-    if(_timer) {
+    if (_timer) {
         [self start];
     }
 }
 
 #pragma mark
 
-- (void)handleTimer:(NSTimer *)theTimer
-{
+- (void)handleTimer:(NSTimer *)theTimer {
     int inRange = [self getRange];
 #ifdef DEBUG
     // 0: Out of Range, 1: In Range, 2: Not Found
@@ -70,45 +71,52 @@
     
     _status = inRange != ProximityBluetoothStatusInRange ? ProximityBluetoothStatusOutOfRange : ProximityBluetoothStatusInRange;
     
-    if( _status != _iconStatus ) {
-        if( _status == ProximityBluetoothStatusInRange ) {
-            [_delegate setMenuIconInRange];
-        }
-        else {
-            [_delegate setMenuIconOutOfRange];
+    if (_status != _iconStatus) {
+        if (_status == ProximityBluetoothStatusInRange) {
+            if (_delegate && [_delegate respondsToSelector:@selector(inRange)]) {
+                [_delegate inRange];
+            }
+        } else {
+            if (_delegate && [_delegate respondsToSelector:@selector(outOfRange)]) {
+                [_delegate outOfRange];
+            }
         }
         _iconStatus = _status;
     }
     
-	if( inRange == ProximityBluetoothStatusInRange) {
-		if( _priorStatus != ProximityBluetoothStatusInRange ) {
+	if (inRange == ProximityBluetoothStatusInRange) {
+		if (_priorStatus != ProximityBluetoothStatusInRange) {
             _changedStatusCounter++;
-            if(_changedStatusCounter >= inRangeDetectionCount) {
+            if (_changedStatusCounter >= inRangeDetectionCount) {
                 _changedStatusCounter = 0;
                 _priorStatus = ProximityBluetoothStatusInRange;
-                [_delegate proximityBluetoothMonitor:self foundDevice:_device];
+                
+                if (_delegate && [_delegate respondsToSelector:@selector(proximityBluetoothMonitor:foundDevice:)]) {
+                    [_delegate proximityBluetoothMonitor:self foundDevice:_device];
+                }
 #ifdef DEBUG
                 NSLog(@"-- found");
 #endif
             }
-		}
-        else {
+		} else {
             _changedStatusCounter = 0;
         }
 	}
 	else {
-		if( _priorStatus != ProximityBluetoothStatusOutOfRange ) {
+		if (_priorStatus != ProximityBluetoothStatusOutOfRange) {
             _changedStatusCounter++;
-            if( _changedStatusCounter >= outOfRangeDetectionCount ) {
+            if (_changedStatusCounter >= outOfRangeDetectionCount) {
                 _changedStatusCounter = 0;
                 _priorStatus = ProximityBluetoothStatusOutOfRange;
-                [_delegate proximityBluetoothMonitor:self lostDevice:_device];
+                
+                if (_delegate && [_delegate respondsToSelector:@selector(proximityBluetoothMonitor:lostDevice:)]) {
+                    [_delegate proximityBluetoothMonitor:self lostDevice:_device];
+                }
 #ifdef DEBUG
                 NSLog(@"-- lost");
 #endif
             }
-		}
-        else {
+		} else {
             _changedStatusCounter = 0;
         }
 	}
@@ -116,10 +124,9 @@
     _status = inRange;
 }
 
-- (int)getRange:(BOOL)getSignal
-{
-    if( !_device ) {
-        if( getSignal )
+- (int)getRange:(BOOL)getSignal {
+    if (!_device) {
+        if (getSignal)
             return 0;
         
         return ProximityBluetoothStatusUndefined;
@@ -127,13 +134,13 @@
     
     IOReturn br = [_device openConnection:nil withPageTimeout:kDefaultPageTimeout authenticationRequired:NO];
     
-    if( br == kIOReturnSuccess ) {
+    if (br == kIOReturnSuccess) {
 //        BluetoothHCIRSSIValue rawRssi = [_device rawRSSI];
-        BluetoothHCIRSSIValue rssi = [_device RSSI];
+        BluetoothHCIRSSIValue rssi = _device.RSSI;
         
         [_device closeConnection];
         
-        if( getSignal ) {
+        if (getSignal) {
             
 #ifdef DEBUG
             NSLog(@"RSSI of %@ out of 50: %d", _device.name, 50+rssi);
@@ -151,14 +158,13 @@
         return inRange ? ProximityBluetoothStatusInRange : ProximityBluetoothStatusOutOfRange;
     }
     
-    if( getSignal )
+    if (getSignal)
         return 0;
     
     return ProximityBluetoothStatusUndefined;
 }
 
-- (int)getRange
-{
+- (int)getRange {
     return [self getRange:NO];
 }
 

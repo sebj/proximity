@@ -3,14 +3,10 @@
 <plist version="1.0">
 <dict>
 	<key>timerInterval</key>
-	<string>60</string>
-	<key>updating</key>
-	<true/>
+	<string>40</string>
 	<key>enabled</key>
 	<true/>
 	<key>executeOnStartup</key>
-	<false/>
-	<key>startOnSystemStartup</key>
 	<false/>
 	<key>requiredSignalStrength</key>
 	<integer>-20</integer>
