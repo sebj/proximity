@@ -41,7 +41,7 @@ NS_ENUM(NSInteger, ProximityBluetoothStatus) {
 @property(nonatomic, assign) NSInteger inRangeDetectionCount;
 @property(nonatomic, assign) NSInteger outOfRangeDetectionCount;
 @property(assign) BOOL requiredSignalStrength;
-@property(retain) IOBluetoothDevice *device; // could be an array and statuses too
+@property(retain) IOBluetoothDevice *device;
 
 @property(readonly) enum ProximityBluetoothStatus priorStatus;
 @property(readonly) enum ProximityBluetoothStatus status;

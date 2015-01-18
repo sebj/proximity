@@ -1,5 +1,5 @@
 #define UDMonitoringEnabledKey @"enabled"
-#define UDCheckIntervalKey @"_timerInterval"
+#define UDCheckIntervalKey @"timerInterval"
 
 #define UDIdleCheckEnabledkey @"idleCheckEnabled"
 #define UDIdleMinTimeKey @"idleTime"

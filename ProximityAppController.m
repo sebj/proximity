@@ -156,13 +156,13 @@ int64_t SystemIdleTime(void) {
     // In range script path
 	if ([UD URLForKey:UDInRangeActionKey]) {
         inRangeScriptURL = [UD URLForKey:UDInRangeActionKey];
-		[_inRangeScriptPath setStringValue:inRangeScriptURL.path];
+        _inRangeScriptPath.stringValue = inRangeScriptURL.path;
     }
 
 	// Out of range script path
 	if ([UD URLForKey:UDOutOfRangeActionKey]) {
         outOfRangeScriptURL = [UD URLForKey:UDOutOfRangeActionKey];
-		[_outOfRangeScriptPath setStringValue:outOfRangeScriptURL.path];
+		_outOfRangeScriptPath.stringValue = outOfRangeScriptURL.path;
     }
 }
 
@@ -178,8 +178,8 @@ int64_t SystemIdleTime(void) {
 
 - (IBAction)updateDeviceStatus:(id)sender {
     if (!monitor.device) {
-        [_deviceStatus setStringValue:@"Please select a device"];
-        
+        _deviceStatus.stringValue = @"Please select a device";
+        NSLog(@"No device = no status");
         return;
     }
     
@@ -192,15 +192,22 @@ int64_t SystemIdleTime(void) {
     
     // Update signal bar
     [_currentSignalStrength setIntegerValue:[testMon getRange:YES]];
+    NSLog(@"Signal strength: %li",(long)_currentSignalStrength.integerValue);
     
     // Update status
-	if (testMon.status == ProximityBluetoothStatusInRange)  {
-        [_deviceStatus setStringValue:@"In range"];
-	} else if (testMon.status == ProximityBluetoothStatusOutOfRange) {
-        [_deviceStatus setStringValue:@"Out of range"];
-	} else if (testMon.status == ProximityBluetoothStatusUndefined) {
-        [_deviceStatus setStringValue:@"Not found"];
-	}
+    switch (testMon.status) {
+        case ProximityBluetoothStatusInRange:
+            _deviceStatus.stringValue = @"In range";
+            break;
+            
+        case ProximityBluetoothStatusOutOfRange:
+            _deviceStatus.stringValue = @"Out of range";
+            break;
+            
+        case ProximityBluetoothStatusUndefined:
+            _deviceStatus.stringValue = @"Not found";
+            break;
+    }
     
     [testMon stop];
     testMon = nil;
@@ -222,7 +229,7 @@ int64_t SystemIdleTime(void) {
     if (returnCode == kIOBluetoothUISuccess) {
         id device = controller.getResults[0];
         
-        [_deviceName setStringValue:[NSString stringWithFormat:@"%@ (%@)", [device name], [device addressString]]];
+        _deviceName.stringValue = [NSString stringWithFormat:@"%@ (%@)", [device name], [device addressString]];
         
         monitor.device = device;
         
@@ -256,7 +263,7 @@ int64_t SystemIdleTime(void) {
     
     if (file) {
         inRangeScriptURL = file;
-        [_inRangeScriptPath setStringValue:file.path];
+        _inRangeScriptPath.stringValue = file.path;
     }
 }
 
@@ -269,7 +276,7 @@ int64_t SystemIdleTime(void) {
     
     if (file) {
         outOfRangeScriptURL = file;
-        [_outOfRangeScriptPath setStringValue:file.path];
+        _outOfRangeScriptPath.stringValue = file.path;
     }
 }
 
@@ -285,7 +292,7 @@ int64_t SystemIdleTime(void) {
 	[_prefsWindow makeKeyAndOrderFront:self];
     
     // Clear out status
-    [_deviceStatus setStringValue:@""];
+    _deviceStatus.stringValue = @"";
 	
 	[monitor stop];
     

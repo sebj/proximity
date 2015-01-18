@@ -13,6 +13,6 @@
 	<key>executeOnStartup</key>
 	<false/>
 	<key>requiredSignalStrength</key>
-	<integer>-20</integer>
+	<integer>1</integer>
 </dict>
 </plist>

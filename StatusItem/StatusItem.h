@@ -29,8 +29,8 @@
 @property BOOL showMenuOnLeftMouseDown;
 @property NSRect imageDrawBounds;
 
-- (id)initWithStandardThickness;
-- (id)initWithThickness:(CGFloat)thickness;
+- (instancetype)initWithStandardThickness;
+- (instancetype)initWithThickness:(CGFloat)thickness;
 
 - (void)drawStandardBackground;
 

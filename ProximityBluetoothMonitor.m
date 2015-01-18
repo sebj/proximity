@@ -15,7 +15,7 @@
 
 @synthesize inRangeDetectionCount, outOfRangeDetectionCount;
 
-- (id)init {
+- (instancetype)init {
     self = [super init];
     if (self) {
         [self setupVars];
@@ -23,7 +23,7 @@
     return self;
 }
 
-- (id)initWithDevice:(IOBluetoothDevice*)aDevice {
+- (instancetype)initWithDevice:(IOBluetoothDevice*)aDevice {
     self = [super init];
     if (self) {
         [self setupVars];
@@ -78,8 +78,8 @@
     int inRange = [self getRange];
 #ifdef DEBUG
     // 0: Out of Range, 1: In Range, 2: Not Found
-    NSLog(@"BT device %@ inRange:%d",_device.name, inRange);
-    NSLog(@"Changed counter %ld", _changedStatusCounter);
+    //NSLog(@"BT device %@ inRange: %d",_device.name, inRange);
+    //NSLog(@"Changed counter %ld", _changedStatusCounter);
 #endif
     
     _status = inRange != ProximityBluetoothStatusInRange ? ProximityBluetoothStatusOutOfRange : ProximityBluetoothStatusInRange;
@@ -156,15 +156,15 @@
         if (getSignal) {
             
 #ifdef DEBUG
-            NSLog(@"RSSI of %@ out of 50: %d", _device.name, 50+rssi);
+            NSLog(@"RSSI: %d", rssi);
 #endif
             // -1 * (minimun RSSI) + rssi
-            return 50+rssi;
+            return rssi;
         }
 
 #ifdef DEBUG
         //        if(rssi!=0)
-        NSLog(@"RSSI of %@: %d/%d", _device.name, rssi, _requiredSignalStrength);
+        NSLog(@"RSSI: %d / %d", rssi, _requiredSignalStrength);
 #endif
         BOOL inRange = rssi>=_requiredSignalStrength;
         
