@@ -106,6 +106,8 @@ int64_t SystemIdleTime(void) {
         if (SystemIdleTime() >= [[UD objectForKey:UDIdleMinTimeKey] integerValue]) {
             [self runOutOfRangeScript:YES];
         }
+    } else {
+        [self runOutOfRangeScript:YES];
     }
 }
 
