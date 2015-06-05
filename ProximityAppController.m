@@ -28,8 +28,6 @@
 }
 
 - (void)windowWillClose:(NSNotification *)aNotification {
-	[self userDefaultsSave];
-
     if ([UD boolForKey:UDMonitoringEnabledKey] && monitor.device) {
         monitor.requiredSignalStrength = [[UD objectForKey:UDRequiredSignalKey] integerValue];
         monitor.timeInterval = [UD stringForKey:UDCheckIntervalKey].doubleValue;
@@ -42,6 +40,8 @@
         
         statusItem.paused = YES;
     }
+
+    [self userDefaultsSave];
 }
 
 #pragma mark -
