@@ -21,6 +21,10 @@
     [self userDefaultsLoad];
 
 	[self createMenuBar];
+
+    //update icon
+    [monitor refresh];
+    [monitor start];
 }
 
 - (void)applicationWillTerminate:(NSNotification *)aNotification {
@@ -61,8 +65,6 @@
     statusItem = [[ProximityStatusItem alloc] initWithStandardThickness];
     statusItem.showMenuOnLeftMouseDown = YES;
     statusItem.menu = menu;
-
-	[self outOfRange];
 }
 
 - (void)inRange {
@@ -156,8 +158,6 @@ int64_t SystemIdleTime(void) {
 		[_deviceName setStringValue:[NSString stringWithFormat:@"%@ (%@)", [device name], [device addressString]]];
 		
         monitor.device = device;
-        //update icon
-        [monitor refresh];
 	}
     
     // In range script path
