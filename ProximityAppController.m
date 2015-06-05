@@ -144,6 +144,11 @@ int64_t SystemIdleTime(void) {
         monitor.timeInterval = [UD stringForKey:UDCheckIntervalKey].doubleValue;
     }
 
+    //signal strength
+    if ([UD stringForKey:UDRequiredSignalKey].length > 0 ) {
+        monitor.requiredSignalStrength = [[UD objectForKey:UDRequiredSignalKey] integerValue];
+    }
+
     // Device
 	NSData *deviceAsData = [UD objectForKey:UDDeviceKey];
 	if (deviceAsData.length > 0) {
