@@ -13,7 +13,7 @@
 #pragma mark Delegate Methods
 
 - (void)awakeFromNib {
-    [NSUserDefaults.standardUserDefaults registerDefaults:[NSDictionary dictionaryWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"ud" ofType:@"plist"]]];
+    [UD registerDefaults:[NSDictionary dictionaryWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"ud" ofType:@"plist"]]];
     
     monitor = [ProximityBluetoothMonitor new];
     monitor.delegate = self;
@@ -154,8 +154,8 @@ int64_t SystemIdleTime(void) {
     // Device
 	NSData *deviceAsData = [UD objectForKey:UDDeviceKey];
 	if (deviceAsData.length > 0) {
-		id device = [NSKeyedUnarchiver unarchiveObjectWithData:deviceAsData];
-		[_deviceName setStringValue:[NSString stringWithFormat:@"%@ (%@)", [device name], [device addressString]]];
+		IOBluetoothDevice *device = [NSKeyedUnarchiver unarchiveObjectWithData:deviceAsData];
+		[_deviceName setStringValue:[NSString stringWithFormat:@"%@ (%@)", device.name, device.addressString]];
 		
         monitor.device = device;
 	}
@@ -234,9 +234,9 @@ int64_t SystemIdleTime(void) {
 
 - (void)sheetDidEnd:(IOBluetoothDeviceSelectorController *)controller returnCode:(int)returnCode contextInfo:(void *)contextInfo {
     if (returnCode == kIOBluetoothUISuccess) {
-        id device = controller.getResults[0];
+        IOBluetoothDevice *device = controller.getResults[0];
         
-        _deviceName.stringValue = [NSString stringWithFormat:@"%@ (%@)", [device name], [device addressString]];
+        _deviceName.stringValue = [NSString stringWithFormat:@"%@ (%@)", device.name, device.addressString];
         
         monitor.device = device;
         
@@ -245,7 +245,7 @@ int64_t SystemIdleTime(void) {
         // Device
         if (monitor.device) {
             NSData *deviceAsData = [NSKeyedArchiver archivedDataWithRootObject:monitor.device];
-            [[NSUserDefaults standardUserDefaults] setObject:deviceAsData forKey:UDDeviceKey];
+            [UD setObject:deviceAsData forKey:UDDeviceKey];
         }
     }
 }

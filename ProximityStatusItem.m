@@ -26,6 +26,7 @@
     
     if (_paused) {
         //TODO: Draw image
+        
     } else {
         NSRect drawRect = NSInsetRect(NSOffsetRect(_bounds, 0, 1), 3.0f, 3.0f);
         

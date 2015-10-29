@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		1DDD58160DA1D0A300B32029 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DDD58140DA1D0A300B32029 /* MainMenu.xib */; };
 		2E10CA190FBD00900059A159 /* ProximityAppController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E10CA180FBD00900059A159 /* ProximityAppController.m */; };
-		2EA9F55B0FC02F68007354EF /* AppIcon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 2EA9F55A0FC02F68007354EF /* AppIcon.icns */; };
 		8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
 		8D11072D0486CEB800E47090 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
@@ -18,6 +17,7 @@
 		966EA5ED185B8CA0003C39B7 /* StatusItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 966EA5EC185B8CA0003C39B7 /* StatusItem.m */; };
 		966EA5F0185B8D94003C39B7 /* ProximityStatusItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 966EA5EF185B8D94003C39B7 /* ProximityStatusItem.m */; };
 		966EA5F2185BA319003C39B7 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 966EA5F1185BA319003C39B7 /* IOKit.framework */; };
+		96A567AB1BE2465C00B5ED66 /* AppIcon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 2EA9F55A0FC02F68007354EF /* AppIcon.icns */; };
 		B427AFE715C2825A00CF0229 /* IOBluetoothUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E67EC000FC03A8F0025D101 /* IOBluetoothUI.framework */; };
 		B427AFEA15C2876300CF0229 /* ServiceManagement.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B427AFE915C2876300CF0229 /* ServiceManagement.framework */; };
 		B4B8CA9D15C2A1F40068A39C /* ud.plist in Resources */ = {isa = PBXBuildFile; fileRef = B4B8CA9C15C2A1F40068A39C /* ud.plist */; };
@@ -250,9 +250,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				96A567AB1BE2465C00B5ED66 /* AppIcon.icns in Resources */,
 				8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */,
 				1DDD58160DA1D0A300B32029 /* MainMenu.xib in Resources */,
-				2EA9F55B0FC02F68007354EF /* AppIcon.icns in Resources */,
 				B4B8CA9D15C2A1F40068A39C /* ud.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -13,12 +13,10 @@
     NSInteger _changedStatusCounter;
 }
 
-@synthesize inRangeDetectionCount, outOfRangeDetectionCount;
-
 - (instancetype)init {
     self = [super init];
     if (self) {
-        [self setupVars];
+        [self setup];
     }
     return self;
 }
@@ -26,18 +24,18 @@
 - (instancetype)initWithDevice:(IOBluetoothDevice*)aDevice {
     self = [super init];
     if (self) {
-        [self setupVars];
+        [self setup];
         _device = aDevice;
     }
     return self;
 }
 
-- (void)setupVars {
+- (void)setup {
     _iconStatus = _priorStatus = _status = ProximityBluetoothStatusUndefined;
     _timeInterval = kDefaultPageTimeout;
     _requiredSignalStrength = NO;
-    inRangeDetectionCount = 1;
-    outOfRangeDetectionCount = 1;
+    _inRangeDetectionCount = 1;
+    _outOfRangeDetectionCount = 1;
 }
 
 - (void)start {
@@ -70,8 +68,6 @@
     if (_timer) [self start];
 }
 
-#pragma mark
-
 - (void)handleTimer:(NSTimer *)theTimer {
     int inRange = [self getRange];
 #ifdef DEBUG
@@ -97,7 +93,7 @@
 	if (inRange == ProximityBluetoothStatusInRange) {
 		if (_priorStatus != ProximityBluetoothStatusInRange) {
             _changedStatusCounter++;
-            if (_changedStatusCounter >= inRangeDetectionCount) {
+            if (_changedStatusCounter >= _inRangeDetectionCount) {
                 _changedStatusCounter = 0;
                 _priorStatus = ProximityBluetoothStatusInRange;
                 
@@ -114,7 +110,7 @@
 	else {
 		if (_priorStatus != ProximityBluetoothStatusOutOfRange) {
             _changedStatusCounter++;
-            if (_changedStatusCounter >= outOfRangeDetectionCount) {
+            if (_changedStatusCounter >= _outOfRangeDetectionCount) {
                 _changedStatusCounter = 0;
                 _priorStatus = ProximityBluetoothStatusOutOfRange;
                 
