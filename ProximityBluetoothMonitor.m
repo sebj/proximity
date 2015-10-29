@@ -164,7 +164,7 @@
 
 #ifdef DEBUG
         //        if(rssi!=0)
-        NSLog(@"RSSI: %d / %d", rssi, _requiredSignalStrength);
+        NSLog(@"RSSI: %d / %ld", rssi, _requiredSignalStrength);
 #endif
         BOOL inRange = rssi>=_requiredSignalStrength;
         

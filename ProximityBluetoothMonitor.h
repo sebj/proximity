@@ -40,7 +40,7 @@ NS_ENUM(NSInteger, ProximityBluetoothStatus) {
 @property(nonatomic, assign) NSTimeInterval timeInterval;
 @property(nonatomic, assign) NSInteger inRangeDetectionCount;
 @property(nonatomic, assign) NSInteger outOfRangeDetectionCount;
-@property(assign) BOOL requiredSignalStrength;
+@property(assign) long requiredSignalStrength;
 @property(retain) IOBluetoothDevice *device;
 
 @property(readonly) enum ProximityBluetoothStatus priorStatus;

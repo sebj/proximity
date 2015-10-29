@@ -21,6 +21,10 @@
     [self userDefaultsLoad];
 
 	[self createMenuBar];
+
+    //update icon
+    [monitor refresh];
+    [monitor start];
 }
 
 - (void)applicationWillTerminate:(NSNotification *)aNotification {
@@ -28,8 +32,6 @@
 }
 
 - (void)windowWillClose:(NSNotification *)aNotification {
-	[self userDefaultsSave];
-
     if ([UD boolForKey:UDMonitoringEnabledKey] && monitor.device) {
         monitor.requiredSignalStrength = [[UD objectForKey:UDRequiredSignalKey] integerValue];
         monitor.timeInterval = [UD stringForKey:UDCheckIntervalKey].doubleValue;
@@ -42,6 +44,8 @@
         
         statusItem.paused = YES;
     }
+
+    [self userDefaultsSave];
 }
 
 #pragma mark -
@@ -61,8 +65,6 @@
     statusItem = [[ProximityStatusItem alloc] initWithStandardThickness];
     statusItem.showMenuOnLeftMouseDown = YES;
     statusItem.menu = menu;
-
-	[self outOfRange];
 }
 
 - (void)inRange {
@@ -106,6 +108,8 @@ int64_t SystemIdleTime(void) {
         if (SystemIdleTime() >= [[UD objectForKey:UDIdleMinTimeKey] integerValue]) {
             [self runOutOfRangeScript:YES];
         }
+    } else {
+        [self runOutOfRangeScript:YES];
     }
 }
 
@@ -142,6 +146,11 @@ int64_t SystemIdleTime(void) {
         monitor.timeInterval = [UD stringForKey:UDCheckIntervalKey].doubleValue;
     }
 
+    //signal strength
+    if ([UD stringForKey:UDRequiredSignalKey].length > 0 ) {
+        monitor.requiredSignalStrength = [[UD objectForKey:UDRequiredSignalKey] integerValue];
+    }
+
     // Device
 	NSData *deviceAsData = [UD objectForKey:UDDeviceKey];
 	if (deviceAsData.length > 0) {
@@ -149,8 +158,6 @@ int64_t SystemIdleTime(void) {
 		[_deviceName setStringValue:[NSString stringWithFormat:@"%@ (%@)", [device name], [device addressString]]];
 		
         monitor.device = device;
-        //update icon
-        [monitor refresh];
 	}
     
     // In range script path
