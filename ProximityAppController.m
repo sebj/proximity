@@ -13,9 +13,9 @@
 #pragma mark Delegate Methods
 
 - (void)awakeFromNib {
-    [[NSUserDefaults standardUserDefaults] registerDefaults:[NSDictionary dictionaryWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"ud" ofType:@"plist"]]];
+    [NSUserDefaults.standardUserDefaults registerDefaults:[NSDictionary dictionaryWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"ud" ofType:@"plist"]]];
     
-    monitor = [[ProximityBluetoothMonitor alloc] init];
+    monitor = [ProximityBluetoothMonitor new];
     monitor.delegate = self;
     
     [self userDefaultsLoad];
@@ -52,7 +52,7 @@
 #pragma mark AppController Methods
 
 - (void)createMenuBar {
-	NSMenu *menu = [[NSMenu alloc] init];
+	NSMenu *menu = [NSMenu new];
 	
 	NSMenuItem *menuItem = [menu addItemWithTitle:@"Preferences..." action:@selector(showWindow:) keyEquivalent:@""];
 	[menuItem setTarget:self];
@@ -103,11 +103,14 @@ int64_t SystemIdleTime(void) {
     statusItem.inRange = NO;
     
     if ([UD boolForKey:UDIdleCheckEnabledkey]) {
-        NSLog(@"Idle time: %lli",SystemIdleTime());
         
-        if (SystemIdleTime() >= [[UD objectForKey:UDIdleMinTimeKey] integerValue]) {
+#ifdef DEBUG
+        NSLog(@"Idle time: %lli",SystemIdleTime());
+#endif
+        
+        if (SystemIdleTime() >= [[UD objectForKey:UDIdleMinTimeKey] integerValue])
             [self runOutOfRangeScript:YES];
-        }
+            
     } else {
         [self runOutOfRangeScript:YES];
     }
@@ -117,39 +120,36 @@ int64_t SystemIdleTime(void) {
     if (!pathUrl)
         return;
     
-    NSError *error = nil;
-    BOOL b = [[NSWorkspace sharedWorkspace] runFileAtPath:pathUrl.path arguments:args error:&error];
+    NSError *error;
+    BOOL b = [NSWorkspace.sharedWorkspace runFileAtPath:pathUrl.path arguments:args error:&error];
     if (!silent && !b) {
         if (!error)
             error = [NSError errorWithDomain:@"NSWorkspace" code:0 userInfo:@{NSLocalizedDescriptionKey : @"unknown error"}];
+        
         [NSApp presentError:error];
     }
 }
 
 - (void)runInRangeScript:(BOOL)silent {
-    if (inRangeScriptURL) {
+    if (inRangeScriptURL)
         [self runScript:inRangeScriptURL arguments:@[@"in"] silent:silent];
-    }
 }
 
 - (void)runOutOfRangeScript:(BOOL)silent {
-    if (outOfRangeScriptURL) {
+    if (outOfRangeScriptURL)
         [self runScript:outOfRangeScriptURL arguments:@[@"out"] silent:silent];
-    }
 }
 
 #pragma mark -
 
 - (void)userDefaultsLoad {
 	//Timer interval
-	if ([UD stringForKey:UDCheckIntervalKey].length > 0 ) {
+	if ([UD stringForKey:UDCheckIntervalKey].length > 0 )
         monitor.timeInterval = [UD stringForKey:UDCheckIntervalKey].doubleValue;
-    }
 
     //signal strength
-    if ([UD stringForKey:UDRequiredSignalKey].length > 0 ) {
+    if ([UD stringForKey:UDRequiredSignalKey].length > 0 )
         monitor.requiredSignalStrength = [[UD objectForKey:UDRequiredSignalKey] integerValue];
-    }
 
     // Device
 	NSData *deviceAsData = [UD objectForKey:UDDeviceKey];
@@ -254,12 +254,12 @@ int64_t SystemIdleTime(void) {
 
 - (NSURL*)chooseScript {
     NSOpenPanel *op = [NSOpenPanel openPanel];
-    [op setAllowsMultipleSelection:NO];
+    op.allowsMultipleSelection = NO;
+    op.canChooseDirectories = NO;
     
 	if ([op runModal] == NSOKButton) {
         NSArray *files = op.URLs;
-        if (files.count)
-            return files[0];
+        if (files.count == 1) return files[0];
     }
     
     return nil;
@@ -294,9 +294,8 @@ int64_t SystemIdleTime(void) {
 #pragma mark -
 
 - (void)showWindow:(id)sender {
-    [NSApp activateIgnoringOtherApps:YES];
-    
 	[_prefsWindow makeKeyAndOrderFront:self];
+    [NSApp activateIgnoringOtherApps:YES];
     
     // Clear out status
     _deviceStatus.stringValue = @"";

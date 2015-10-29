@@ -18,9 +18,7 @@
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
-    if (object == self) {
-        self.needsDisplay = YES;
-    }
+    if (object == self) self.needsDisplay = YES;
 }
 
 - (void)drawRect:(NSRect)dirtyRect {
@@ -34,17 +32,18 @@
         NSRect circleRect = _inRange? NSInsetRect(drawRect, 1.0f, 1.0f) : drawRect;
         NSBezierPath *circle = [NSBezierPath bezierPathWithOvalInRect:circleRect];
         
-        [(selected? [NSColor whiteColor] : [NSColor blackColor]) set];
+        [selected? NSColor.whiteColor : NSColor.blackColor set];
         
         if (_inRange) {
             [circle setLineWidth:2.0f];
             [circle stroke];
+            
         } else {
             [circle fill];
         }
         
         if (!selected) {
-            NSShadow *shadow = [[NSShadow alloc] init];
+            NSShadow *shadow = [NSShadow new];
             [shadow setShadowColor:[NSColor colorWithCalibratedWhite:1.0 alpha:0.5]];
             [shadow setShadowOffset:NSMakeSize(0, -1)];
             [shadow setShadowBlurRadius:0.0f];

@@ -18,7 +18,7 @@
 - (instancetype)initWithThickness:(CGFloat)thickness {
     self = [super init];
     if (self) {
-        statusItem = [[NSStatusBar systemStatusBar] statusItemWithLength:thickness];
+        statusItem = [NSStatusBar.systemStatusBar statusItemWithLength:thickness];
         statusItem.view = [self initWithFrame:(NSRect){.size={thickness, thickness}}];
         
         selected = NO;
@@ -115,9 +115,8 @@
         self.needsDisplay = YES;
     }
     
-    if (_delegate && [_delegate respondsToSelector:@selector(statusItemClicked:)]) {
+    if (_delegate && [_delegate respondsToSelector:@selector(statusItemClicked:)])
         [_delegate statusItemClicked:selected];
-    }
 }
 
 #pragma mark - Right click, menu
@@ -129,13 +128,10 @@
 
 - (void)showMenu {
     if (self.menu) {
-        if (self.menu.delegate != self) {
-            self.menu.delegate = self;
-        }
+        if (self.menu.delegate != self) self.menu.delegate = self;
         
-        if (_delegate && [_delegate respondsToSelector:@selector(statusItemRightClicked:)]) {
+        if (_delegate && [_delegate respondsToSelector:@selector(statusItemRightClicked:)])
             [_delegate statusItemRightClicked:!menuVisible];
-        }
         
         [statusItem popUpStatusItemMenu:self.menu];
     }

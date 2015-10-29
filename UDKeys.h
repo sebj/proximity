@@ -6,10 +6,8 @@
 
 #define UDActionOnStartupKey @"executeOnStartup"
 
-
 #define UDDeviceKey @"device"
 #define UDRequiredSignalKey @"requiredSignalStrength"
-
 
 #define UDInRangeActionKey @"inRangeScriptURL"
 #define UDOutOfRangeActionKey @"outOfRangeScriptURL"

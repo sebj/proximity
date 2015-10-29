@@ -67,9 +67,7 @@
         _timeInterval = kDefaultPageTimeout;
     
     _timeInterval = timeInterval;
-    if (_timer) {
-        [self start];
-    }
+    if (_timer) [self start];
 }
 
 #pragma mark
@@ -86,13 +84,12 @@
     
     if (_status != _iconStatus) {
         if (_status == ProximityBluetoothStatusInRange) {
-            if (_delegate && [_delegate respondsToSelector:@selector(inRange)]) {
+            if (_delegate && [_delegate respondsToSelector:@selector(inRange)])
                 [_delegate inRange];
-            }
+                
         } else {
-            if (_delegate && [_delegate respondsToSelector:@selector(outOfRange)]) {
+            if (_delegate && [_delegate respondsToSelector:@selector(outOfRange)])
                 [_delegate outOfRange];
-            }
         }
         _iconStatus = _status;
     }
@@ -104,9 +101,8 @@
                 _changedStatusCounter = 0;
                 _priorStatus = ProximityBluetoothStatusInRange;
                 
-                if (_delegate && [_delegate respondsToSelector:@selector(proximityBluetoothMonitor:foundDevice:)]) {
+                if (_delegate && [_delegate respondsToSelector:@selector(proximityBluetoothMonitor:foundDevice:)])
                     [_delegate proximityBluetoothMonitor:self foundDevice:_device];
-                }
 #ifdef DEBUG
                 NSLog(@"Found");
 #endif
@@ -122,9 +118,8 @@
                 _changedStatusCounter = 0;
                 _priorStatus = ProximityBluetoothStatusOutOfRange;
                 
-                if (_delegate && [_delegate respondsToSelector:@selector(proximityBluetoothMonitor:lostDevice:)]) {
+                if (_delegate && [_delegate respondsToSelector:@selector(proximityBluetoothMonitor:lostDevice:)])
                     [_delegate proximityBluetoothMonitor:self lostDevice:_device];
-                }
 #ifdef DEBUG
                 NSLog(@"Lost");
 #endif
@@ -139,8 +134,7 @@
 
 - (int)getRange:(BOOL)getSignal {
     if (!_device) {
-        if (getSignal)
-            return 0;
+        if (getSignal) return 0;
         
         return ProximityBluetoothStatusUndefined;
     }
@@ -171,8 +165,7 @@
         return inRange ? ProximityBluetoothStatusInRange : ProximityBluetoothStatusOutOfRange;
     }
     
-    if (getSignal)
-        return 0;
+    if (getSignal) return 0;
     
     return ProximityBluetoothStatusUndefined;
 }
