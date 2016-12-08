@@ -36,7 +36,7 @@
         [selected? NSColor.whiteColor : NSColor.blackColor set];
         
         if (_inRange) {
-            [circle setLineWidth:2.0f];
+            circle.lineWidth = 2.0f;
             [circle stroke];
             
         } else {
@@ -45,9 +45,9 @@
         
         if (!selected) {
             NSShadow *shadow = [NSShadow new];
-            [shadow setShadowColor:[NSColor colorWithCalibratedWhite:1.0 alpha:0.5]];
-            [shadow setShadowOffset:NSMakeSize(0, -1)];
-            [shadow setShadowBlurRadius:0.0f];
+            shadow.shadowColor = [NSColor colorWithCalibratedWhite:1.0 alpha:0.5];
+            shadow.shadowOffset = NSMakeSize(0, -1);
+            shadow.shadowBlurRadius = 0.0f;
             
             [shadow set];
             [circle stroke];

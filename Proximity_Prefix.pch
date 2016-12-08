@@ -1,8 +1,0 @@
-//
-// Prefix header for all source files of the 'Proximity' target in the 'Proximity' project
-//
-
-#ifdef __OBJC__
-    #import <Cocoa/Cocoa.h>
-    #import <ServiceManagement/ServiceManagement.h>
-#endif

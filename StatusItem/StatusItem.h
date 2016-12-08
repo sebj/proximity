@@ -4,6 +4,7 @@
 // Seb Jachec
 
 #import <Foundation/Foundation.h>
+#import <Cocoa/Cocoa.h>
 
 @protocol StatusItemDelegate <NSObject>
 @required

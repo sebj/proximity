@@ -9,6 +9,8 @@
 
 @implementation StatusItem
 
+@dynamic menu;
+
 #pragma mark - Init
 
 - (instancetype)initWithStandardThickness {

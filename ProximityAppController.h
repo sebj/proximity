@@ -1,8 +1,8 @@
-#import <Cocoa/Cocoa.h>
-
 #import <IOBluetoothUI/objc/IOBluetoothDeviceSelectorController.h>
-#import "ProximityBluetoothMonitor.h"
-#import "ProximityStatusItem.h"
+#import "ProximityBluetoothMonitorDelegate.h"
+
+@class ProximityStatusItem;
+@class ProximityBluetoothMonitor;
 
 @interface ProximityAppController : NSObject <NSApplicationDelegate, NSWindowDelegate, ProximityBluetoothMonitorDelegate> {
     ProximityBluetoothMonitor *monitor;

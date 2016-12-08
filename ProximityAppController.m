@@ -1,9 +1,8 @@
-#import <IOKit/IOKitLib.h>
-
 #import "ProximityAppController.h"
 #import "NSWorkspace+runFileAtPath.h"
-#import "StatusItem.h"
+#import "ProximityStatusItem.h"
 #import "UDKeys.h"
+#import "ProximityBluetoothMonitor.h"
 
 #define UD [NSUserDefaults standardUserDefaults]
 
@@ -13,7 +12,7 @@
 #pragma mark Delegate Methods
 
 - (void)awakeFromNib {
-    [UD registerDefaults:[NSDictionary dictionaryWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"ud" ofType:@"plist"]]];
+    [UD registerDefaults:[NSDictionary dictionaryWithContentsOfFile:[NSBundle.mainBundle pathForResource:@"userdefaults" ofType:@"plist"]]];
     
     monitor = [ProximityBluetoothMonitor new];
     monitor.delegate = self;
@@ -55,9 +54,9 @@
 	NSMenu *menu = [NSMenu new];
 	
 	NSMenuItem *menuItem = [menu addItemWithTitle:@"Preferences..." action:@selector(showWindow:) keyEquivalent:@""];
-	[menuItem setTarget:self];
+	menuItem.target = self;
     
-    [menu addItem:[NSMenuItem separatorItem]];
+    [menu addItem:NSMenuItem.separatorItem];
 	
 	[menu addItemWithTitle:@"Quit" action:@selector(terminate:) keyEquivalent:@""];
 	
@@ -155,7 +154,7 @@ int64_t SystemIdleTime(void) {
 	NSData *deviceAsData = [UD objectForKey:UDDeviceKey];
 	if (deviceAsData.length > 0) {
 		IOBluetoothDevice *device = [NSKeyedUnarchiver unarchiveObjectWithData:deviceAsData];
-		[_deviceName setStringValue:[NSString stringWithFormat:@"%@ (%@)", device.name, device.addressString]];
+		_deviceName.stringValue = [NSString stringWithFormat:@"%@ (%@)", device.name, device.addressString];
 		
         monitor.device = device;
 	}
@@ -186,7 +185,9 @@ int64_t SystemIdleTime(void) {
 - (IBAction)updateDeviceStatus:(id)sender {
     if (!monitor.device) {
         _deviceStatus.stringValue = @"Please select a device";
+#ifdef DEBUG
         NSLog(@"No device = no status");
+#endif
         return;
     }
     
@@ -198,8 +199,11 @@ int64_t SystemIdleTime(void) {
     [testMon refresh];
     
     // Update signal bar
-    [_currentSignalStrength setIntegerValue:[testMon getRange:YES]];
+    _currentSignalStrength.integerValue = [testMon getRange:YES];
+    
+#ifdef DEBUG
     NSLog(@"Signal strength: %li",(long)_currentSignalStrength.integerValue);
+#endif
     
     // Update status
     switch (testMon.status) {
@@ -253,7 +257,7 @@ int64_t SystemIdleTime(void) {
 #pragma mark -
 
 - (NSURL*)chooseScript {
-    NSOpenPanel *op = [NSOpenPanel openPanel];
+    NSOpenPanel *op = NSOpenPanel.openPanel;
     op.allowsMultipleSelection = NO;
     op.canChooseDirectories = NO;
     

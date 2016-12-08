@@ -8,38 +8,37 @@
 
 /* Begin PBXBuildFile section */
 		1DDD58160DA1D0A300B32029 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DDD58140DA1D0A300B32029 /* MainMenu.xib */; };
-		2E10CA190FBD00900059A159 /* ProximityAppController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E10CA180FBD00900059A159 /* ProximityAppController.m */; };
 		8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
-		8D11072D0486CEB800E47090 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
-		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
-		9645E9FE1BE241A7008DB9EF /* DDRunTask.m in Sources */ = {isa = PBXBuildFile; fileRef = 9645E9FB1BE241A7008DB9EF /* DDRunTask.m */; settings = {ASSET_TAGS = (); }; };
-		9645E9FF1BE241A7008DB9EF /* NSWorkspace+runFileAtPath.m in Sources */ = {isa = PBXBuildFile; fileRef = 9645E9FD1BE241A7008DB9EF /* NSWorkspace+runFileAtPath.m */; settings = {ASSET_TAGS = (); }; };
-		966EA5ED185B8CA0003C39B7 /* StatusItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 966EA5EC185B8CA0003C39B7 /* StatusItem.m */; };
-		966EA5F0185B8D94003C39B7 /* ProximityStatusItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 966EA5EF185B8D94003C39B7 /* ProximityStatusItem.m */; };
-		966EA5F2185BA319003C39B7 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 966EA5F1185BA319003C39B7 /* IOKit.framework */; };
+		960347CE1DF9EC8D00DE193D /* DDRunTask.m in Sources */ = {isa = PBXBuildFile; fileRef = 9645E9FB1BE241A7008DB9EF /* DDRunTask.m */; };
+		960347CF1DF9EC9000DE193D /* NSWorkspace+runFileAtPath.m in Sources */ = {isa = PBXBuildFile; fileRef = 9645E9FD1BE241A7008DB9EF /* NSWorkspace+runFileAtPath.m */; };
+		960347D01DF9EC9400DE193D /* StatusItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 966EA5EC185B8CA0003C39B7 /* StatusItem.m */; };
+		960347D31DF9ECA300DE193D /* ProximityStatusItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 966EA5EF185B8D94003C39B7 /* ProximityStatusItem.m */; };
+		960347D41DF9ECA600DE193D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; };
+		960347D71DF9ECCE00DE193D /* ProximityBluetoothMonitor.m in Sources */ = {isa = PBXBuildFile; fileRef = 960347D61DF9ECCE00DE193D /* ProximityBluetoothMonitor.m */; };
+		960347DA1DF9ECD300DE193D /* ProximityAppController.m in Sources */ = {isa = PBXBuildFile; fileRef = 960347D91DF9ECD300DE193D /* ProximityAppController.m */; };
+		960347FC1DF9F3F100DE193D /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 960347FB1DF9F3F100DE193D /* Cocoa.framework */; };
+		960348001DF9F40000DE193D /* IOBluetoothUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 960347FF1DF9F40000DE193D /* IOBluetoothUI.framework */; };
+		960348021DF9F40B00DE193D /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 960348011DF9F40B00DE193D /* IOKit.framework */; };
 		96A567AB1BE2465C00B5ED66 /* AppIcon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 2EA9F55A0FC02F68007354EF /* AppIcon.icns */; };
-		B427AFE715C2825A00CF0229 /* IOBluetoothUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E67EC000FC03A8F0025D101 /* IOBluetoothUI.framework */; };
-		B427AFEA15C2876300CF0229 /* ServiceManagement.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B427AFE915C2876300CF0229 /* ServiceManagement.framework */; };
-		B4B8CA9D15C2A1F40068A39C /* ud.plist in Resources */ = {isa = PBXBuildFile; fileRef = B4B8CA9C15C2A1F40068A39C /* ud.plist */; };
-		B4FF6C2915C98AC400BD0910 /* ProximityBluetoothMonitor.m in Sources */ = {isa = PBXBuildFile; fileRef = B4FF6C2815C98AC400BD0910 /* ProximityBluetoothMonitor.m */; };
+		B4B8CA9D15C2A1F40068A39C /* userdefaults.plist in Resources */ = {isa = PBXBuildFile; fileRef = B4B8CA9C15C2A1F40068A39C /* userdefaults.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		089C165DFE840E0CC02AAC07 /* English */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
-		13E42FB307B3F0F600E4EEF1 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
 		1DDD58150DA1D0A300B32029 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		29B97324FDCFA39411CA2CEA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
-		29B97325FDCFA39411CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
-		2E10CA170FBD00900059A159 /* ProximityAppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProximityAppController.h; sourceTree = "<group>"; };
-		2E10CA180FBD00900059A159 /* ProximityAppController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProximityAppController.m; sourceTree = "<group>"; };
-		2E67EBFA0FC03A780025D101 /* IOBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOBluetooth.framework; path = /System/Library/Frameworks/IOBluetooth.framework; sourceTree = "<absolute>"; };
-		2E67EC000FC03A8F0025D101 /* IOBluetoothUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOBluetoothUI.framework; path = /System/Library/Frameworks/IOBluetoothUI.framework; sourceTree = "<absolute>"; };
 		2EA9F55A0FC02F68007354EF /* AppIcon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = AppIcon.icns; sourceTree = "<group>"; };
-		32CA4F630368D1EE00C91783 /* Proximity_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Proximity_Prefix.pch; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8D1107320486CEB800E47090 /* Proximity.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Proximity.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		960347D51DF9ECCE00DE193D /* ProximityBluetoothMonitor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProximityBluetoothMonitor.h; sourceTree = "<group>"; };
+		960347D61DF9ECCE00DE193D /* ProximityBluetoothMonitor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProximityBluetoothMonitor.m; sourceTree = "<group>"; };
+		960347D81DF9ECD300DE193D /* ProximityAppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProximityAppController.h; sourceTree = "<group>"; };
+		960347D91DF9ECD300DE193D /* ProximityAppController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProximityAppController.m; sourceTree = "<group>"; };
+		960347DC1DF9EF2F00DE193D /* ProximityBluetoothMonitorDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProximityBluetoothMonitorDelegate.h; sourceTree = "<group>"; };
+		960347FB1DF9F3F100DE193D /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
+		960347FD1DF9F3F800DE193D /* IOBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOBluetooth.framework; path = System/Library/Frameworks/IOBluetooth.framework; sourceTree = SDKROOT; };
+		960347FF1DF9F40000DE193D /* IOBluetoothUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOBluetoothUI.framework; path = System/Library/Frameworks/IOBluetoothUI.framework; sourceTree = SDKROOT; };
+		960348011DF9F40B00DE193D /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
 		9645E9FA1BE241A7008DB9EF /* DDRunTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDRunTask.h; sourceTree = "<group>"; };
 		9645E9FB1BE241A7008DB9EF /* DDRunTask.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDRunTask.m; sourceTree = "<group>"; };
 		9645E9FC1BE241A7008DB9EF /* NSWorkspace+runFileAtPath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSWorkspace+runFileAtPath.h"; sourceTree = "<group>"; };
@@ -48,12 +47,8 @@
 		966EA5EC185B8CA0003C39B7 /* StatusItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StatusItem.m; sourceTree = "<group>"; };
 		966EA5EE185B8D94003C39B7 /* ProximityStatusItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProximityStatusItem.h; sourceTree = "<group>"; };
 		966EA5EF185B8D94003C39B7 /* ProximityStatusItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProximityStatusItem.m; sourceTree = "<group>"; };
-		966EA5F1185BA319003C39B7 /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
 		966EA5F4185BAB43003C39B7 /* UDKeys.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UDKeys.h; sourceTree = "<group>"; };
-		B427AFE915C2876300CF0229 /* ServiceManagement.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ServiceManagement.framework; path = System/Library/Frameworks/ServiceManagement.framework; sourceTree = SDKROOT; };
-		B4B8CA9C15C2A1F40068A39C /* ud.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = ud.plist; sourceTree = "<group>"; };
-		B4FF6C2715C98AC400BD0910 /* ProximityBluetoothMonitor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProximityBluetoothMonitor.h; sourceTree = "<group>"; };
-		B4FF6C2815C98AC400BD0910 /* ProximityBluetoothMonitor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProximityBluetoothMonitor.m; sourceTree = "<group>"; };
+		B4B8CA9C15C2A1F40068A39C /* userdefaults.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = userdefaults.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -61,10 +56,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				966EA5F2185BA319003C39B7 /* IOKit.framework in Frameworks */,
-				8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */,
-				B427AFEA15C2876300CF0229 /* ServiceManagement.framework in Frameworks */,
-				B427AFE715C2825A00CF0229 /* IOBluetoothUI.framework in Frameworks */,
+				960348021DF9F40B00DE193D /* IOKit.framework in Frameworks */,
+				960348001DF9F40000DE193D /* IOBluetoothUI.framework in Frameworks */,
+				960347FC1DF9F3F100DE193D /* Cocoa.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -74,36 +68,15 @@
 		080E96DDFE201D6D7F000001 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				2E10CA170FBD00900059A159 /* ProximityAppController.h */,
-				2E10CA180FBD00900059A159 /* ProximityAppController.m */,
-				B4FF6C2715C98AC400BD0910 /* ProximityBluetoothMonitor.h */,
-				B4FF6C2815C98AC400BD0910 /* ProximityBluetoothMonitor.m */,
+				960347DC1DF9EF2F00DE193D /* ProximityBluetoothMonitorDelegate.h */,
+				960347D81DF9ECD300DE193D /* ProximityAppController.h */,
+				960347D91DF9ECD300DE193D /* ProximityAppController.m */,
+				960347D51DF9ECCE00DE193D /* ProximityBluetoothMonitor.h */,
+				960347D61DF9ECCE00DE193D /* ProximityBluetoothMonitor.m */,
 				966EA5EE185B8D94003C39B7 /* ProximityStatusItem.h */,
 				966EA5EF185B8D94003C39B7 /* ProximityStatusItem.m */,
 			);
 			name = Classes;
-			sourceTree = "<group>";
-		};
-		1058C7A0FEA54F0111CA2CBB /* Linked Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				966EA5F1185BA319003C39B7 /* IOKit.framework */,
-				B427AFE915C2876300CF0229 /* ServiceManagement.framework */,
-				2E67EC000FC03A8F0025D101 /* IOBluetoothUI.framework */,
-				1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */,
-			);
-			name = "Linked Frameworks";
-			sourceTree = "<group>";
-		};
-		1058C7A2FEA54F0111CA2CBB /* Other Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				2E67EBFA0FC03A780025D101 /* IOBluetooth.framework */,
-				29B97324FDCFA39411CA2CEA /* AppKit.framework */,
-				13E42FB307B3F0F600E4EEF1 /* CoreData.framework */,
-				29B97325FDCFA39411CA2CEA /* Foundation.framework */,
-			);
-			name = "Other Frameworks";
 			sourceTree = "<group>";
 		};
 		19C28FACFE9D520D11CA2CBB /* Products */ = {
@@ -118,6 +91,7 @@
 			isa = PBXGroup;
 			children = (
 				B427AFE815C2830400CF0229 /* Proximity */,
+				960347FA1DF9F3F100DE193D /* Frameworks */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
 			);
 			name = Proximity;
@@ -126,7 +100,6 @@
 		29B97315FDCFA39411CA2CEA /* Other Sources */ = {
 			isa = PBXGroup;
 			children = (
-				32CA4F630368D1EE00C91783 /* Proximity_Prefix.pch */,
 				29B97316FDCFA39411CA2CEA /* main.m */,
 			);
 			name = "Other Sources";
@@ -139,17 +112,19 @@
 				8D1107310486CEB800E47090 /* Info.plist */,
 				089C165CFE840E0CC02AAC07 /* InfoPlist.strings */,
 				1DDD58140DA1D0A300B32029 /* MainMenu.xib */,
-				B4B8CA9C15C2A1F40068A39C /* ud.plist */,
+				B4B8CA9C15C2A1F40068A39C /* userdefaults.plist */,
 				966EA5F4185BAB43003C39B7 /* UDKeys.h */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
 		};
-		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
+		960347FA1DF9F3F100DE193D /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				1058C7A0FEA54F0111CA2CBB /* Linked Frameworks */,
-				1058C7A2FEA54F0111CA2CBB /* Other Frameworks */,
+				960348011DF9F40B00DE193D /* IOKit.framework */,
+				960347FF1DF9F40000DE193D /* IOBluetoothUI.framework */,
+				960347FD1DF9F3F800DE193D /* IOBluetooth.framework */,
+				960347FB1DF9F3F100DE193D /* Cocoa.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -190,7 +165,6 @@
 				080E96DDFE201D6D7F000001 /* Classes */,
 				29B97315FDCFA39411CA2CEA /* Other Sources */,
 				29B97317FDCFA39411CA2CEA /* Resources */,
-				29B97323FDCFA39411CA2CEA /* Frameworks */,
 			);
 			name = Proximity;
 			sourceTree = "<group>";
@@ -222,7 +196,7 @@
 		29B97313FDCFA39411CA2CEA /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0700;
+				LastUpgradeCheck = 0810;
 				TargetAttributes = {
 					8D1107260486CEB800E47090 = {
 						DevelopmentTeam = 9GQ7YX93KJ;
@@ -253,7 +227,7 @@
 				96A567AB1BE2465C00B5ED66 /* AppIcon.icns in Resources */,
 				8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */,
 				1DDD58160DA1D0A300B32029 /* MainMenu.xib in Resources */,
-				B4B8CA9D15C2A1F40068A39C /* ud.plist in Resources */,
+				B4B8CA9D15C2A1F40068A39C /* userdefaults.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -264,13 +238,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				966EA5F0185B8D94003C39B7 /* ProximityStatusItem.m in Sources */,
-				8D11072D0486CEB800E47090 /* main.m in Sources */,
-				2E10CA190FBD00900059A159 /* ProximityAppController.m in Sources */,
-				966EA5ED185B8CA0003C39B7 /* StatusItem.m in Sources */,
-				9645E9FE1BE241A7008DB9EF /* DDRunTask.m in Sources */,
-				B4FF6C2915C98AC400BD0910 /* ProximityBluetoothMonitor.m in Sources */,
-				9645E9FF1BE241A7008DB9EF /* NSWorkspace+runFileAtPath.m in Sources */,
+				960347D41DF9ECA600DE193D /* main.m in Sources */,
+				960347D31DF9ECA300DE193D /* ProximityStatusItem.m in Sources */,
+				960347DA1DF9ECD300DE193D /* ProximityAppController.m in Sources */,
+				960347D01DF9EC9400DE193D /* StatusItem.m in Sources */,
+				960347D71DF9ECCE00DE193D /* ProximityBluetoothMonitor.m in Sources */,
+				960347CF1DF9EC9000DE193D /* NSWorkspace+runFileAtPath.m in Sources */,
+				960347CE1DF9EC8D00DE193D /* DDRunTask.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -299,14 +273,13 @@
 		C01FCF4B08A954540054247B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_ENABLE_OBJC_ARC = YES;
-				CODE_SIGN_ENTITLEMENTS = "";
 				CODE_SIGN_IDENTITY = "";
-				COPY_PHASE_STRIP = NO;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = dwarf;
 				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = Proximity_Prefix.pch;
+				GCC_PRECOMPILE_PREFIX_HEADER = NO;
 				INFOPLIST_FILE = Info.plist;
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				PRODUCT_BUNDLE_IDENTIFIER = info.pich.proximity;
@@ -317,12 +290,11 @@
 		C01FCF4C08A954540054247B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_ENABLE_OBJC_ARC = YES;
-				CODE_SIGN_ENTITLEMENTS = "";
 				CODE_SIGN_IDENTITY = "";
+				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = Proximity_Prefix.pch;
+				GCC_NO_COMMON_BLOCKS = NO;
+				GCC_PRECOMPILE_PREFIX_HEADER = NO;
 				INFOPLIST_FILE = Info.plist;
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				PRODUCT_BUNDLE_IDENTIFIER = info.pich.proximity;
@@ -334,15 +306,28 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_IMPLICIT_SIGN_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COMBINE_HIDPI_IMAGES = YES;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
-				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = DEBUG;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				ONLY_ACTIVE_ARCH = YES;
@@ -355,12 +340,25 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_IMPLICIT_SIGN_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COMBINE_HIDPI_IMAGES = YES;
-				GCC_C_LANGUAGE_STANDARD = c99;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				SDKROOT = macosx;

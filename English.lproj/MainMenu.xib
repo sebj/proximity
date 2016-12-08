@@ -1,9 +1,10 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="8191" systemVersion="15A284" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="11542" systemVersion="16B2555" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
     <dependencies>
-        <deployment version="1060" identifier="macosx"/>
-        <development version="6300" identifier="xcode"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="8191"/>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="11542"/>
+        <capability name="box content view" minToolsVersion="7.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="NSApplication"/>
@@ -77,7 +78,7 @@
                 </menuItem>
             </items>
         </menu>
-        <window title="Proximity Preferences" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" restorable="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" animationBehavior="default" id="371">
+        <window title="Proximity Preferences" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" restorable="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" frameAutosaveName="PreferencesWindow" animationBehavior="default" id="371">
             <windowStyleMask key="styleMask" titled="YES" closable="YES"/>
             <rect key="contentRect" x="335" y="320" width="523" height="407"/>
             <rect key="screenRect" x="0.0" y="0.0" width="1680" height="1028"/>
@@ -85,17 +86,16 @@
                 <rect key="frame" x="0.0" y="0.0" width="523" height="407"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <box autoresizesSubviews="NO" title="Device" borderType="line" id="518">
+                    <box autoresizesSubviews="NO" borderType="line" title="Device" id="518">
                         <rect key="frame" x="17" y="125" width="489" height="149"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <view key="contentView">
+                        <view key="contentView" id="gb3-7F-hwK">
                             <rect key="frame" x="1" y="1" width="487" height="130"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
                                 <button verticalHuggingPriority="750" id="532">
                                     <rect key="frame" x="336" y="7" width="133" height="32"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                    <animations/>
                                     <buttonCell key="cell" type="push" title="Choose Device" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="534">
                                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                         <font key="font" metaFont="system"/>
@@ -107,9 +107,13 @@
                                 <slider verticalHuggingPriority="750" id="638">
                                     <rect key="frame" x="120" y="52" width="345" height="21"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                    <animations/>
                                     <sliderCell key="cell" state="on" alignment="left" minValue="-100" doubleValue="-5" tickMarkPosition="above" sliderType="linear" id="639"/>
                                     <connections>
+                                        <binding destination="QlU-qC-Q8O" name="hidden" keyPath="values.device" previousBinding="iRZ-Zx-bdw" id="M91-lB-SZ2">
+                                            <dictionary key="options">
+                                                <string key="NSValueTransformerName">NSIsNil</string>
+                                            </dictionary>
+                                        </binding>
                                         <binding destination="QlU-qC-Q8O" name="enabled" keyPath="values.device" id="iRZ-Zx-bdw">
                                             <dictionary key="options">
                                                 <string key="NSValueTransformerName">NSIsNotNil</string>
@@ -121,29 +125,48 @@
                                 <textField verticalHuggingPriority="750" id="640">
                                     <rect key="frame" x="16" y="54" width="65" height="17"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                    <animations/>
                                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" allowsUndo="NO" sendsActionOnEndEditing="YES" title="Required:" id="641">
                                         <font key="font" metaFont="system"/>
                                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                     </textFieldCell>
+                                    <connections>
+                                        <binding destination="QlU-qC-Q8O" name="hidden" keyPath="values.device" id="w38-fu-C0w">
+                                            <dictionary key="options">
+                                                <bool key="NSRaisesForNotApplicableKeys" value="NO"/>
+                                                <string key="NSValueTransformerName">NSIsNil</string>
+                                            </dictionary>
+                                        </binding>
+                                    </connections>
                                 </textField>
                                 <textField verticalHuggingPriority="750" id="667">
                                     <rect key="frame" x="16" y="79" width="100" height="17"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                    <animations/>
                                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" allowsUndo="NO" sendsActionOnEndEditing="YES" title="Signal:" id="668">
                                         <font key="font" metaFont="system"/>
                                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                     </textFieldCell>
+                                    <connections>
+                                        <binding destination="QlU-qC-Q8O" name="hidden" keyPath="values.device" id="zMd-Vr-YzT">
+                                            <dictionary key="options">
+                                                <bool key="NSRaisesForNotApplicableKeys" value="NO"/>
+                                                <string key="NSValueTransformerName">NSIsNil</string>
+                                            </dictionary>
+                                        </binding>
+                                    </connections>
                                 </textField>
                                 <levelIndicator verticalHuggingPriority="750" id="669">
                                     <rect key="frame" x="122" y="81" width="341" height="14"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                    <animations/>
                                     <levelIndicatorCell key="cell" alignment="left" doubleValue="-100" minValue="-100" warningValue="-61" criticalValue="-71" levelIndicatorStyle="continuousCapacity" id="670"/>
                                     <connections>
+                                        <binding destination="QlU-qC-Q8O" name="hidden" keyPath="values.device" previousBinding="fBr-bx-bz8" id="vI0-1m-Hhe">
+                                            <dictionary key="options">
+                                                <bool key="NSRaisesForNotApplicableKeys" value="NO"/>
+                                                <string key="NSValueTransformerName">NSIsNil</string>
+                                            </dictionary>
+                                        </binding>
                                         <binding destination="QlU-qC-Q8O" name="enabled" keyPath="values.device" id="fBr-bx-bz8">
                                             <dictionary key="options">
                                                 <string key="NSValueTransformerName">NSIsNotNil</string>
@@ -154,26 +177,33 @@
                                 <textField verticalHuggingPriority="750" id="536">
                                     <rect key="frame" x="16" y="104" width="420" height="17"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                    <animations/>
                                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" allowsUndo="NO" sendsActionOnEndEditing="YES" title="No device selected" id="537">
                                         <font key="font" metaFont="system"/>
-                                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                        <color key="textColor" name="disabledControlTextColor" catalog="System" colorSpace="catalog"/>
                                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                     </textFieldCell>
+                                    <connections>
+                                        <binding destination="QlU-qC-Q8O" name="hidden" keyPath="values.device" id="BDR-6t-dS8">
+                                            <dictionary key="options">
+                                                <bool key="NSRaisesForNotApplicableKeys" value="NO"/>
+                                                <string key="NSValueTransformerName">NSIsNil</string>
+                                            </dictionary>
+                                        </binding>
+                                    </connections>
                                 </textField>
                                 <button verticalHuggingPriority="750" id="9Pw-wB-ITV">
                                     <rect key="frame" x="12" y="7" width="161" height="32"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                    <animations/>
                                     <buttonCell key="cell" type="push" title="Check Connectivity" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Ts8-Hl-Ot3">
                                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                         <font key="font" metaFont="system"/>
                                     </buttonCell>
                                     <connections>
                                         <action selector="updateDeviceStatus:" target="450" id="7UB-Fh-U4W"/>
-                                        <binding destination="QlU-qC-Q8O" name="enabled" keyPath="values.device" id="Hjj-Yq-Yor">
+                                        <binding destination="QlU-qC-Q8O" name="hidden" keyPath="values.device" id="9JV-DW-nqD">
                                             <dictionary key="options">
-                                                <string key="NSValueTransformerName">NSIsNotNil</string>
+                                                <bool key="NSRaisesForNotApplicableKeys" value="NO"/>
+                                                <string key="NSValueTransformerName">NSIsNil</string>
                                             </dictionary>
                                         </binding>
                                     </connections>
@@ -181,38 +211,31 @@
                                 <textField verticalHuggingPriority="750" id="671">
                                     <rect key="frame" x="173" y="16" width="138" height="17"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                    <animations/>
                                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" allowsUndo="NO" sendsActionOnEndEditing="YES" title="No device" placeholderString="" id="672">
                                         <font key="font" metaFont="system"/>
-                                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                        <color key="textColor" name="disabledControlTextColor" catalog="System" colorSpace="catalog"/>
                                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                     </textFieldCell>
                                 </textField>
                                 <progressIndicator wantsLayer="YES" horizontalHuggingPriority="750" verticalHuggingPriority="750" minValue="16" maxValue="100" doubleValue="16" displayedWhenStopped="NO" bezeled="NO" indeterminate="YES" controlSize="small" style="spinning" id="533">
                                     <rect key="frame" x="447" y="104" width="16" height="16"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                    <animations/>
                                 </progressIndicator>
                             </subviews>
-                            <animations/>
                         </view>
-                        <animations/>
-                        <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
-                        <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <font key="titleFont" metaFont="system"/>
                     </box>
-                    <box autoresizesSubviews="NO" title="General" borderType="line" id="519">
+                    <box autoresizesSubviews="NO" borderType="line" title="General" id="519">
                         <rect key="frame" x="17" y="288" width="489" height="109"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <view key="contentView">
+                        <view key="contentView" id="PQv-ls-lww">
                             <rect key="frame" x="1" y="1" width="487" height="90"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
                                 <button id="524">
-                                    <rect key="frame" x="16" y="64" width="284" height="18"/>
+                                    <rect key="frame" x="16" y="64" width="182" height="18"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                    <animations/>
-                                    <buttonCell key="cell" type="check" title="Enable device monitoring, checking every" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="525">
+                                    <buttonCell key="cell" type="check" title="Check device status every" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="525">
                                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                         <font key="font" metaFont="system"/>
                                         <connections>
@@ -220,10 +243,9 @@
                                         </connections>
                                     </buttonCell>
                                 </button>
-                                <textField verticalHuggingPriority="750" id="523">
-                                    <rect key="frame" x="306" y="63" width="50" height="22"/>
+                                <textField verticalHuggingPriority="750" misplaced="YES" id="523">
+                                    <rect key="frame" x="204" y="62" width="50" height="22"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                    <animations/>
                                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" title="60" drawsBackground="YES" id="526">
                                         <numberFormatter key="formatter" formatterBehavior="custom10_4" positiveFormat="#0" negativeFormat="#0" numberStyle="decimal" allowsFloats="NO" usesGroupingSeparator="NO" paddingCharacter="*" minimumIntegerDigits="1" maximumIntegerDigits="309" decimalSeparator="." groupingSeparator="," currencyDecimalSeparator="." plusSign="+" minusSign="-" notANumberSymbol="NaN" perMillSymbol="‰" percentSymbol="%" exponentSymbol="E" positivePrefix="" positiveSuffix="" negativePrefix="-" negativeSuffix="" id="676">
                                             <real key="minimum" value="2"/>
@@ -238,21 +260,10 @@
                                         <binding destination="QlU-qC-Q8O" name="value" keyPath="values.timerInterval" id="Hnv-mw-DwP"/>
                                     </connections>
                                 </textField>
-                                <textField verticalHuggingPriority="750" id="522">
-                                    <rect key="frame" x="378" y="66" width="56" height="17"/>
-                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                    <animations/>
-                                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="seconds" id="527">
-                                        <font key="font" metaFont="system"/>
-                                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                    </textFieldCell>
-                                </textField>
                                 <button id="549">
                                     <rect key="frame" x="16" y="12" width="412" height="18"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                    <animations/>
-                                    <buttonCell key="cell" type="check" title="Immediately run action on startup if device in-range" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="550">
+                                    <buttonCell key="cell" type="check" title="Execute action at launch if device is in-range" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="550">
                                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                         <font key="font" metaFont="system"/>
                                         <connections>
@@ -260,21 +271,19 @@
                                         </connections>
                                     </buttonCell>
                                 </button>
-                                <stepper horizontalHuggingPriority="750" verticalHuggingPriority="750" id="665">
-                                    <rect key="frame" x="356" y="60" width="19" height="27"/>
+                                <stepper horizontalHuggingPriority="750" verticalHuggingPriority="750" misplaced="YES" id="665">
+                                    <rect key="frame" x="254" y="59" width="19" height="27"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                    <animations/>
                                     <stepperCell key="cell" continuous="YES" alignment="left" minValue="2" maxValue="99999" doubleValue="60" id="666"/>
                                     <connections>
                                         <action selector="takeIntegerValueFrom:" target="523" id="675"/>
                                         <binding destination="QlU-qC-Q8O" name="enabled" keyPath="values.enabled" id="gKp-GI-dr1"/>
                                     </connections>
                                 </stepper>
-                                <button id="NmH-7a-yoS">
-                                    <rect key="frame" x="16" y="37" width="284" height="18"/>
+                                <button misplaced="YES" id="NmH-7a-yoS">
+                                    <rect key="frame" x="16" y="37" width="69" height="18"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                    <animations/>
-                                    <buttonCell key="cell" type="check" title="Only run out of range action if idle for over" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="HaZ-3n-SsF">
+                                    <buttonCell key="cell" type="check" title="Require" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="HaZ-3n-SsF">
                                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                         <font key="font" metaFont="system"/>
                                         <connections>
@@ -282,10 +291,9 @@
                                         </connections>
                                     </buttonCell>
                                 </button>
-                                <textField verticalHuggingPriority="750" id="nxs-Hy-72f">
-                                    <rect key="frame" x="306" y="36" width="50" height="22"/>
+                                <textField verticalHuggingPriority="750" misplaced="YES" id="nxs-Hy-72f">
+                                    <rect key="frame" x="91" y="36" width="50" height="22"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                    <animations/>
                                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" title="30" drawsBackground="YES" id="6Te-4Y-Yvn">
                                         <numberFormatter key="formatter" formatterBehavior="custom10_4" positiveFormat="#0" negativeFormat="#0" numberStyle="decimal" allowsFloats="NO" usesGroupingSeparator="NO" paddingCharacter="*" minimumIntegerDigits="1" maximumIntegerDigits="309" decimalSeparator="." groupingSeparator="," currencyDecimalSeparator="." plusSign="+" minusSign="-" notANumberSymbol="NaN" perMillSymbol="‰" percentSymbol="%" exponentSymbol="E" positivePrefix="" positiveSuffix="" negativePrefix="-" negativeSuffix="" id="yK1-jK-SxG">
                                             <real key="minimum" value="2"/>
@@ -300,46 +308,48 @@
                                         <binding destination="QlU-qC-Q8O" name="value" keyPath="values.idleTime" id="0m3-fg-mfD"/>
                                     </connections>
                                 </textField>
-                                <textField verticalHuggingPriority="750" id="RM7-Fu-1Vd">
-                                    <rect key="frame" x="378" y="39" width="56" height="17"/>
+                                <textField verticalHuggingPriority="750" misplaced="YES" id="RM7-Fu-1Vd">
+                                    <rect key="frame" x="163" y="38" width="312" height="17"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                    <animations/>
-                                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="seconds" id="3pw-Nl-bMO">
+                                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="seconds of idle time to execute out of range action" id="3pw-Nl-bMO">
                                         <font key="font" metaFont="system"/>
                                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                     </textFieldCell>
                                 </textField>
-                                <stepper horizontalHuggingPriority="750" verticalHuggingPriority="750" id="rSh-IH-W54">
-                                    <rect key="frame" x="356" y="33" width="19" height="27"/>
+                                <stepper horizontalHuggingPriority="750" verticalHuggingPriority="750" misplaced="YES" id="rSh-IH-W54">
+                                    <rect key="frame" x="141" y="33" width="19" height="27"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                    <animations/>
                                     <stepperCell key="cell" continuous="YES" alignment="left" minValue="10" maxValue="99999" doubleValue="30" id="Cp4-3K-l8B"/>
                                     <connections>
                                         <action selector="takeIntegerValueFrom:" target="nxs-Hy-72f" id="pWZ-65-Ey5"/>
                                         <binding destination="QlU-qC-Q8O" name="enabled" keyPath="values.idleCheckEnabled" id="43W-Wc-OK1"/>
                                     </connections>
                                 </stepper>
+                                <textField verticalHuggingPriority="750" misplaced="YES" id="522">
+                                    <rect key="frame" x="276" y="65" width="56" height="17"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="seconds" id="527">
+                                        <font key="font" metaFont="system"/>
+                                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                    </textFieldCell>
+                                </textField>
                             </subviews>
-                            <animations/>
                         </view>
-                        <animations/>
-                        <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
-                        <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <font key="titleFont" metaFont="system"/>
                     </box>
-                    <box autoresizesSubviews="NO" title="Actions" borderType="line" id="551">
+                    <box autoresizesSubviews="NO" borderType="line" title="Actions" id="551">
                         <rect key="frame" x="17" y="16" width="489" height="95"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <view key="contentView">
+                        <view key="contentView" id="1Lc-hG-Upa">
                             <rect key="frame" x="1" y="1" width="487" height="76"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
                                 <textField verticalHuggingPriority="750" id="562">
-                                    <rect key="frame" x="16" y="48" width="59" height="17"/>
+                                    <rect key="frame" x="16" y="48" width="61" height="17"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                    <animations/>
-                                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" allowsUndo="NO" sendsActionOnEndEditing="YES" title="In Range" id="571">
+                                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" allowsUndo="NO" sendsActionOnEndEditing="YES" title="In Range:" id="571">
                                         <font key="font" metaFont="system"/>
                                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -348,7 +358,6 @@
                                 <textField verticalHuggingPriority="750" id="563">
                                     <rect key="frame" x="109" y="44" width="204" height="22"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                    <animations/>
                                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="570">
                                         <font key="font" metaFont="system"/>
                                         <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
@@ -358,16 +367,15 @@
                                 <button verticalHuggingPriority="750" id="565">
                                     <rect key="frame" x="315" y="39" width="66" height="32"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                    <animations/>
                                     <buttonCell key="cell" type="push" title="Test" bezelStyle="rounded" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="568">
                                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                         <font key="font" metaFont="system"/>
                                     </buttonCell>
                                     <connections>
                                         <action selector="inRangeScriptTest:" target="450" id="592"/>
-                                        <binding destination="QlU-qC-Q8O" name="enabled" keyPath="values.inRangeScriptURL" id="WZb-sl-uk0">
+                                        <binding destination="QlU-qC-Q8O" name="hidden" keyPath="values.inRangeScriptURL" id="vGp-cw-XJA">
                                             <dictionary key="options">
-                                                <string key="NSValueTransformerName">NSIsNotNil</string>
+                                                <string key="NSValueTransformerName">NSIsNil</string>
                                             </dictionary>
                                         </binding>
                                     </connections>
@@ -375,7 +383,6 @@
                                 <button verticalHuggingPriority="750" id="566">
                                     <rect key="frame" x="381" y="39" width="88" height="32"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                    <animations/>
                                     <buttonCell key="cell" type="push" title="Change" bezelStyle="rounded" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="567">
                                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                         <font key="font" metaFont="system"/>
@@ -385,10 +392,9 @@
                                     </connections>
                                 </button>
                                 <textField verticalHuggingPriority="750" id="YpM-KS-Llk">
-                                    <rect key="frame" x="16" y="18" width="87" height="17"/>
+                                    <rect key="frame" x="16" y="18" width="88" height="17"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                    <animations/>
-                                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" allowsUndo="NO" sendsActionOnEndEditing="YES" title="Out of Range" id="vIe-3A-c9X">
+                                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" allowsUndo="NO" sendsActionOnEndEditing="YES" title="Out of Range:" id="vIe-3A-c9X">
                                         <font key="font" metaFont="system"/>
                                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -397,7 +403,6 @@
                                 <textField verticalHuggingPriority="750" id="94j-f9-q1X">
                                     <rect key="frame" x="109" y="14" width="204" height="22"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                    <animations/>
                                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="7h2-Cm-GU0">
                                         <font key="font" metaFont="system"/>
                                         <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
@@ -407,16 +412,15 @@
                                 <button verticalHuggingPriority="750" id="8N3-Zl-3nD">
                                     <rect key="frame" x="315" y="9" width="66" height="32"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                    <animations/>
                                     <buttonCell key="cell" type="push" title="Test" bezelStyle="rounded" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="f8W-FG-Fdf">
                                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                         <font key="font" metaFont="system"/>
                                     </buttonCell>
                                     <connections>
                                         <action selector="outOfRangeScriptTest:" target="450" id="4HX-ry-k7u"/>
-                                        <binding destination="QlU-qC-Q8O" name="enabled" keyPath="values.outOfRangeScriptURL" id="Wax-VL-rv8">
+                                        <binding destination="QlU-qC-Q8O" name="hidden" keyPath="values.outOfRangeScriptURL" id="iCV-fa-2bU">
                                             <dictionary key="options">
-                                                <string key="NSValueTransformerName">NSIsNotNil</string>
+                                                <string key="NSValueTransformerName">NSIsNil</string>
                                             </dictionary>
                                         </binding>
                                     </connections>
@@ -424,7 +428,6 @@
                                 <button verticalHuggingPriority="750" id="rdS-g8-VX9">
                                     <rect key="frame" x="381" y="9" width="88" height="32"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                    <animations/>
                                     <buttonCell key="cell" type="push" title="Change" bezelStyle="rounded" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="D8g-Io-nwV">
                                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                         <font key="font" metaFont="system"/>
@@ -434,17 +437,12 @@
                                     </connections>
                                 </button>
                             </subviews>
-                            <animations/>
                         </view>
-                        <animations/>
-                        <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
-                        <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <font key="titleFont" metaFont="system"/>
                     </box>
                     <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" id="605">
                         <rect key="frame" x="88" y="94" width="416" height="13"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMinY="YES"/>
-                        <animations/>
                         <textFieldCell key="cell" allowsUndo="NO" sendsActionOnEndEditing="YES" alignment="right" title="Applescripts, shell scripts, executables, app bundles. Argument passed:  'in' or 'out'" id="606">
                             <font key="font" metaFont="system" size="10"/>
                             <color key="textColor" red="0.50196081399917603" green="0.50196081399917603" blue="0.50196081399917603" alpha="1" colorSpace="calibratedRGB"/>
@@ -452,11 +450,11 @@
                         </textFieldCell>
                     </textField>
                 </subviews>
-                <animations/>
             </view>
             <connections>
                 <outlet property="delegate" destination="450" id="596"/>
             </connections>
+            <point key="canvasLocation" x="138.5" y="-129.5"/>
         </window>
         <userDefaultsController representsSharedInstance="YES" id="QlU-qC-Q8O"/>
     </objects>
