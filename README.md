@@ -1,17 +1,17 @@
-#Proximity
+# Proximity
 
 **Proximity runs custom scripts/applications when a Bluetooth device you choose (phone/watch/etc.) enters or exits range of your Mac.**
 
 This fork is a work-in-progress: feel free to [create an issue](https://github.com/sebj/Proximity/issues/new) for any problems/suggestions or a pull request with code or icons (*currently in need of: an app icon, menubar icons for in and out of range states*).
 
-###Fork Ancestry/Contributors
+### Fork Ancestry/Contributors
 * Bugfixes from [niobos](https://github.com/niobos/proximity) and [Niels Laukens](https://github.com/nielslaukens)
 * proximity 1.81 fork by [Jesse Smick](https://github.com/janka102/proximity)
 * proximity 1.81 by [Stuart Eichart](https://github.com/fivemicro/proximity)
 * proximity 1.7 by [Dominik Pich](https://github.com/Daij-Djan/proximity)
 * proximity 1.6 by [revned](https://github.com/revned/proximity/)
 
-###Changelog
+### Changelog
 **1.9 (work in progress – no menubar icons)**
 * General code tidy (some outlets replaced with bindings; syntax changes etc.)
 * Removed update checking due to nature of forking on GitHub
