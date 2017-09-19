@@ -261,7 +261,7 @@ int64_t SystemIdleTime(void) {
     op.allowsMultipleSelection = NO;
     op.canChooseDirectories = NO;
     
-	if ([op runModal] == NSOKButton) {
+	if ([op runModal] == NSModalResponseOK) {
         NSArray *files = op.URLs;
         if (files.count == 1) return files[0];
     }
