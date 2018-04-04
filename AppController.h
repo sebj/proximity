@@ -1,11 +1,11 @@
 #import <IOBluetoothUI/objc/IOBluetoothDeviceSelectorController.h>
-#import "ProximityBluetoothMonitorDelegate.h"
+#import "BluetoothMonitorDelegate.h"
 
 @class ProximityStatusItem;
-@class ProximityBluetoothMonitor;
+@class BluetoothMonitor;
 
-@interface ProximityAppController : NSObject <NSApplicationDelegate, NSWindowDelegate, ProximityBluetoothMonitorDelegate> {
-    ProximityBluetoothMonitor *monitor;
+@interface AppController : NSObject <NSApplicationDelegate, NSWindowDelegate, BluetoothMonitorDelegate> {
+    BluetoothMonitor *monitor;
 	ProximityStatusItem *statusItem;
 
     NSURL *inRangeScriptURL;

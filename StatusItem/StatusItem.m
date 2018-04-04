@@ -52,7 +52,7 @@
             [NSColor.whiteColor set];
             NSRectFill(dstRect);
             
-            [_image drawInRect:_imageDrawBounds fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1.0];
+            [self->_image drawInRect:self->_imageDrawBounds fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1.0];
             
             return YES;
         }];

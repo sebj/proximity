@@ -1,12 +1,12 @@
 //
-//  ProximityBluetoothMonitor.h
+//  BluetoothMonitor.h
 //  Proximity
 //
 //  Created by Dominik Pich on 8/1/12.
 //
 //
 #import <IOBluetoothUI/objc/IOBluetoothDeviceSelectorController.h>
-#import "ProximityBluetoothMonitorDelegate.h"
+#import "BluetoothMonitorDelegate.h"
 
 NS_ENUM(NSInteger, ProximityBluetoothStatus) {
     ProximityBluetoothStatusOutOfRange,
@@ -15,9 +15,9 @@ NS_ENUM(NSInteger, ProximityBluetoothStatus) {
 };
 
 
-@interface ProximityBluetoothMonitor : NSObject
+@interface BluetoothMonitor : NSObject
 
-@property(weak) id<ProximityBluetoothMonitorDelegate> delegate;
+@property(weak) id<BluetoothMonitorDelegate> delegate;
 @property(nonatomic, assign) NSTimeInterval timeInterval;
 @property(nonatomic, assign) NSInteger inRangeDetectionCount;
 @property(nonatomic, assign) NSInteger outOfRangeDetectionCount;

@@ -1,12 +1,12 @@
-#import "ProximityAppController.h"
+#import "AppController.h"
 #import "NSWorkspace+runFileAtPath.h"
 #import "ProximityStatusItem.h"
 #import "UDKeys.h"
-#import "ProximityBluetoothMonitor.h"
+#import "BluetoothMonitor.h"
 
 #define UD [NSUserDefaults standardUserDefaults]
 
-@implementation ProximityAppController
+@implementation AppController
 
 #pragma mark -
 #pragma mark Delegate Methods
@@ -14,7 +14,7 @@
 - (void)awakeFromNib {
     [UD registerDefaults:[NSDictionary dictionaryWithContentsOfFile:[NSBundle.mainBundle pathForResource:@"userdefaults" ofType:@"plist"]]];
     
-    monitor = [ProximityBluetoothMonitor new];
+    monitor = [BluetoothMonitor new];
     monitor.delegate = self;
     
     [self userDefaultsLoad];
@@ -194,7 +194,7 @@ int64_t SystemIdleTime(void) {
     [_progressIndicator startAnimation:nil];
     
     // Refresh status
-    ProximityBluetoothMonitor *testMon = [[ProximityBluetoothMonitor alloc] initWithDevice:monitor.device];
+    BluetoothMonitor *testMon = [[BluetoothMonitor alloc] initWithDevice:monitor.device];
     testMon.requiredSignalStrength = monitor.requiredSignalStrength = [[UD objectForKey:UDRequiredSignalKey] integerValue];
     [testMon refresh];
     

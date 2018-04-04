@@ -1,14 +1,14 @@
 //
-//  ProximityBluetoothMonitor.m
+//  BluetoothMonitor.m
 //  Proximity
 //
 //  Created by Dominik Pich on 8/1/12.
 //
 //
 
-#import "ProximityBluetoothMonitor.h"
+#import "BluetoothMonitor.h"
 
-@implementation ProximityBluetoothMonitor {
+@implementation BluetoothMonitor {
 	NSTimer *_timer;
     NSInteger _changedStatusCounter;
 }
