@@ -31,6 +31,6 @@
 	<key>NSPrincipalClass</key>
 	<string>NSApplication</string>
 	<key>NSAppleEventsUsageDescription</key>
-	<string>Allow Proximity to unlock the screensaver?</string>
+	<string>Proximity uses AppleEvents indirectly through any AppleScript files you run.</string>
 </dict>
 </plist>
